@@ -284,7 +284,7 @@ cd docker
 ./start.sh
 ```
 
-1. Re-run the migration scripts:
+6. Re-run the migration scripts:
  
 ```bash
 cd ../app

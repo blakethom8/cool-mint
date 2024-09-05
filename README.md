@@ -256,7 +256,7 @@ Follow these steps to clean up your Docker environment:
 1. Stop all running containers:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 2. Remove all containers related to the project:

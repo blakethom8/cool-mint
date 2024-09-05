@@ -301,4 +301,6 @@ cd docker
 
 If problems persist, ensure that all environment variables are correctly set in your `.env` files and that there are no conflicts with other services running on your machine.
 
+---
+
 For further assistance or to contribute to the GenAI Project Launchpad, please consult the project maintainers or refer to the contribution guidelines.

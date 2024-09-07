@@ -19,7 +19,7 @@ class PromptManager:
     @staticmethod
     def get_prompt(template, **kwargs):
         env = PromptManager._get_env()
-        template_path = f"{template}.j2"
+        template_path = f"{template}.jinja"
         with open(env.loader.get_source(env, template_path)[1]) as file:
             post = frontmatter.load(file)
 
@@ -32,7 +32,7 @@ class PromptManager:
     @staticmethod
     def get_template_info(template):
         env = PromptManager._get_env()
-        template_path = f"{template}.j2"
+        template_path = f"{template}.jinja"
         with open(env.loader.get_source(env, template_path)[1]) as file:
             post = frontmatter.load(file)
 

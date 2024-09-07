@@ -8,4 +8,11 @@ from pipelines.registry import PipelineRegistry
 
 event = EventFactory.create_event(event_key="invoice")
 pipeline = PipelineRegistry.get_pipeline(event)
-result = pipeline.run(event)
+output = pipeline.run(event)
+
+event = EventFactory.create_event(event_key="product")
+pipeline = PipelineRegistry.get_pipeline(event)
+output = pipeline.run(event)
+
+print(output.result.reasoning)
+print(output.result.response)

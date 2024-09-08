@@ -32,11 +32,11 @@ prompts/
 ├── __init__.py
 ├── prompt_manager.py
 └── templates/
-    ├── prompt_template.jinja
+    ├── prompt_template.j2
 ```
 
 - `prompt_manager.py`: Contains the `PromptManager` class for handling prompt templates.
-- `templates/`: Directory containing Jinja template files (`.jinja` extension).
+- `templates/`: Directory containing Jinja template files (`.j2` extension).
 
 ## Understanding the Prompt Manager
 
@@ -48,12 +48,12 @@ The `PromptManager` class in `prompt_manager.py` is the core component for worki
 
 ## Creating Jinja Templates
 
-Jinja templates are stored in the `prompts/templates/` directory with a `.jinja` extension. Each template consists of two parts:
+Jinja templates are stored in the `prompts/templates/` directory with a `.j2` extension. Each template consists of two parts:
 
 1. **Frontmatter**: YAML-formatted metadata at the beginning of the file.
 2. **Template Content**: The main body of the template using Jinja syntax.
 
-Example (`ticket_analysis.jinja`):
+Example (`ticket_analysis.j2`):
 
 ```jinja
 ---
@@ -163,7 +163,7 @@ Product price: {{ format_price(product.price) }}
 Create base templates and extend them:
 
 ```jinja
-{# base_prompt.jinja #}
+{# base_prompt.j2 #}
 # SYSTEM INSTRUCTION
 {{ system_instruction }}
 
@@ -173,8 +173,8 @@ Create base templates and extend them:
 # ASSISTANT RESPONSE
 {% block response %}{% endblock %}
 
-{# specific_prompt.jinja #}
-{% extends "base_prompt.jinja" %}
+{# specific_prompt.j2 #}
+{% extends "base_prompt.j2" %}
 
 {% block response %}
 Here is my response to your query:
@@ -206,7 +206,7 @@ While external databases can be used for prompt management, the Jinja-based appr
 
 ## Best Practices
 
-1. **Use Clear Template Names**: Choose descriptive names for your templates (e.g., `customer_support_greeting.jinja`).
+1. **Use Clear Template Names**: Choose descriptive names for your templates (e.g., `customer_support_greeting.j2`).
 2. **Leverage Frontmatter**: Include metadata like description, author, and version in the template frontmatter.
 3. **Modularize Templates**: Break down complex prompts into smaller, reusable components.
 4. **Comment Your Templates**: Add comments to explain complex logic or variable usage.

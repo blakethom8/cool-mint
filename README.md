@@ -17,7 +17,6 @@ The GenAI Project Launchpad is a comprehensive, flexible, Docker-based framework
     - [Quick Start](#quick-start)
   - [Configuration](#configuration)
   - [Development Workflow](#development-workflow)
-  - [Testing](#testing)
   - [Deployment](#deployment)
   - [Troubleshooting](#troubleshooting)
     - [Issues During Initial Deployment](#issues-during-initial-deployment)
@@ -59,7 +58,6 @@ All services are containerized using Docker, ensuring consistency across develop
 │   ├── prompts            # Prompt templates for AI models
 │   ├── services           # Business logic and services
 │   ├── tasks              # Background task definitions
-│   ├── tests              # Unit and integration tests
 │   └── utils              # Utility functions and helpers
 ├── docker                 # Docker configuration files
 ├── docs                   # Project documentation
@@ -213,23 +211,6 @@ Here's a high-level action plan to update the template for your unique project:
 7. Experiment with different AI models, data, and settings in the 'playground'
 8. Fine-tune your pipelines and application flow
 
-## Testing
-
-Run tests using pytest:
-
-```bash
-cd app
-pytest
-```
-
-Monitor logs during testing:
-
-```bash
-cd docker
-./logs.sh
-```
-
-For end-to-end testing, use `test_events.py` request definitions in the `test/` folder.
 
 ## Deployment
 

@@ -5,7 +5,7 @@ sys.path.append("..")
 from app.services.llm_factory import LLMFactory
 from app.models.domain.intent import CustomerIntent
 
-llm = LLMFactory(provider="openai")
+llm = LLMFactory(provider="anthropic")
 
 
 completion = llm.create_completion(

@@ -4,7 +4,7 @@ Copyright (c) 2024 Datalumina Solutions B.V.
 
 By using the code provided by Datalumina Solutions B.V. (“the Company”), you agree to the following terms:
 
-You are free to use this code for any personal or business projects, whether for internal purposes or client work. Feel free to modify it, build upon it, and make it your own.
+You are free to use this code for any personal or commercial projects, whether for internal purposes or client work. Feel free to modify it, build upon it, and make it your own.
 
 However, this code is provided as part of a unique project template ("the Package"), so you’re not allowed to resell or distribute it as a template or part of a package where the primary value is in the code itself, rather than the utility. In other words, while you can use the code in your projects, you cannot pass it off as your own product template, boilerplate or course content for resale.
 

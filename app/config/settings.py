@@ -1,4 +1,6 @@
+from datetime import timedelta
 from typing import Optional
+from pydantic import Field
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 from dotenv import load_dotenv
@@ -16,6 +18,7 @@ class LLMProviderSettings(BaseSettings):
 class OpenAISettings(LLMProviderSettings):
     api_key: str = os.getenv("OPENAI_API_KEY")
     default_model: str = "gpt-4o"
+    embedding_model: str = "text-embedding-3-small"
 
 
 class AnthropicSettings(LLMProviderSettings):
@@ -30,11 +33,27 @@ class LlamaSettings(LLMProviderSettings):
     base_url: str = "http://localhost:11434/v1"
 
 
+class VectorStoreSettings(BaseSettings):
+    """Settings for the VectorStore."""
+
+    table_name: str = "embeddings"
+    embedding_dimensions: int = 1536
+    time_partition_interval: timedelta = timedelta(days=7)
+
+
+class DatabaseSettings(BaseSettings):
+    service_url: str = (
+        "postgres://postgres:super-secret-postgres-password@localhost:5432/launchpad"
+    )
+    vector_store: VectorStoreSettings = VectorStoreSettings()
+
+
 class Settings(BaseSettings):
     app_name: str = "GenAI Project Template"
     openai: OpenAISettings = OpenAISettings()
     anthropic: AnthropicSettings = AnthropicSettings()
     llama: LlamaSettings = LlamaSettings()
+    database: DatabaseSettings = DatabaseSettings()
 
 
 @lru_cache

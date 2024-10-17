@@ -39,30 +39,17 @@ services:
     volumes:
       - ./../app:/app
   database:
+    image: timescale/timescaledb-ha:pg16
     container_name: "${PROJECT_NAME}_database"
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_USER: ${DATABASE_USER}
-    image: postgres:latest
     ports:
       - "127.0.0.1:5432:5432"
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-  database_test:
-    container_name: "${PROJECT_NAME}_database_test"
-    environment:
-      POSTGRES_DB: "${DATABASE_NAME}_test"
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_USER: ${DATABASE_USER}
-    image: postgres:latest
-    ports:
-      - "127.0.0.1:5433:5432"
-    restart: always
-    volumes:
-      - postgres_data_test:/var/lib/postgresql/data
 
   redis:
     container_name: "${PROJECT_NAME}_redis"

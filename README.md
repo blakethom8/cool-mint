@@ -72,6 +72,7 @@ All services are containerized using Docker, ensuring consistency across develop
 - Python 3
 - Docker
 - Git
+- VS Code or Cursor (optional, but recommended)
 
 ### Quick Start
 
@@ -119,9 +120,17 @@ cd ../docker
 ./logs.sh
 ```
 
-6. Send event
+6. Populate the vector store:
 
-Run the following command to send a test event using the invoice.json file and the request libary:
+To initialize the vector store with sample data, run:
+
+```bash
+python -m app.utils.insert_vectors
+```
+
+7. Send event:
+
+Run the following command to send a test event using the invoice.json file and the request library:
 
 ```bash
 python requests/send_event.py
@@ -129,7 +138,10 @@ python requests/send_event.py
 
 You should get a `202` status code back and see the response logged in the terminal where you are running `./logs.sh`. Here you should see that the invoice service should be called and that the task is successfully completed.
 
-7. Check database
+
+This step creates necessary tables, indexes, and inserts initial vector data into the database.
+
+8. Check database:
 
 Connect to the database using your favorite database explorer. The default settings are:
 
@@ -141,7 +153,7 @@ Connect to the database using your favorite database explorer. The default setti
 
 In the `events` table, you should see the event you just processed. It contains the raw data (JSON) in the `data` column and the processed event (JSON) with in the `task_context` column.
 
-8. Experiment in the playground
+9. Experiment in the playground:
 
 The playground directory contains several Python scripts to help you experiment with different components of the GenAI Project Launchpad:
 
@@ -149,7 +161,7 @@ The playground directory contains several Python scripts to help you experiment 
 - Use `playground/pipeline.py` to run the pipeline with different example events.
 - Use `playground/prompts.py` to test and refine prompt templates.
 
-It is recommended to run these with the Python interactive window, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346). Also, make sure to create a new `venv` or `conda` environment and install the `requirements.txt`:
+It is recommended to run these with the **Python interactive window**, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346). Also, make sure to create a new `venv` or `conda` environment and install the `requirements.txt`:
 
 ```bash
 cd ./app

@@ -3,8 +3,8 @@ from prompts.prompt_manager import PromptManager
 from pydantic import BaseModel
 from models.domain.task import TaskContext
 from services.llm_factory import LLMFactory
-from services.rag_service import RAGService
 from models.domain.task import TaskResult
+from database.pgvector import VectorStore
 
 
 class ReponseData(BaseModel):
@@ -24,6 +24,10 @@ class ContextExtractor:
 
 
 class TicketResponse(PipelineStep):
+    def __init__(self):
+        super().__init__()
+        self.vector_store = VectorStore()
+
     def process(self, task_context: TaskContext):
         llm_context = ContextExtractor.get_context(task_context)
         rag_context = self.search_kb(llm_context.body)
@@ -36,8 +40,13 @@ class TicketResponse(PipelineStep):
         return task_context
 
     def search_kb(self, query: str):
-        rag_service = RAGService()
-        return rag_service.search(query)
+        results = self.vector_store.semantic_search(
+            query=query,
+            limit=5,
+            metadata_filter={"category": "customer"},
+            return_dataframe=True,
+        )
+        return results["contents"].tolist()
 
     def generate_response(
         self, llm_context: ReponseData, rag_context: list

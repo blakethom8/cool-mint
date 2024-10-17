@@ -1,9 +1,9 @@
 from enum import Enum
 from typing import Any, Dict, Optional
 
+from api.schemas.event import EventSchema
 from pydantic import BaseModel, Field
 
-from api.schemas.event import EventSchema
 from models.domain.result import TaskResult
 
 

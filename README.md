@@ -1,5 +1,7 @@
 # GenAI Launchpad
 
+With AI innovation moving beyond the speed of light, your time to develop is now more precious than ever. That’s why we’ve built the GenAI Launchpad – your secret weapon to shipping game-changing apps, faster.
+
 ## Introduction
 
 The GenAI Launchpad is a comprehensive, flexible, Docker-based framework designed to accelerate the development and deployment of production-ready Generative AI applications. It provides a solid foundation for building scalable, event-driven architectures with built-in AI pipeline support.

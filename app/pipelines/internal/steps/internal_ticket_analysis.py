@@ -1,11 +1,10 @@
 import logging
 
-from pydantic import BaseModel, Field
-
 from models.domain.intent import InternalIntent
 from models.domain.task import TaskContext
 from pipelines.base import PipelineStep
 from prompts.prompt_manager import PromptManager
+from pydantic import BaseModel, Field
 from services.llm_factory import LLMFactory
 from utils.event_factory import EventFactory
 

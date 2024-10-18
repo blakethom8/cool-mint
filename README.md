@@ -1,12 +1,16 @@
-# GenAI Project Launchpad
+# GenAI Launchpad
+
+With AI innovation moving beyond the speed of light, your time to develop is now more precious than ever. That’s why we’ve built the GenAI Launchpad – your secret weapon to shipping game-changing apps, faster.
 
 ## Introduction
 
-The GenAI Project Launchpad is a comprehensive, flexible, Docker-based framework designed to accelerate the development and deployment of production-ready Generative AI applications. It provides a solid foundation for building scalable, event-driven architectures with built-in AI pipeline support.
+Welcome to the GenAI Launchpad – your all-in-one repository for building powerful, scalable Generative AI applications. Whether you’re prototyping or deploying at scale, this Docker-based setup has you covered with everything from event-driven architecture to seamless AI pipeline integration.
+
+No need to start from scratch or waste time on repetitive configurations. The GenAI Launchpad is engineered to get you up and running fast, with a flexible design that fits your workflow – all while keeping things production-ready from day one
 
 ## Table of Contents
 
-- [GenAI Project Launchpad](#genai-project-launchpad)
+- [GenAI Launchpad](#genai-launchpad)
   - [Introduction](#introduction)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
@@ -17,22 +21,21 @@ The GenAI Project Launchpad is a comprehensive, flexible, Docker-based framework
     - [Quick Start](#quick-start)
   - [Configuration](#configuration)
   - [Development Workflow](#development-workflow)
-  - [Testing](#testing)
   - [Deployment](#deployment)
   - [Troubleshooting](#troubleshooting)
     - [Issues During Initial Deployment](#issues-during-initial-deployment)
 
 ## Overview
 
-The GenAI Project Launchpad is not just another agent framework. It's a production-ready infrastructure with a modular architecture that combines various design patterns, frameworks, and technologies. This launchpad is tailored for developers who want to build and deploy quickly while maintaining full control over their codebase.
+The GenAI Launchpad isn’t just another framework – it’s your shortcut to a production-ready AI infrastructure. Built for speed and control, its modular architecture brings together the best tools and design patterns to help you deploy faster without compromising flexibility.
 
-Key components include:
+Here’s what you’re working with:
 
-- FastAPI for efficient API development
-- Celery for robust background task processing
-- PostgreSQL for reliable data persistence
-- Redis for high-performance task queue management
-- Caddy for seamless reverse proxy and automatic HTTPS
+- FastAPI for lightning-fast API development
+- Celery for background task processing
+- PostgreSQL to handle all your data, includding embeddings
+- Redis for fast task queue management
+- Caddy for reverse proxy and automatic HTTPS
 
 All services are containerized using Docker, ensuring consistency across development and deployment environments.
 
@@ -59,7 +62,6 @@ All services are containerized using Docker, ensuring consistency across develop
 │   ├── prompts            # Prompt templates for AI models
 │   ├── services           # Business logic and services
 │   ├── tasks              # Background task definitions
-│   ├── tests              # Unit and integration tests
 │   └── utils              # Utility functions and helpers
 ├── docker                 # Docker configuration files
 ├── docs                   # Project documentation
@@ -74,13 +76,14 @@ All services are containerized using Docker, ensuring consistency across develop
 - Python 3
 - Docker
 - Git
+- VS Code or Cursor (optional, but recommended)
 
 ### Quick Start
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/datalumina/genai-project-launchpad.git
+git clone https://github.com/datalumina/genai-launchpad.git
 cd genai-project-launchpad
 ```
 
@@ -121,9 +124,17 @@ cd ../docker
 ./logs.sh
 ```
 
-6. Send event
+6. Populate the vector store:
 
-Run the following command to send a test event using the invoice.json file and the request libary:
+To initialize the vector store with sample data, run:
+
+```bash
+python -m app.utils.insert_vectors
+```
+
+7. Send event:
+
+Run the following command to send a test event using the invoice.json file and the request library:
 
 ```bash
 python requests/send_event.py
@@ -131,7 +142,10 @@ python requests/send_event.py
 
 You should get a `202` status code back and see the response logged in the terminal where you are running `./logs.sh`. Here you should see that the invoice service should be called and that the task is successfully completed.
 
-7. Check database
+
+This step creates necessary tables, indexes, and inserts initial vector data into the database.
+
+8. Check database:
 
 Connect to the database using your favorite database explorer. The default settings are:
 
@@ -143,15 +157,15 @@ Connect to the database using your favorite database explorer. The default setti
 
 In the `events` table, you should see the event you just processed. It contains the raw data (JSON) in the `data` column and the processed event (JSON) with in the `task_context` column.
 
-8. Experiment in the playground
+9. Experiment in the playground:
 
-The playground directory contains several Python scripts to help you experiment with different components of the GenAI Project Launchpad:
+The playground directory contains several Python scripts to help you experiment with different components of the GenAI Launchpad:
 
 - Use `playground/models.py` to experiment with the LLM factory and structured output.
 - Use `playground/pipeline.py` to run the pipeline with different example events.
 - Use `playground/prompts.py` to test and refine prompt templates.
 
-It is recommended to run these with the Python interactive window, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346). Also, make sure to create a new `venv` or `conda` environment and install the `requirements.txt`:
+It is recommended to run these with the **Python interactive window**, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346). Also, make sure to create a new `venv` or `conda` environment and install the `requirements.txt`:
 
 ```bash
 cd ./app
@@ -213,23 +227,6 @@ Here's a high-level action plan to update the template for your unique project:
 7. Experiment with different AI models, data, and settings in the 'playground'
 8. Fine-tune your pipelines and application flow
 
-## Testing
-
-Run tests using pytest:
-
-```bash
-cd app
-pytest
-```
-
-Monitor logs during testing:
-
-```bash
-cd docker
-./logs.sh
-```
-
-For end-to-end testing, use `test_events.py` request definitions in the `test/` folder.
 
 ## Deployment
 
@@ -303,4 +300,4 @@ If problems persist, ensure that all environment variables are correctly set in 
 
 ---
 
-For further assistance or to contribute to the GenAI Project Launchpad, please consult the project maintainers or refer to the contribution guidelines.
+For further assistance or to contribute to the GenAI Launchpad, please consult the project maintainers or refer to the contribution guidelines.

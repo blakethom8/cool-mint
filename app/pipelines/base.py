@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import List
 
 from api.schemas.event import EventSchema
-from models.domain.task import TaskStatus, TaskContext
+from models.domain.task import TaskContext, TaskStatus
 
 
 class RoutingRule(ABC):

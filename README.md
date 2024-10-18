@@ -1,12 +1,12 @@
-# GenAI Project Launchpad
+# GenAI Launchpad
 
 ## Introduction
 
-The GenAI Project Launchpad is a comprehensive, flexible, Docker-based framework designed to accelerate the development and deployment of production-ready Generative AI applications. It provides a solid foundation for building scalable, event-driven architectures with built-in AI pipeline support.
+The GenAI Launchpad is a comprehensive, flexible, Docker-based framework designed to accelerate the development and deployment of production-ready Generative AI applications. It provides a solid foundation for building scalable, event-driven architectures with built-in AI pipeline support.
 
 ## Table of Contents
 
-- [GenAI Project Launchpad](#genai-project-launchpad)
+- [GenAI Launchpad](#genai-launchpad)
   - [Introduction](#introduction)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
@@ -23,7 +23,7 @@ The GenAI Project Launchpad is a comprehensive, flexible, Docker-based framework
 
 ## Overview
 
-The GenAI Project Launchpad is not just another agent framework. It's a production-ready infrastructure with a modular architecture that combines various design patterns, frameworks, and technologies. This launchpad is tailored for developers who want to build and deploy quickly while maintaining full control over their codebase.
+The GenAI Launchpad is not just another agent framework. It's a production-ready infrastructure with a modular architecture that combines various design patterns, frameworks, and technologies. This launchpad is tailored for developers who want to build and deploy quickly while maintaining full control over their codebase.
 
 Key components include:
 
@@ -79,7 +79,7 @@ All services are containerized using Docker, ensuring consistency across develop
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/datalumina/genai-project-launchpad.git
+git clone https://github.com/datalumina/genai-launchpad.git
 cd genai-project-launchpad
 ```
 
@@ -155,7 +155,7 @@ In the `events` table, you should see the event you just processed. It contains 
 
 9. Experiment in the playground:
 
-The playground directory contains several Python scripts to help you experiment with different components of the GenAI Project Launchpad:
+The playground directory contains several Python scripts to help you experiment with different components of the GenAI Launchpad:
 
 - Use `playground/models.py` to experiment with the LLM factory and structured output.
 - Use `playground/pipeline.py` to run the pipeline with different example events.
@@ -296,4 +296,4 @@ If problems persist, ensure that all environment variables are correctly set in 
 
 ---
 
-For further assistance or to contribute to the GenAI Project Launchpad, please consult the project maintainers or refer to the contribution guidelines.
+For further assistance or to contribute to the GenAI Launchpad, please consult the project maintainers or refer to the contribution guidelines.

@@ -1,8 +1,8 @@
-from pipelines.core.pipeline import Pipeline, PipelineSchema, StepConfig
-from pipelines.internal.steps.analyze_ticket import AnalyzeTicket
-from pipelines.internal.steps.ticket_router import TicketRouter
-from pipelines.internal.steps.generate_response import GenerateResponse
-from pipelines.common.send_reply import SendReply
+from core.pipeline import Pipeline, PipelineSchema, StepConfig
+from pipelines.internal.analyze_ticket import AnalyzeTicket
+from pipelines.internal.ticket_router import TicketRouter
+from pipelines.internal.generate_response import GenerateResponse
+from pipelines.customer.send_reply import SendReply
 from utils.validate_pipeline import validate_pipeline
 
 

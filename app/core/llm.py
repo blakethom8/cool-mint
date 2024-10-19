@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from pipelines.core.task import TaskContext
-from pipelines.core.base import Step
+from core.task import TaskContext
+from core.base import Step
 from pydantic import BaseModel
 
 

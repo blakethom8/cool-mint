@@ -1,6 +1,6 @@
 from functools import wraps
 
-from pipelines.core.pipeline import PipelineSchema, StepType
+from core.pipeline import PipelineSchema, StepType
 
 
 def validate_pipeline_configuration(pipeline_schema: PipelineSchema) -> None:

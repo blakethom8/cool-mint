@@ -1,9 +1,9 @@
 import logging
 from typing import Dict, Type
 from api.event_schema import EventSchema
-from pipelines.core.pipeline import Pipeline
-from pipelines.customer.customer_pipeline import CustomerPipeline
-from pipelines.internal.internal_pipeline import InternalPipeline
+from core.pipeline import Pipeline
+from pipelines.customer_pipeline import CustomerPipeline
+from pipelines.internal_pipeline import InternalPipeline
 
 
 class PipelineRegistry:

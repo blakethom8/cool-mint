@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from pipelines.core.task import TaskContext
-from pipelines.core.base import Step
+from core.task import TaskContext
+from core.base import Step
 
 
 class BaseRouter(Step):

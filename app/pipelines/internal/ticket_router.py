@@ -1,11 +1,11 @@
 from typing import Optional
 
-from pipelines.internal.steps.analyze_ticket import InternalIntent
-from pipelines.core.task import TaskContext
-from pipelines.core.base import Step
-from pipelines.core.router import BaseRouter, RouterStep
-from pipelines.internal.steps.get_appointments import GetAppointment
-from pipelines.internal.steps.generate_response import GenerateResponse
+from pipelines.internal.analyze_ticket import InternalIntent
+from core.task import TaskContext
+from core.base import Step
+from core.router import BaseRouter, RouterStep
+from pipelines.internal.get_appointments import GetAppointment
+from pipelines.internal.generate_response import GenerateResponse
 
 
 class TicketRouter(BaseRouter):

@@ -1,5 +1,5 @@
 from graphviz import Digraph
-from pipelines.core.pipeline import Pipeline
+from core.pipeline import Pipeline
 
 
 def visualize_pipeline(pipeline: Pipeline) -> Digraph:

@@ -1,7 +1,7 @@
-from pipelines.core.llm import LLMStep
+from core.llm import LLMStep
 from services.prompt import PromptManager
 from pydantic import BaseModel, Field
-from pipelines.core.task import TaskContext, TaskResult
+from core.task import TaskContext, TaskResult
 from services.llm import LLMFactory
 from services.vector import VectorStore
 

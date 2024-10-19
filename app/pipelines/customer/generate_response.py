@@ -1,17 +1,17 @@
-from pipelines.core.llm import LLMStep
+from core.llm import LLMStep
 from services.prompt import PromptManager
 from pydantic import BaseModel, Field
-from pipelines.core.task import TaskContext
+from core.task import TaskContext
 from services.llm import LLMFactory
 from services.vector import VectorStore
 
 
 class GenerateResponse(LLMStep):
     """
-    A step to generate a response for an internal ticket.
+    A step to generate a response for a customer ticket.
 
     This class inherits from LLMStep and implements the necessary methods
-    to process an internal ticket and generate a response using RAG.
+    to process a customer ticket and generate a response using RAG.
 
     Attributes:
         vector_store (VectorStore): An instance of VectorStore for semantic search.
@@ -25,6 +25,9 @@ class GenerateResponse(LLMStep):
     class ResponseModel(BaseModel):
         reasoning: str = Field(description="The reasoning for the response")
         response: str = Field(description="The response to the ticket")
+        confidence: float = Field(
+            ge=0, le=1, description="Confidence score for how helpful the response is"
+        )
 
     def __init__(self):
         super().__init__()
@@ -41,7 +44,7 @@ class GenerateResponse(LLMStep):
         results = self.vector_store.semantic_search(
             query=query,
             limit=5,
-            metadata_filter={"category": "internal"},
+            metadata_filter={"category": "customer"},
             return_dataframe=True,
         )
         return results["contents"].tolist()
@@ -51,7 +54,7 @@ class GenerateResponse(LLMStep):
     ) -> tuple[ResponseModel, list[str]]:
         rag_context = self.search_kb(context.body)
         llm = LLMFactory("openai")
-        SYSTEM_PROMPT = PromptManager.get_prompt(template="internal_ticket_response")
+        SYSTEM_PROMPT = PromptManager.get_prompt(template="customer_ticket_response")
         completion = llm.create_completion(
             response_model=self.ResponseModel,
             messages=[

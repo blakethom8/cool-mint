@@ -1,12 +1,12 @@
 from typing import Optional
 
-from pipelines.customer.steps.analyze_ticket import CustomerIntent
-from pipelines.core.task import TaskContext
-from pipelines.core.base import Step
-from pipelines.core.router import BaseRouter, RouterStep
-from pipelines.customer.steps.escalate_ticket import EscalateTicket
-from pipelines.customer.steps.process_invoice import ProcessInvoice
-from pipelines.customer.steps.generate_response import GenerateResponse
+from pipelines.customer.analyze_ticket import CustomerIntent
+from core.task import TaskContext
+from core.base import Step
+from core.router import BaseRouter, RouterStep
+from pipelines.customer.escalate_ticket import EscalateTicket
+from pipelines.customer.process_invoice import ProcessInvoice
+from pipelines.customer.generate_response import GenerateResponse
 
 
 class TicketRouter(BaseRouter):

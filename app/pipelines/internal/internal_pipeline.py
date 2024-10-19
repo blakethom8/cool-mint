@@ -1,9 +1,8 @@
 from pipelines.core.pipeline import BasePipeline, PipelineSchema, StepConfig
-from pipelines.customer.steps.analyze_ticket import AnalyzeTicket
-from pipelines.customer.steps.route_ticket import TicketRouter
-from pipelines.customer.steps.generate_response import GenerateResponse
-from pipelines.common.send_reply import UpdateTicket
-from utils.visualize_pipeline import visualize_pipeline
+from pipelines.internal.steps.analyze_ticket import AnalyzeTicket
+from pipelines.internal.steps.ticket_router import TicketRouter
+from pipelines.internal.steps.generate_response import GenerateResponse
+from pipelines.common.send_reply import SendReply
 from decorators.validate_pipeline import validate_pipeline
 
 
@@ -20,13 +19,8 @@ class InternalPipeline(BasePipeline):
                         "GenerateResponse": GenerateResponse,
                     }
                 ),
-                "GenerateResponse": StepConfig(next=UpdateTicket),
-                "UpdateTicket": StepConfig(end=True),
+                "GenerateResponse": StepConfig(next=SendReply),
+                "SendReply": StepConfig(end=True),
             },
         )
         self.initialize_steps()
-
-
-if __name__ == "__main__":
-    pipeline = InternalPipeline()
-    visualize_pipeline(pipeline)

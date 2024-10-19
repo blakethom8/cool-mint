@@ -2,14 +2,14 @@ import logging
 from typing import Dict, Type
 from api.schemas.event import EventSchema
 from pipelines.core.pipeline import BasePipeline
-from pipelines.customer import CustomerPipeline
-# from pipelines.internal.internal_pipeline import InternalPipeline
+from pipelines.customer.customer_pipeline import CustomerPipeline
+from pipelines.internal.internal_pipeline import InternalPipeline
 
 
 class PipelineRegistry:
     pipelines: Dict[str, Type[BasePipeline]] = {
         "support": CustomerPipeline,
-        # "helpdesk": InternalPipeline,
+        "helpdesk": InternalPipeline,
     }
 
     """

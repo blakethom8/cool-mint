@@ -1,11 +1,10 @@
 from pipelines.core.pipeline import BasePipeline, PipelineSchema, StepConfig
-from pipelines.steps.analyze_ticket import AnalyzeTicket
-from pipelines.steps.escalate_ticket import EscalateTicket
-from pipelines.steps.process_invoice import ProcessInvoice
-from pipelines.steps.route_ticket import TicketRouter
-from pipelines.steps.generate_response import GenerateResponse
-from pipelines.steps.update_ticket import UpdateTicket
-from utils.visualize_pipeline import visualize_pipeline
+from pipelines.customer.steps.analyze_ticket import AnalyzeTicket
+from pipelines.customer.steps.escalate_ticket import EscalateTicket
+from pipelines.customer.steps.process_invoice import ProcessInvoice
+from pipelines.customer.steps.route_ticket import TicketRouter
+from pipelines.customer.steps.generate_response import GenerateResponse
+from pipelines.common.send_reply import SendReply
 from decorators.validate_pipeline import validate_pipeline
 
 
@@ -24,15 +23,10 @@ class CustomerPipeline(BasePipeline):
                         "GenerateResponse": GenerateResponse,
                     }
                 ),
-                "EscalateTicket": StepConfig(next=None),
-                "ProcessInvoice": StepConfig(next=None),
-                "GenerateResponse": StepConfig(next=UpdateTicket),
-                "UpdateTicket": StepConfig(next=None),
+                "EscalateTicket": StepConfig(end=True),
+                "ProcessInvoice": StepConfig(end=True),
+                "GenerateResponse": StepConfig(next=SendReply),
+                "SendReply": StepConfig(end=True),
             },
         )
         self.initialize_steps()
-
-
-if __name__ == "__main__":
-    pipeline = CustomerPipeline()
-    visualize_pipeline(pipeline)

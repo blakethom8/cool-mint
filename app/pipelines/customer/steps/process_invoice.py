@@ -10,5 +10,4 @@ class ProcessInvoice(BaseStep):
 
     def _get_invoice(self, task_context: TaskContext):
         logging.info("Billing intent detected. Invoice service should be called.")
-        # Add logic to retrieve and process invoice here
         task_context.steps[self.step_name] = {"invoice_retrieved": True}

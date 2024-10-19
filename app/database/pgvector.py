@@ -4,7 +4,8 @@ from datetime import datetime
 from typing import Any, List, Optional, Tuple, Union
 
 import pandas as pd
-import psycopg
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from config.settings import get_settings
 from openai import OpenAI
 from timescale_vector import client
@@ -35,7 +36,7 @@ class VectorStore:
         ON {self.vector_settings.table_name} USING gin(to_tsvector('english', contents));
         """
         try:
-            with psycopg.connect(self.settings.database.service_url) as conn:
+            with psycopg2.connect(self.settings.database.service_url) as conn:
                 with conn.cursor() as cur:
                     cur.execute(create_index_sql)
                     conn.commit()
@@ -265,6 +266,7 @@ class VectorStore:
 
         Returns:
             Either a list of tuples (id, contents, rank) or a pandas DataFrame containing the search results.
+            If no results are found, returns an empty DataFrame or an empty list.
 
         Example:
             results = vector_store.keyword_search("shipping options")
@@ -279,9 +281,9 @@ class VectorStore:
 
         start_time = time.time()
 
-        # Create a new connection using psycopg3
-        with psycopg.connect(self.settings.database.service_url) as conn:
-            with conn.cursor() as cur:
+        # Create a new connection using psycopg2
+        with psycopg2.connect(self.settings.database.service_url) as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
                 cur.execute(search_sql, (query, limit))
                 results = cur.fetchall()
 
@@ -289,11 +291,13 @@ class VectorStore:
         self._log_search_time("Keyword", elapsed_time)
 
         if return_dataframe:
-            df = pd.DataFrame(results, columns=["id", "contents", "rank"])
+            if not results:
+                return pd.DataFrame(columns=["id", "contents", "rank"])
+            df = pd.DataFrame(results)
             df["id"] = df["id"].astype(str)
             return df
         else:
-            return results
+            return [(r["id"], r["contents"], r["rank"]) for r in results]
 
     def hybrid_search(
         self,
@@ -382,6 +386,3 @@ class VectorStore:
         )
 
         return reranked_df.sort_values("relevance_score", ascending=False)
-
-
-vec = VectorStore()

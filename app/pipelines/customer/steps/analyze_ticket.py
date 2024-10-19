@@ -36,7 +36,6 @@ class AnalyzeTicket(LLMStep):
         prompt = PromptManager.get_prompt(
             "ticket_analysis",
             pipeline="support",
-            ticket=context.model_dump(),
         )
         return llm.create_completion(
             response_model=self.ResponseModel,
@@ -44,6 +43,10 @@ class AnalyzeTicket(LLMStep):
                 {
                     "role": "system",
                     "content": prompt,
+                },
+                {
+                    "role": "user",
+                    "content": f"# New ticket:\n{context.model_dump()}",
                 },
             ],
         )

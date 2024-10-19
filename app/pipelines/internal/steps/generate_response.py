@@ -8,10 +8,10 @@ from database.pgvector import VectorStore
 
 class GenerateResponse(LLMStep):
     """
-    A step to generate a response for a customer ticket.
+    A step to generate a response for an internal ticket.
 
     This class inherits from LLMStep and implements the necessary methods
-    to process a customer ticket and generate a response using RAG.
+    to process an internal ticket and generate a response using RAG.
 
     Attributes:
         vector_store (VectorStore): An instance of VectorStore for semantic search.
@@ -25,10 +25,6 @@ class GenerateResponse(LLMStep):
     class ResponseModel(BaseModel):
         reasoning: str = Field(description="The reasoning for the response")
         response: str = Field(description="The response to the ticket")
-        confidence: float = Field(
-            ge=0, le=1, description="Confidence score for how helpful the response is"
-        )
-        rag_context: list[str] = []
 
     def __init__(self):
         super().__init__()
@@ -45,15 +41,17 @@ class GenerateResponse(LLMStep):
         results = self.vector_store.semantic_search(
             query=query,
             limit=5,
-            metadata_filter={"category": "customer"},
+            metadata_filter={"category": "internal"},
             return_dataframe=True,
         )
         return results["contents"].tolist()
 
-    def create_completion(self, context: ContextModel) -> ResponseModel:
+    def create_completion(
+        self, context: ContextModel
+    ) -> tuple[ResponseModel, list[str]]:
         rag_context = self.search_kb(context.body)
         llm = LLMFactory("openai")
-        SYSTEM_PROMPT = PromptManager.get_prompt(template="customer_ticket_response")
+        SYSTEM_PROMPT = PromptManager.get_prompt(template="internal_ticket_response")
         completion = llm.create_completion(
             response_model=self.ResponseModel,
             messages=[
@@ -71,11 +69,13 @@ class GenerateResponse(LLMStep):
                 },
             ],
         )
-        completion.rag_context = rag_context
-        return completion
+        return completion, rag_context
 
     def process(self, task_context: TaskContext) -> TaskContext:
         context: self.ContextModel = self.get_context(task_context)
-        completion: self.ResponseModel = self.create_completion(context)
-        task_context.steps[self.step_name] = completion
+        completion, rag_context = self.create_completion(context)
+        task_context.steps[self.step_name] = {
+            "completion": completion,
+            "rag_context": rag_context,
+        }
         return task_context

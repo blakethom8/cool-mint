@@ -4,9 +4,9 @@ from models.domain.intent import CustomerIntent
 from models.domain.task import TaskContext
 from pipelines.core.base import BaseStep
 from pipelines.core.router import BaseRouter, RouterStep
-from pipelines.steps.escalate_ticket import EscalateTicket
-from pipelines.steps.process_invoice import ProcessInvoice
-from pipelines.steps.generate_response import GenerateResponse
+from pipelines.customer.steps.escalate_ticket import EscalateTicket
+from pipelines.customer.steps.process_invoice import ProcessInvoice
+from pipelines.customer.steps.generate_response import GenerateResponse
 
 
 class TicketRouter(BaseRouter):

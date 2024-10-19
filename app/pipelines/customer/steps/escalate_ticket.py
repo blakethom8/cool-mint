@@ -17,5 +17,4 @@ class EscalateTicket(BaseStep):
     def _escalate_ticket(self, task_context: TaskContext, escalation_reason: str):
         ticket_id = task_context.event.ticket_id
         logging.info(f"Ticket {ticket_id} escalated: {escalation_reason}")
-        # Add any additional escalation logic here
         task_context.steps[self.step_name] = {"escalation_reason": escalation_reason}

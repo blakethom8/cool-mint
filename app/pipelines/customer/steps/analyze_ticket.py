@@ -1,9 +1,9 @@
-from models.domain.intent import CustomerIntent
-from models.domain.task import TaskContext
+from models.intent import CustomerIntent
+from pipelines.core.task import TaskContext
 from pipelines.core.llm import LLMStep
-from prompts.prompt_manager import PromptManager
+from services.prompt import PromptManager
 from pydantic import BaseModel, Field
-from services.llm_factory import LLMFactory
+from services.llm import LLMFactory
 
 
 class AnalyzeTicket(LLMStep):

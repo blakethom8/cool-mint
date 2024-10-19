@@ -1,7 +1,7 @@
 from pipelines.core.llm import LLMStep
 from services.prompt import PromptManager
 from pydantic import BaseModel, Field
-from pipelines.core.task import TaskContext
+from pipelines.core.task import TaskContext, TaskResult
 from services.llm import LLMFactory
 from services.vector import VectorStore
 
@@ -46,36 +46,28 @@ class GenerateResponse(LLMStep):
         )
         return results["contents"].tolist()
 
-    def create_completion(
-        self, context: ContextModel
-    ) -> tuple[ResponseModel, list[str]]:
+    def create_completion(self, context: ContextModel) -> TaskResult:
         rag_context = self.search_kb(context.body)
         llm = LLMFactory("openai")
-        SYSTEM_PROMPT = PromptManager.get_prompt(template="internal_ticket_response")
+        SYSTEM_PROMPT = PromptManager.get_prompt(
+            template="internal_ticket_response",
+            ticket=context,
+            rag_context=rag_context,
+        )
         completion = llm.create_completion(
-            response_model=self.ResponseModel,
+            response_model=TaskResult,
             messages=[
                 {
                     "role": "system",
                     "content": SYSTEM_PROMPT,
                 },
-                {
-                    "role": "user",
-                    "content": f"# New ticket:\n{context.model_dump()}",
-                },
-                {
-                    "role": "assistant",
-                    "content": f"# Retrieved information:\n{rag_context}",
-                },
             ],
         )
-        return completion, rag_context
+        completion.rag_context = rag_context
+        return completion
 
     def process(self, task_context: TaskContext) -> TaskContext:
         context: self.ContextModel = self.get_context(task_context)
-        completion, rag_context = self.create_completion(context)
-        task_context.steps[self.step_name] = {
-            "completion": completion,
-            "rag_context": rag_context,
-        }
+        completion: TaskResult = self.create_completion(context)
+        task_context.steps[self.step_name] = completion
         return task_context

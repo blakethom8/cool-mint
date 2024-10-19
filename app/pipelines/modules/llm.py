@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
 from pipelines.core.task import TaskContext
-from pipelines.core.base import Step
+from pipelines.core.base import BaseStep
 from pydantic import BaseModel
 
 
-class LLMStep(Step, ABC):
+class LLMStep(BaseStep, ABC):
     class ContextModel(BaseModel):
         pass
 

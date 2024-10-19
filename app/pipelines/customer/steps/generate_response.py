@@ -1,9 +1,9 @@
 from pipelines.core.llm import LLMStep
-from prompts.prompt_manager import PromptManager
+from services.prompt import PromptManager
 from pydantic import BaseModel, Field
-from models.domain.task import TaskContext
-from services.llm_factory import LLMFactory
-from database.pgvector import VectorStore
+from pipelines.core.task import TaskContext
+from services.llm import LLMFactory
+from services.vector import VectorStore
 
 
 class GenerateResponse(LLMStep):

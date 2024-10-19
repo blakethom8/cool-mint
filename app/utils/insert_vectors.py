@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import pandas as pd
-from database.pgvector import VectorStore
+from services.vector import VectorStore
 from timescale_vector.client import uuid_from_time
 
 # Initialize VectorStore

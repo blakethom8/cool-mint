@@ -1,8 +1,8 @@
 from typing import Optional
 
-from models.domain.intent import CustomerIntent
-from models.domain.task import TaskContext
-from pipelines.core.base import BaseStep
+from models.intent import CustomerIntent
+from pipelines.core.task import TaskContext
+from pipelines.core.base import Step
 from pipelines.core.router import BaseRouter, RouterStep
 from pipelines.customer.steps.escalate_ticket import EscalateTicket
 from pipelines.customer.steps.process_invoice import ProcessInvoice
@@ -19,7 +19,7 @@ class TicketRouter(BaseRouter):
 
 
 class EscalationRouter(RouterStep):
-    def determine_next_step(self, task_context: TaskContext) -> Optional[BaseStep]:
+    def determine_next_step(self, task_context: TaskContext) -> Optional[Step]:
         analysis = task_context.steps["AnalyzeTicket"]
         if analysis.intent.escalate or analysis.escalate:
             return EscalateTicket()
@@ -27,7 +27,7 @@ class EscalationRouter(RouterStep):
 
 
 class InvoiceRouter(RouterStep):
-    def determine_next_step(self, task_context: TaskContext) -> Optional[BaseStep]:
+    def determine_next_step(self, task_context: TaskContext) -> Optional[Step]:
         analysis = task_context.steps["AnalyzeTicket"]
         if analysis.intent == CustomerIntent.BILLING_INVOICE:
             return ProcessInvoice()

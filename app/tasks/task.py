@@ -5,7 +5,7 @@ from uuid import UUID
 from api.dependencies import db_session
 from api.schemas.event import EventSchema
 from database.repository import GenericRepository
-from models.orm.event import Event
+from models.event import Event
 from pipelines.registry import PipelineRegistry
 
 from tasks.celery_config import celery_app

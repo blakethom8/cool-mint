@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("..")
 
-from app.services.llm_factory import LLMFactory
+from services.llm import LLMFactory
 from app.models.domain.intent import CustomerIntent
 
 llm = LLMFactory(provider="anthropic")

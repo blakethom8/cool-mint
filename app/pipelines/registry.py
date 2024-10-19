@@ -1,13 +1,13 @@
 import logging
 from typing import Dict, Type
 from api.schemas.event import EventSchema
-from pipelines.core.pipeline import BasePipeline
+from pipelines.core.pipeline import Pipeline
 from pipelines.customer.customer_pipeline import CustomerPipeline
 from pipelines.internal.internal_pipeline import InternalPipeline
 
 
 class PipelineRegistry:
-    pipelines: Dict[str, Type[BasePipeline]] = {
+    pipelines: Dict[str, Type[Pipeline]] = {
         "support": CustomerPipeline,
         "helpdesk": InternalPipeline,
     }
@@ -21,7 +21,7 @@ class PipelineRegistry:
         return event.to_email.split("@")[0]
 
     @staticmethod
-    def get_pipeline(event: EventSchema) -> BasePipeline:
+    def get_pipeline(event: EventSchema) -> Pipeline:
         pipeline_type = PipelineRegistry.get_pipeline_type(event)
         pipeline = PipelineRegistry.pipelines.get(pipeline_type)
         if pipeline:

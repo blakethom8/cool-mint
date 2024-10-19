@@ -1,4 +1,4 @@
-from pipelines.core.pipeline import BasePipeline, PipelineSchema, StepConfig
+from pipelines.core.pipeline import Pipeline, PipelineSchema, StepConfig
 from pipelines.customer.steps.analyze_ticket import AnalyzeTicket
 from pipelines.customer.steps.escalate_ticket import EscalateTicket
 from pipelines.customer.steps.process_invoice import ProcessInvoice
@@ -9,7 +9,7 @@ from decorators.validate_pipeline import validate_pipeline
 
 
 @validate_pipeline
-class CustomerPipeline(BasePipeline):
+class CustomerPipeline(Pipeline):
     def __init__(self):
         super().__init__()
         self.pipeline_schema = PipelineSchema(

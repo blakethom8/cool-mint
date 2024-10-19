@@ -1,4 +1,4 @@
-from pipelines.core.pipeline import BasePipeline, PipelineSchema, StepConfig
+from pipelines.core.pipeline import Pipeline, PipelineSchema, StepConfig
 from pipelines.internal.steps.analyze_ticket import AnalyzeTicket
 from pipelines.internal.steps.ticket_router import TicketRouter
 from pipelines.internal.steps.generate_response import GenerateResponse
@@ -7,7 +7,7 @@ from decorators.validate_pipeline import validate_pipeline
 
 
 @validate_pipeline
-class InternalPipeline(BasePipeline):
+class InternalPipeline(Pipeline):
     def __init__(self):
         super().__init__()
         self.pipeline_schema = PipelineSchema(

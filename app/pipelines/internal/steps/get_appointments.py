@@ -1,9 +1,9 @@
 import logging
-from models.domain.task import TaskContext
-from pipelines.core.base import BaseStep
+from pipelines.core.task import TaskContext
+from pipelines.core.base import Step
 
 
-class GetAppointment(BaseStep):
+class GetAppointment(Step):
     """Step for getting an IT support appointment."""
 
     def process(self, task_context: TaskContext) -> TaskContext:

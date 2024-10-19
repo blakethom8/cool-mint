@@ -1,4 +1,4 @@
-from database.pgvector import VectorStore
+from services.vector import VectorStore
 
 
 vec = VectorStore()

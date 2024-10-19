@@ -1,13 +1,13 @@
 from graphviz import Digraph
-from pipelines.core.pipeline import BasePipeline
+from pipelines.core.pipeline import Pipeline
 
 
-def visualize_pipeline(pipeline: BasePipeline) -> Digraph:
+def visualize_pipeline(pipeline: Pipeline) -> Digraph:
     """
     Generates a visual representation of the pipeline flow with a modern look.
 
     Args:
-        pipeline: The BasePipeline object to visualize.
+        pipeline: The Pipeline object to visualize.
 
     Returns:
         A graphviz Digraph object representing the pipeline with modern styling.

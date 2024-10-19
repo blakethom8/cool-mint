@@ -7,10 +7,10 @@ from pydantic import BaseModel
 
 from api.schemas.event import EventSchema
 from pipelines.core.task import TaskContext
-from pipelines.core.base import Step
+from pipelines.core.base import BaseStep
 from pipelines.core.router import BaseRouter
 
-StepType = Type[Step]
+StepType = Type[BaseStep]
 
 
 class StepConfig(BaseModel):
@@ -37,7 +37,7 @@ class PipelineSchema(BaseModel):
         }
 
 
-class Pipeline(ABC):
+class BasePipeline(ABC):
     """Base class for all pipelines.
 
     Attributes:
@@ -46,7 +46,7 @@ class Pipeline(ABC):
     """
 
     pipeline_schema: PipelineSchema
-    steps: List[Step] = []
+    steps: List[BaseStep] = []
 
     @contextmanager
     def step_context(self, step_name: str):
@@ -83,8 +83,8 @@ class Pipeline(ABC):
         return task_context
 
     def _get_next_step(
-        self, current_step: Step, task_context: TaskContext
-    ) -> Optional[Step]:
+        self, current_step: BaseStep, task_context: TaskContext
+    ) -> Optional[BaseStep]:
         step_config = self.pipeline_schema.steps[current_step.__class__.__name__]
 
         if (
@@ -100,7 +100,7 @@ class Pipeline(ABC):
 
     def _handle_router(
         self, router: BaseRouter, router_config: StepConfig, task_context: TaskContext
-    ) -> Optional[Step]:
+    ) -> Optional[BaseStep]:
         route_result = router.route(task_context)
         if (
             not route_result

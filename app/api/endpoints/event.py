@@ -7,7 +7,7 @@ from starlette.responses import Response
 
 from api.dependencies import db_session
 from api.schemas.event import EventSchema
-from models.orm.event import Event
+from models.event import Event
 from database.repository import GenericRepository
 from tasks.celery_config import celery_app
 

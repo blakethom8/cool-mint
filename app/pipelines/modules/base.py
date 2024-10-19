@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from pipelines.core.task import TaskContext
 
 
-class Step(ABC):
+class BaseStep(ABC):
     @property
     def step_name(self):
         return self.__class__.__name__

@@ -3,7 +3,7 @@ from pipelines.internal.steps.analyze_ticket import AnalyzeTicket
 from pipelines.internal.steps.ticket_router import TicketRouter
 from pipelines.internal.steps.generate_response import GenerateResponse
 from pipelines.common.send_reply import SendReply
-from decorators.validate_pipeline import validate_pipeline
+from utils.validate_pipeline import validate_pipeline
 
 
 @validate_pipeline

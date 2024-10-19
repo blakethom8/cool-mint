@@ -5,7 +5,7 @@ from pipelines.customer.steps.process_invoice import ProcessInvoice
 from pipelines.customer.steps.route_ticket import TicketRouter
 from pipelines.customer.steps.generate_response import GenerateResponse
 from pipelines.common.send_reply import SendReply
-from decorators.validate_pipeline import validate_pipeline
+from utils.validate_pipeline import validate_pipeline
 
 
 @validate_pipeline

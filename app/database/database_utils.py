@@ -6,7 +6,6 @@ load_dotenv()
 
 
 class DatabaseUtils:
-
     @staticmethod
     def get_connection_string():
         db_host = os.getenv("DATABASE_HOST", "localhost")

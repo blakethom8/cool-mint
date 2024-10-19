@@ -41,9 +41,12 @@ class VectorStoreSettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    service_url: str = (
-        "postgres://postgres:super-secret-postgres-password@localhost:5432/launchpad"
-    )
+    host: str = os.getenv("DATABASE_HOST", "localhost")
+    port: str = os.getenv("DATABASE_PORT", "5432")
+    name: str = os.getenv("DATABASE_NAME", "launchpad")
+    user: str = os.getenv("DATABASE_USER", "postgres")
+    password: str = os.getenv("DATABASE_PASSWORD")
+    service_url: str = f"postgres://{user}:{password}@{host}:{port}/{name}"
     vector_store: VectorStoreSettings = VectorStoreSettings()
 
 

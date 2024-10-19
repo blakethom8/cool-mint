@@ -1,6 +1,8 @@
+import os
 import sys
 
 sys.path.append("..")
+os.environ["DATABASE_HOST"] = "localhost"
 
 from utils.event_factory import EventFactory
 from pipelines.registry import PipelineRegistry

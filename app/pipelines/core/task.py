@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from api.schemas.event import EventSchema
+from api.event_schema import EventSchema
 from pydantic import BaseModel, Field
 
 

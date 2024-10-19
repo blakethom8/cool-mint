@@ -1,9 +1,23 @@
-from models.intent import InternalIntent
+from enum import Enum
 from pipelines.core.task import TaskContext
 from pipelines.core.llm import LLMStep
 from services.prompt import PromptManager
 from pydantic import BaseModel, Field
 from services.llm import LLMFactory
+
+
+class InternalIntent(str, Enum):
+    IT_SUPPORT = "it/support"
+    SOFTWARE_REQUEST = "software/request"
+    POLICY_QUESTION = "policy/question"
+    ACCESS_MANAGEMENT = "access/management"
+    HARDWARE_ISSUE = "hardware/issue"
+
+    @property
+    def escalate(self) -> bool:
+        return self in {
+            self.ACCESS_MANAGEMENT,
+        }
 
 
 class AnalyzeTicket(LLMStep):

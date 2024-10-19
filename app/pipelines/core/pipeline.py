@@ -5,7 +5,7 @@ from typing import Dict, List, Type, Optional, Set
 
 from pydantic import BaseModel
 
-from api.schemas.event import EventSchema
+from api.event_schema import EventSchema
 from pipelines.core.task import TaskContext
 from pipelines.core.base import Step
 from pipelines.core.router import BaseRouter

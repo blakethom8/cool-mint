@@ -6,8 +6,8 @@ from sqlalchemy.orm import Session
 from starlette.responses import Response
 
 from api.dependencies import db_session
-from api.schemas.event import EventSchema
-from models.event import Event
+from api.event_schema import EventSchema
+from database.event import Event
 from database.repository import GenericRepository
 from tasks.celery_config import celery_app
 

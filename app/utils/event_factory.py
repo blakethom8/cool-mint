@@ -2,7 +2,7 @@ import json
 import logging
 from pathlib import Path
 from typing import Dict, Any, List
-from api.schemas.event import EventSchema
+from api.event_schema import EventSchema
 
 logging.basicConfig(level=logging.INFO)
 

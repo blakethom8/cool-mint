@@ -1,6 +1,6 @@
 from typing import Optional
 
-from models.intent import InternalIntent
+from pipelines.internal.steps.analyze_ticket import InternalIntent
 from pipelines.core.task import TaskContext
 from pipelines.core.base import Step
 from pipelines.core.router import BaseRouter, RouterStep

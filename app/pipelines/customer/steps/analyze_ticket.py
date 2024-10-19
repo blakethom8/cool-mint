@@ -1,9 +1,22 @@
-from models.intent import CustomerIntent
+from enum import Enum
 from pipelines.core.task import TaskContext
 from pipelines.core.llm import LLMStep
 from services.prompt import PromptManager
 from pydantic import BaseModel, Field
 from services.llm import LLMFactory
+
+
+class CustomerIntent(str, Enum):
+    GENERAL_QUESTION = "general/question"
+    PRODUCT_QUESTION = "product/question"
+    BILLING_INVOICE = "billing/invoice"
+    REFUND_REQUEST = "refund/request"
+
+    @property
+    def escalate(self) -> bool:
+        return self in {
+            self.REFUND_REQUEST,
+        }
 
 
 class AnalyzeTicket(LLMStep):

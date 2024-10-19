@@ -3,9 +3,9 @@ from contextlib import contextmanager
 from uuid import UUID
 
 from api.dependencies import db_session
-from api.schemas.event import EventSchema
+from api.event_schema import EventSchema
 from database.repository import GenericRepository
-from models.event import Event
+from database.event import Event
 from pipelines.registry import PipelineRegistry
 
 from tasks.celery_config import celery_app

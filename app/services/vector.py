@@ -19,7 +19,6 @@ class VectorStore:
         self.settings = get_settings()
         self.openai_client = OpenAI(api_key=self.settings.openai.api_key)
         self.embedding_model = self.settings.openai.embedding_model
-        # self.cohere_client = cohere.ClientV2(api_key=self.settings.cohere.api_key)
         self.vector_settings = self.settings.database.vector_store
         self.vec_client = client.Sync(
             self.settings.database.service_url,
@@ -347,42 +346,8 @@ class VectorStore:
         combined_results = combined_results.drop_duplicates(subset=["id"], keep="first")
 
         if rerank:
-            return self._rerank_results(query, combined_results, top_n)
+            logging.warning("Reranking is not implemented yet.")
+            if top_n < len(combined_results):
+                return combined_results.head(top_n)
 
         return combined_results
-
-    def _rerank_results(
-        self, query: str, combined_results: pd.DataFrame, top_n: int
-    ) -> pd.DataFrame:
-        """
-        Rerank the combined search results using Cohere.
-
-        Args:
-            query: The original search query.
-            combined_results: DataFrame containing the combined keyword and semantic search results.
-            top_n: The number of top results to return after reranking.
-
-        Returns:
-            A pandas DataFrame containing the reranked results.
-        """
-        rerank_results = self.cohere_client.v2.rerank(
-            model="rerank-english-v3.0",
-            query=query,
-            documents=combined_results["contents"].tolist(),
-            top_n=top_n,
-            return_documents=True,
-        )
-
-        reranked_df = pd.DataFrame(
-            [
-                {
-                    "id": combined_results.iloc[result.index]["id"],
-                    "contents": result.document,
-                    "search_type": combined_results.iloc[result.index]["search_type"],
-                    "relevance_score": result.relevance_score,
-                }
-                for result in rerank_results.results
-            ]
-        )
-
-        return reranked_df.sort_values("relevance_score", ascending=False)

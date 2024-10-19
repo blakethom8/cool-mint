@@ -1,6 +1,5 @@
 from datetime import timedelta
 from typing import Optional
-from pydantic import Field
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 from dotenv import load_dotenv

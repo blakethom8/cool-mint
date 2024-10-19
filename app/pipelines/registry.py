@@ -1,16 +1,20 @@
 import logging
 from typing import Dict, Type
 from api.schemas.event import EventSchema
-from pipelines.base import BasePipeline
-from pipelines.customer.customer_pipeline import CustomerPipeline
-from pipelines.internal.internal_pipeline import InternalPipeline
+from pipelines.core.pipeline import BasePipeline
+from pipelines.customer import CustomerPipeline
+# from pipelines.internal.internal_pipeline import InternalPipeline
 
 
 class PipelineRegistry:
     pipelines: Dict[str, Type[BasePipeline]] = {
         "support": CustomerPipeline,
-        "helpdesk": InternalPipeline,
+        # "helpdesk": InternalPipeline,
     }
+
+    """
+    Implement your logic to determine the pipeline type based on the event.
+    """
 
     @staticmethod
     def get_pipeline_type(event: EventSchema) -> str:

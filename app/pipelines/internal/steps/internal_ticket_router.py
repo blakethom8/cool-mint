@@ -3,10 +3,11 @@ from typing import List
 
 from models.domain.intent import InternalIntent
 from models.domain.task import TaskContext
-from pipelines.base import PipelineStep, RoutingRule
+from pipelines.core.base import BaseStep
+from pipelines.core.router import RouterStep
 
 
-class AppointmentRouter(RoutingRule):
+class AppointmentRouter(RouterStep):
     def apply(self, task_context: TaskContext) -> bool:
         analysis = task_context.steps["TicketAnalysis"]
         if analysis.intent == InternalIntent.IT_SUPPORT:
@@ -21,9 +22,9 @@ class AppointmentRouter(RoutingRule):
         )
 
 
-class TicketRouter(PipelineStep):
+class TicketRouter(BaseStep):
     def __init__(self):
-        self.rules: List[RoutingRule] = [
+        self.rules: List[RouterStep] = [
             AppointmentRouter(),
         ]
 

@@ -1,4 +1,4 @@
-from pipelines.base import BasePipeline
+from pipelines.core.base import BasePipeline
 from pipelines.internal.steps.internal_ticket_analysis import TicketAnalysis
 from pipelines.internal.steps.internal_ticket_router import TicketRouter
 from pipelines.internal.steps.internal_ticket_response import TicketResponse

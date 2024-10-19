@@ -1,4 +1,4 @@
-from pipelines.base import PipelineStep
+from pipelines.core.base import BaseStep
 from prompts.prompt_manager import PromptManager
 from pydantic import BaseModel, Field
 from models.domain.task import TaskContext
@@ -28,7 +28,7 @@ class ContextExtractor:
         )
 
 
-class TicketResponse(PipelineStep):
+class TicketResponse(BaseStep):
     def __init__(self):
         super().__init__()
         self.vector_store = VectorStore()

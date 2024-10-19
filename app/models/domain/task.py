@@ -1,10 +1,8 @@
 from enum import Enum
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 from api.schemas.event import EventSchema
 from pydantic import BaseModel, Field
-
-from models.domain.result import TaskResult
 
 
 class TaskStatus(str, Enum):
@@ -21,4 +19,3 @@ class TaskContext(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
     skip_remaining_steps: bool = False
     status: str = TaskStatus.PENDING
-    result: Optional[TaskResult] = None

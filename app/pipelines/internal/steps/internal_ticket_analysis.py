@@ -2,7 +2,7 @@ import logging
 
 from models.domain.intent import InternalIntent
 from models.domain.task import TaskContext
-from pipelines.base import PipelineStep
+from pipelines.core.base import BaseStep
 from prompts.prompt_manager import PromptManager
 from pydantic import BaseModel, Field
 from services.llm_factory import LLMFactory
@@ -33,7 +33,7 @@ class ContextExtractor:
         )
 
 
-class TicketAnalysis(PipelineStep):
+class TicketAnalysis(BaseStep):
     def process(self, task_context: TaskContext) -> TaskContext:
         logging.info(f"Running {self.step_name}")
         llm_context = ContextExtractor.get_context(task_context)

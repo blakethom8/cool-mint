@@ -1,4 +1,4 @@
-from services.vector import VectorStore
+from services.vector_store import VectorStore
 
 
 vec = VectorStore()

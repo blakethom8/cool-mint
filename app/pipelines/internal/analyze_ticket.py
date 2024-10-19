@@ -1,9 +1,9 @@
 from enum import Enum
 from core.task import TaskContext
 from core.llm import LLMStep
-from services.prompt import PromptManager
+from services.prompt_loader import PromptManager
 from pydantic import BaseModel, Field
-from services.llm import LLMFactory
+from services.llm_factory import LLMFactory
 
 
 class InternalIntent(str, Enum):

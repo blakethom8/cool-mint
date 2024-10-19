@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("..")
 
-from services.prompt import PromptManager
+from services.prompt_loader import PromptManager
 
 
 support_prompt = PromptManager.get_prompt(

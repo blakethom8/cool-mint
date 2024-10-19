@@ -1,9 +1,9 @@
 from core.llm import LLMStep
-from services.prompt import PromptManager
+from services.prompt_loader import PromptManager
 from pydantic import BaseModel, Field
 from core.task import TaskContext
-from services.llm import LLMFactory
-from services.vector import VectorStore
+from services.llm_factory import LLMFactory
+from services.vector_store import VectorStore
 
 
 class GenerateResponse(LLMStep):

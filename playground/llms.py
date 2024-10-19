@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("..")
 
-from services.llm import LLMFactory
+from services.llm_factory import LLMFactory
 from pipelines.customer.analyze_ticket import CustomerIntent
 
 llm = LLMFactory(provider="anthropic")

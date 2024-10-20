@@ -121,3 +121,4 @@ wrapt==1.16.0
 yarl==1.9.4
 timescale-vector==0.0.7
 pandas==2.2.3
+graphviz==0.20.3 

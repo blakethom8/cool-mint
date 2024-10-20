@@ -1,29 +1,31 @@
 from graphviz import Digraph
 from core.pipeline import Pipeline
+from IPython.display import Image
 
 
-def visualize_pipeline(pipeline: Pipeline) -> Digraph:
+def visualize_pipeline(pipeline: Pipeline) -> Image:
     """
-    Generates a visual representation of the pipeline flow with a modern look.
+    Generates a visual representation of the pipeline flow with a modern look and returns a PNG image.
 
     Args:
         pipeline: The Pipeline object to visualize.
 
     Returns:
-        A graphviz Digraph object representing the pipeline with modern styling.
+        An IPython Image object containing the PNG representation of the pipeline diagram.
 
     Raises:
-        ImportError: If graphviz is not installed.
+        ImportError: If graphviz or IPython is not installed.
 
     Note:
         Requires both the Graphviz Python package and system package to be installed.
+        Also requires IPython to be installed.
         See the class docstring for installation instructions.
     """
     try:
         dot = Digraph(comment="Customer Pipeline")
         dot.attr(
             rankdir="LR",
-            bgcolor="transparent",
+            bgcolor="#ffffff",
             fontname="Helvetica,Arial,sans-serif",
             pad="0.5",
             nodesep="0.5",
@@ -82,6 +84,10 @@ def visualize_pipeline(pipeline: Pipeline) -> Digraph:
                     for route in config.routes.values():
                         dot.edge(step, route.__name__, tailport="e", headport="w")
 
-        return dot
+        # Instead of returning the dot object, render it to PNG and return as Image
+        png_data = dot.pipe(format="png")
+        return Image(png_data)
     except ImportError:
-        raise ImportError("Please install graphviz: pip install graphviz")
+        raise ImportError(
+            "Please install graphviz and IPython: pip install graphviz ipython"
+        )

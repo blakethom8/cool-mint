@@ -1,63 +1,26 @@
-from datetime import timedelta
-from typing import Optional
-from pydantic_settings import BaseSettings
 from functools import lru_cache
+from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
-import os
+from config.llm_config import LLMConfig
+from config.database_config import DatabaseConfig
 
 load_dotenv()
 
 
-class LLMProviderSettings(BaseSettings):
-    temperature: float = 0.0
-    max_tokens: Optional[int] = None
-    max_retries: int = 3
-
-
-class OpenAISettings(LLMProviderSettings):
-    api_key: str = os.getenv("OPENAI_API_KEY")
-    default_model: str = "gpt-4o"
-    embedding_model: str = "text-embedding-3-small"
-
-
-class AnthropicSettings(LLMProviderSettings):
-    api_key: str = os.getenv("ANTHROPIC_API_KEY")
-    default_model: str = "claude-3-5-sonnet-20240620"
-    max_tokens: int = 1024
-
-
-class LlamaSettings(LLMProviderSettings):
-    api_key: str = "key"  # required, but not used
-    default_model: str = "llama3"
-    base_url: str = "http://localhost:11434/v1"
-
-
-class VectorStoreSettings(BaseSettings):
-    """Settings for the VectorStore."""
-
-    table_name: str = "embeddings"
-    embedding_dimensions: int = 1536
-    time_partition_interval: timedelta = timedelta(days=7)
-
-
-class DatabaseSettings(BaseSettings):
-    host: str = os.getenv("DATABASE_HOST", "localhost")
-    port: str = os.getenv("DATABASE_PORT", "5432")
-    name: str = os.getenv("DATABASE_NAME", "launchpad")
-    user: str = os.getenv("DATABASE_USER", "postgres")
-    password: str = os.getenv("DATABASE_PASSWORD")
-    service_url: str = f"postgres://{user}:{password}@{host}:{port}/{name}"
-    vector_store: VectorStoreSettings = VectorStoreSettings()
-
-
 class Settings(BaseSettings):
+    """Main settings for the application."""
+
     app_name: str = "GenAI Project Template"
-    openai: OpenAISettings = OpenAISettings()
-    anthropic: AnthropicSettings = AnthropicSettings()
-    llama: LlamaSettings = LlamaSettings()
-    database: DatabaseSettings = DatabaseSettings()
+    llm: LLMConfig = LLMConfig()
+    database: DatabaseConfig = DatabaseConfig()
 
 
 @lru_cache
-def get_settings():
+def get_settings() -> Settings:
+    """
+    Get the application settings.
+
+    Returns:
+        Settings: The application settings.
+    """
     return Settings()

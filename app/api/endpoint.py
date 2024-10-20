@@ -9,7 +9,7 @@ from api.dependencies import db_session
 from api.event_schema import EventSchema
 from database.event import Event
 from database.repository import GenericRepository
-from tasks.celery_config import celery_app
+from config.celery_config import celery_app
 
 router = APIRouter()
 
@@ -27,11 +27,11 @@ def handle_event(
     repository.create(obj=event)
 
     task_id = celery_app.send_task(
-        "process_event_task",
+        "process_incoming_event",
         args=[str(event.id)],
     )
 
     return Response(
-        content=json.dumps({"message": f"process_event_task started `{task_id}` "}),
+        content=json.dumps({"message": f"process_incoming_event started `{task_id}` "}),
         status_code=HTTPStatus.ACCEPTED,
     )

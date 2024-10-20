@@ -129,7 +129,8 @@ class LLMFactory:
 
     def __init__(self, provider: str):
         self.provider = provider
-        self.settings = getattr(get_settings(), provider)
+        settings = get_settings()
+        self.settings = getattr(settings.llm, provider)
         self.llm_provider = self._create_provider()
 
     def _create_provider(self) -> LLMProvider:

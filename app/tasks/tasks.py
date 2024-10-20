@@ -1,32 +1,15 @@
-import json
 from contextlib import contextmanager
-from uuid import UUID
 
 from api.dependencies import db_session
 from api.event_schema import EventSchema
-from database.repository import GenericRepository
+from config.celery_config import celery_app
 from database.event import Event
+from database.repository import GenericRepository
 from pipelines.registry import PipelineRegistry
 
-from tasks.celery_config import celery_app
 
-
-class UUIDEncoder(json.JSONEncoder):
-    """Custom JSON encoder that can handle UUID objects."""
-
-    def default(self, obj):
-        if isinstance(obj, UUID):
-            return str(obj)
-        return super().default(obj)
-
-
-def json_dumps(obj):
-    """Custom JSON dumps function that uses UUIDEncoder."""
-    return json.dumps(obj, cls=UUIDEncoder)
-
-
-@celery_app.task(name="process_event_task")
-def process_event_task(event_id: str):
+@celery_app.task(name="process_incoming_event")
+def process_incoming_event(event_id: str):
     """
     Process an event task.
 

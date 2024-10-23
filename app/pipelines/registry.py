@@ -18,6 +18,11 @@ class PipelineRegistry:
 
     @staticmethod
     def get_pipeline_type(event: EventSchema) -> str:
+        """
+        Implement your logic to determine the pipeline type based on the event.
+        We're currently using the email address to determine the pipeline type.
+        The options are "support" (CustomerPipeline) and "helpdesk" (InternalPipeline)
+        """
         return event.to_email.split("@")[0]
 
     @staticmethod

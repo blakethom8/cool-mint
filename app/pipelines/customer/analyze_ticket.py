@@ -65,7 +65,7 @@ class AnalyzeTicket(LLMStep):
         )
 
     def process(self, task_context: TaskContext) -> TaskContext:
-        context: self.ContextModel = self.get_context(task_context)
-        completion: self.ResponseModel = self.create_completion(context)
+        context: AnalyzeTicket.ContextModel = self.get_context(task_context)
+        completion: AnalyzeTicket.ResponseModel = self.create_completion(context)
         task_context.steps[self.step_name] = completion
         return task_context

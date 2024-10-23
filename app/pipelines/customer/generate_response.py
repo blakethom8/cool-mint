@@ -75,7 +75,7 @@ class GenerateResponse(LLMStep):
         return completion, rag_context
 
     def process(self, task_context: TaskContext) -> TaskContext:
-        context: self.ContextModel = self.get_context(task_context)
+        context: GenerateResponse.ContextModel = self.get_context(task_context)
         completion, rag_context = self.create_completion(context)
         task_context.steps[self.step_name] = {
             "completion": completion,

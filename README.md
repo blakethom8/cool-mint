@@ -84,7 +84,7 @@ All services are containerized using Docker, ensuring consistency across develop
 
 ```bash
 git clone https://github.com/datalumina/genai-launchpad.git
-cd genai-project-launchpad
+cd genai-launchpad
 ```
 
 2. Set up environment files:
@@ -124,15 +124,38 @@ cd ../docker
 ./logs.sh
 ```
 
-6. Populate the vector store:
+6. Create virtual environment and install requirements:
+
+  a. Create a new virtual environment:
+    ```bash
+    python -m venv venv
+    ```
+
+  b. Activate the virtual environment:
+    - On Windows:
+      ```bash
+      venv\Scripts\activate
+      ```
+    - On macOS and Linux:
+      ```bash
+      source venv/bin/activate
+      ```
+
+  c. Install the required packages:
+    ```bash
+    cd app
+    pip install -r requirements.txt
+    ```
+
+7. Populate the vector store:
 
 To initialize the vector store with sample data, run:
 
 ```bash
-python -m app.utils.insert_vectors
+python -m app/utils/insert_vectors.py
 ```
 
-7. Send event:
+8. Send event:
 
 Run the following command to send a test event using the invoice.json file and the request library:
 
@@ -142,10 +165,9 @@ python requests/send_event.py
 
 You should get a `202` status code back and see the response logged in the terminal where you are running `./logs.sh`. Here you should see that the invoice service should be called and that the task is successfully completed.
 
-
 This step creates necessary tables, indexes, and inserts initial vector data into the database.
 
-8. Check database:
+9. Check database:
 
 Connect to the database using your favorite database explorer. The default settings are:
 
@@ -157,7 +179,7 @@ Connect to the database using your favorite database explorer. The default setti
 
 In the `events` table, you should see the event you just processed. It contains the raw data (JSON) in the `data` column and the processed event (JSON) with in the `task_context` column.
 
-9. Experiment in the playground:
+10. Experiment in the playground:
 
 The playground directory contains several Python scripts to help you experiment with different components of the GenAI Launchpad:
 

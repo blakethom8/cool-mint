@@ -1,0 +1,102 @@
+[
+    {
+      "question": "How do I set up my TechGear SmartHome Hub?",
+      "answer": "To set up your TechGear SmartHome Hub, follow these steps: 1) Plug in the hub to a power source. 2) Download the TechGear app on your smartphone. 3) Open the app and follow the on-screen instructions to connect the hub to your Wi-Fi network. 4) Once connected, you can start adding compatible smart devices to your hub through the app.",
+      "category": "customer"
+    },
+    {
+      "question": "What devices are compatible with the TechGear SmartHome Hub?",
+      "answer": "The TechGear SmartHome Hub is compatible with a wide range of smart home devices, including Philips Hue lights, Nest thermostats, and Amazon Echo devices. It uses standard protocols like Zigbee, Z-Wave, and Wi-Fi to connect and control various smart home products.",
+      "category": "customer"
+    },
+    {
+      "question": "Can I control my TechGear SmartHome Hub with voice commands?",
+      "answer": "Yes, you can control your TechGear SmartHome Hub using voice commands through compatible voice assistants like Amazon Alexa or Google Assistant. Simply link your TechGear account to your preferred voice assistant and start using voice commands to control your smart home devices.",
+      "category": "customer"
+    },
+    {
+      "question": "How many devices can I connect to my TechGear SmartHome Hub?",
+      "answer": "The TechGear SmartHome Hub can support up to 50 connected devices simultaneously. This includes a mix of Zigbee, Z-Wave, and Wi-Fi devices.",
+      "category": "customer"
+    },
+    {
+      "question": "Is the TechGear SmartHome Hub compatible with Apple HomeKit?",
+      "answer": "Currently, the TechGear SmartHome Hub is not directly compatible with Apple HomeKit. However, you can use third-party services like Homebridge to create a bridge between TechGear devices and HomeKit.",
+      "category": "customer"
+    },
+    {
+      "question": "What is TechGear's remote work policy?",
+      "answer": "TechGear allows employees to work remotely for up to two weeks per quarter, including from different states. Employees must inform their manager and HR at least one week in advance. For longer remote work periods or international travel, special approval is required from HR and your department head.",
+      "category": "internal"
+    },
+    {
+      "question": "How do I request remote work?",
+      "answer": "To request remote work, inform your manager and HR via email at least one week in advance. Include the dates you plan to work remotely and confirm that you'll have a stable internet connection to attend all necessary meetings.",
+      "category": "internal"
+    },
+    {
+      "question": "Can I work remotely from another country?",
+      "answer": "Working remotely from another country requires special approval. You must submit a request to both HR and your department head, detailing the duration and reason for your international remote work. Approval is considered on a case-by-case basis.",
+      "category": "internal"
+    },
+    {
+      "question": "What are the internet requirements for remote work?",
+      "answer": "When working remotely, you must ensure you have a stable internet connection that allows you to attend all necessary meetings and perform your job duties effectively. A minimum download speed of 10 Mbps and upload speed of 5 Mbps is recommended.",
+      "category": "internal"
+    },
+    {
+      "question": "How often can I work remotely?",
+      "answer": "TechGear's policy allows employees to work remotely for up to two weeks per quarter. This amounts to about 8 weeks of remote work per year, subject to manager approval and business needs.",
+      "category": "internal"
+    },
+    {
+      "question": "Does TechGear offer flexible working hours?",
+      "answer": "Yes, TechGear offers flexible working hours to many employees, depending on their role and department. Discuss specific arrangements with your manager to ensure it aligns with team and business needs.",
+      "category": "internal"
+    },
+    {
+      "question": "What is TechGear's policy on professional development?",
+      "answer": "TechGear encourages professional development and offers an annual budget for each employee to use on courses, conferences, or certifications relevant to their role. Speak with your manager or HR for more details on how to access these funds.",
+      "category": "internal"
+    },
+    {
+      "question": "How does TechGear handle overtime?",
+      "answer": "Non-exempt employees are eligible for overtime pay for hours worked beyond 40 hours per week. Overtime must be approved in advance by your manager. Exempt employees are not eligible for overtime pay but may be offered compensatory time off for significant extra hours worked.",
+      "category": "internal"
+    },
+    {
+      "question": "What is TechGear's dress code policy?",
+      "answer": "TechGear has a business casual dress code for in-office days. When working remotely or on casual Fridays, more relaxed attire is acceptable. However, employees should always maintain a professional appearance during video calls with clients or external partners.",
+      "category": "internal"
+    },
+    {
+      "question": "How often does TechGear conduct performance reviews?",
+      "answer": "TechGear conducts formal performance reviews twice a year, typically in June and December. However, managers are encouraged to provide ongoing feedback throughout the year to support continuous improvement and development.",
+      "category": "internal"
+    },
+    {
+      "question": "What benefits does TechGear offer for mental health?",
+      "answer": "TechGear offers an Employee Assistance Program (EAP) that provides confidential counseling services. Additionally, our health insurance plans include coverage for mental health services. We also organize regular wellness workshops and provide subscriptions to meditation apps.",
+      "category": "internal"
+    },
+    {
+      "question": "Does TechGear offer parental leave?",
+      "answer": "Yes, TechGear offers parental leave for both primary and secondary caregivers. Primary caregivers are eligible for 12 weeks of paid leave, while secondary caregivers can take 4 weeks of paid leave. Additional unpaid leave may be available upon request.",
+      "category": "internal"
+    },
+    {
+      "question": "What is TechGear's policy on internal transfers?",
+      "answer": "TechGear encourages internal mobility. Employees who have been in their current role for at least one year can apply for internal positions. Inform your current manager before applying, and HR will guide you through the internal application process.",
+      "category": "internal"
+    },
+    {
+      "question": "How does TechGear support sustainability in the workplace?",
+      "answer": "TechGear is committed to sustainability through various initiatives, including recycling programs, energy-efficient office equipment, and encouraging the use of reusable items. We also offer incentives for employees who use public transportation or carpooling.",
+      "category": "internal"
+    },
+    {
+      "question": "What training programs does TechGear offer for new employees?",
+      "answer": "TechGear provides a comprehensive onboarding program for all new employees, including role-specific training, company culture workshops, and a buddy system. We also offer ongoing learning opportunities through our online learning platform and regular skill-sharing sessions.",
+      "category": "internal"
+    }
+  ]

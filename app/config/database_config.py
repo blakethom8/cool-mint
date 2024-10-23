@@ -18,10 +18,18 @@ class VectorStoreConfig(BaseSettings):
 class DatabaseConfig(BaseSettings):
     """Settings for the database."""
 
-    host: str = os.getenv("DATABASE_HOST", "localhost")
+    host: str = os.getenv("DATABASE_HOST", "launchpad_database")
     port: str = os.getenv("DATABASE_PORT", "5432")
     name: str = os.getenv("DATABASE_NAME", "launchpad")
-    user: str = os.getenv("DATABASE_USER", "postgres")
+    pg_user: str = os.getenv("DATABASE_USER", "postgres")
     password: str = os.getenv("DATABASE_PASSWORD")
-    service_url: str = f"postgres://{user}:{password}@{host}:{port}/{name}"
+    local: bool = False
+
+    @property
+    def service_url(self) -> str:
+        """Generate the service URL based on the environment."""
+        if self.local:
+            return f"postgres://{self.pg_user}:{self.password}@localhost:{self.port}/{self.name}"
+        return f"postgres://{self.pg_user}:{self.password}@{self.host}:{self.port}/{self.name}"
+
     vector_store: VectorStoreConfig = VectorStoreConfig()

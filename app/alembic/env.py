@@ -9,7 +9,7 @@ from database.database_utils import DatabaseUtils
 from database.session import Base
 
 # This import is required for autogenerate support
-from models.orm import *
+from database.event import *
 
 load_dotenv()
 

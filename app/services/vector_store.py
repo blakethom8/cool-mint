@@ -14,12 +14,18 @@ from timescale_vector import client
 class VectorStore:
     """A class for managing vector operations and database interactions."""
 
-    def __init__(self):
-        """Initialize the VectorStore with settings, OpenAI client, and Timescale Vector client."""
+    def __init__(self, local: bool = False):
+        """
+        Initialize the VectorStore with settings, OpenAI client, and Timescale Vector client.
+
+        Args:
+            environment: The environment to use for database connection. Defaults to "production".
+        """
         self.settings = get_settings()
         self.openai_client = OpenAI(api_key=self.settings.llm.openai.api_key)
         self.embedding_model = self.settings.llm.openai.embedding_model
         self.vector_settings = self.settings.database.vector_store
+        self.settings.database.local = local
         self.vec_client = client.Sync(
             self.settings.database.service_url,
             self.vector_settings.table_name,

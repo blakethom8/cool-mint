@@ -1,5 +1,5 @@
 from core.pipeline import Pipeline
-from core.schema import PipelineSchema, StepConfig
+from core.schema import PipelineSchema, NodeConfig
 from pipelines.customer.analyze_ticket import AnalyzeTicket
 from pipelines.customer.escalate_ticket import EscalateTicket
 from pipelines.customer.process_invoice import ProcessInvoice
@@ -13,33 +13,21 @@ class CustomerSupportPipeline(Pipeline):
         description="Pipeline for handling customer support tickets based on support@ email",
         start=AnalyzeTicket,
         nodes=[
-            StepConfig(
+            NodeConfig(
                 node=AnalyzeTicket,
                 connections=[TicketRouter],
-                description="Analyze the incoming customer ticket",
+                description="Analyze the incoming customer ticket and pass it to the router",
             ),
-            StepConfig(
+            NodeConfig(
                 node=TicketRouter,
                 connections=[EscalateTicket, ProcessInvoice, GenerateResponse],
                 is_router=True,
-                description="Route the ticket based on analysis",
+                description="Route the ticket based on analysis results stored in the task context",
             ),
-            StepConfig(
-                node=EscalateTicket,
-                description="Escalate the ticket to a human agent",
-            ),
-            StepConfig(
-                node=ProcessInvoice,
-                description="Process any invoice-related requests",
-            ),
-            StepConfig(
+            NodeConfig(
                 node=GenerateResponse,
                 connections=[SendReply],
-                description="Generate an automated response",
-            ),
-            StepConfig(
-                node=SendReply,
-                description="Send the reply to the customer",
+                description="Send the reply after generating a response",
             ),
         ],
     )

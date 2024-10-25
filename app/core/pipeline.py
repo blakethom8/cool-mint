@@ -4,7 +4,7 @@ from contextlib import contextmanager
 from typing import Dict, Optional, ClassVar, Type
 
 from api.event_schema import EventSchema
-from core.base import Step
+from core.base import Node
 from core.router import BaseRouter
 from core.schema import PipelineSchema
 from core.task import TaskContext
@@ -23,7 +23,7 @@ class Pipeline(ABC):
     def __init__(self):
         self.validator = PipelineValidator(self.pipeline_schema)
         self.validator.validate()
-        self.nodes: Dict[Type[Step], Step] = self._initialize_nodes()
+        self.nodes: Dict[Type[Node], Node] = self._initialize_nodes()
 
     @contextmanager
     def node_context(self, node_name: str):
@@ -37,15 +37,18 @@ class Pipeline(ABC):
         finally:
             logging.info(f"Finished node: {node_name}")
 
-    def _initialize_nodes(self) -> Dict[Type[Step], Step]:
+    def _initialize_nodes(self) -> Dict[Type[Node], Node]:
         """Initialize the pipeline nodes."""
-        return {
-            node_config.node: self._instantiate_node(node_config.node)
-            for node_config in self.pipeline_schema.nodes
-        }
+        nodes = {}
+        for node_config in self.pipeline_schema.nodes:
+            nodes[node_config.node] = self._instantiate_node(node_config.node)
+            for connected_node in node_config.connections:
+                if connected_node not in nodes:
+                    nodes[connected_node] = self._instantiate_node(connected_node)
+        return nodes
 
     @staticmethod
-    def _instantiate_node(node_class: Type[Step]) -> Step:
+    def _instantiate_node(node_class: Type[Node]) -> Node:
         """Instantiate a single node."""
         return node_class()
 
@@ -65,8 +68,8 @@ class Pipeline(ABC):
         return task_context
 
     def _get_next_node_class(
-        self, current_node_class: Type[Step], task_context: TaskContext
-    ) -> Optional[Type[Step]]:
+        self, current_node_class: Type[Node], task_context: TaskContext
+    ) -> Optional[Type[Node]]:
         """Determine the next node in the pipeline."""
         node_config = next(
             (nc for nc in self.pipeline_schema.nodes if nc.node == current_node_class),
@@ -83,7 +86,7 @@ class Pipeline(ABC):
 
     def _handle_router(
         self, router: BaseRouter, task_context: TaskContext
-    ) -> Optional[Type[Step]]:
+    ) -> Optional[Type[Node]]:
         """Handle routing logic for router nodes."""
         next_node = router.route(task_context)
         return next_node.__class__ if next_node else None

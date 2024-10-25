@@ -4,12 +4,21 @@ sys.path.append("..")
 
 from services.llm_factory import LLMFactory
 from pipelines.customer.analyze_ticket import CustomerIntent
+from pydantic import BaseModel
 
 llm = LLMFactory(provider="anthropic")
 
+# --------------------------------------------------------------
+# Test the LLM with structured output
+# --------------------------------------------------------------
 
-completion = llm.create_completion(
-    response_model=CustomerIntent,
+
+class IntentModel(BaseModel):
+    intent: CustomerIntent
+
+
+intent, completion = llm.create_completion(
+    response_model=IntentModel,
     messages=[
         {
             "role": "user",

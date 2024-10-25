@@ -2,8 +2,8 @@ from typing import Optional
 
 from pipelines.internal.analyze_ticket import InternalIntent
 from core.task import TaskContext
-from core.base import Step
-from core.router import BaseRouter, RouterStep
+from core.base import Node
+from core.router import BaseRouter, RouterNode
 from pipelines.internal.get_appointments import GetAppointment
 from pipelines.internal.generate_response import GenerateResponse
 
@@ -19,11 +19,11 @@ class TicketRouter(BaseRouter):
         self.fallback = GenerateResponse()
 
 
-class AppointmentRouter(RouterStep):
+class AppointmentRouter(RouterNode):
     """Router for handling IT support appointments."""
 
-    def determine_next_step(self, task_context: TaskContext) -> Optional[Step]:
-        analysis = task_context.steps["AnalyzeTicket"]
+    def determine_next_node(self, task_context: TaskContext) -> Optional[Node]:
+        analysis = task_context.nodes["AnalyzeTicket"]["response_model"]
         if analysis.intent == InternalIntent.IT_SUPPORT:
             return GetAppointment()
         return None

@@ -3,9 +3,9 @@ from abc import ABC, abstractmethod
 from core.task import TaskContext
 
 
-class Step(ABC):
+class Node(ABC):
     @property
-    def step_name(self):
+    def node_name(self):
         return self.__class__.__name__
 
     @abstractmethod

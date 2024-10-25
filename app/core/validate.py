@@ -1,65 +1,87 @@
+from collections import deque
 from typing import Set, Type
 
-from core.base import Step
+from core.base import Node
 from core.schema import PipelineSchema
 
 
 class PipelineValidator:
     """Validator for pipeline schemas."""
 
-    def __init__(self, schema: PipelineSchema):
-        self.schema = schema
+    def __init__(self, pipeline_schema: PipelineSchema):
+        self.pipeline_schema = pipeline_schema
 
-    def validate(self) -> bool:
-        """
-        Validate that the pipeline schema forms a DAG and non-router nodes have only one next node.
+    def validate(self):
+        """Validate the pipeline schema."""
+        self._validate_dag()
+        self._validate_connections()
 
-        Returns:
-            bool: True if the schema is valid.
+    def _validate_dag(self):
+        """Validate that the pipeline schema forms a proper DAG."""
+        # Check for cycles
+        if self._has_cycle():
+            raise ValueError("Pipeline schema contains a cycle")
 
-        Raises:
-            ValueError: If the schema is invalid, with a description of the issue.
-        """
-        visited: Set[Type[Step]] = set()
-        stack: Set[Type[Step]] = set()
+        # Check if all nodes are reachable from the start node
+        reachable_nodes = self._get_reachable_nodes()
+        all_nodes = set(nc.node for nc in self.pipeline_schema.nodes)
+        unreachable_nodes = all_nodes - reachable_nodes
+        if unreachable_nodes:
+            raise ValueError(
+                f"The following nodes are unreachable: {unreachable_nodes}"
+            )
 
-        def dfs(node_class: Type[Step]) -> None:
-            if node_class in stack:
-                raise ValueError(
-                    f"Cycle detected involving node: {node_class.__name__}"
-                )
-            if node_class in visited:
-                return
+    def _has_cycle(self) -> bool:
+        """Check if the pipeline schema contains a cycle."""
+        visited = set()
+        rec_stack = set()
 
-            visited.add(node_class)
-            stack.add(node_class)
+        def dfs(node: Type[Node]) -> bool:
+            visited.add(node)
+            rec_stack.add(node)
 
             node_config = next(
-                (nc for nc in self.schema.nodes if nc.node == node_class), None
+                (nc for nc in self.pipeline_schema.nodes if nc.node == node), None
             )
             if node_config:
-                # Check that non-router nodes have only one next node
-                if not node_config.is_router and len(node_config.connections) > 1:
-                    raise ValueError(
-                        f"Non-router node '{node_class.__name__}' has multiple next nodes"
-                    )
+                for neighbor in node_config.connections:
+                    if neighbor not in visited:
+                        if dfs(neighbor):
+                            return True
+                    elif neighbor in rec_stack:
+                        return True
 
-                for next_node in node_config.connections:
-                    if next_node not in [nc.node for nc in self.schema.nodes]:
-                        raise ValueError(
-                            f"Node '{next_node.__name__}' referenced but not defined"
-                        )
-                    dfs(next_node)
+            rec_stack.remove(node)
+            return False
 
-            stack.remove(node_class)
+        for node_config in self.pipeline_schema.nodes:
+            if node_config.node not in visited:
+                if dfs(node_config.node):
+                    return True
 
-        dfs(self.schema.start)
+        return False
 
-        all_nodes = {nc.node for nc in self.schema.nodes}
-        unreachable = all_nodes - visited
-        if unreachable:
-            raise ValueError(
-                f"Unreachable nodes detected: {', '.join(node.__name__ for node in unreachable)}"
-            )
+    def _get_reachable_nodes(self) -> Set[Type[Node]]:
+        """Get all nodes reachable from the start node."""
+        reachable = set()
+        queue = deque([self.pipeline_schema.start])
 
-        return True
+        while queue:
+            node = queue.popleft()
+            if node not in reachable:
+                reachable.add(node)
+                node_config = next(
+                    (nc for nc in self.pipeline_schema.nodes if nc.node == node), None
+                )
+                if node_config:
+                    queue.extend(node_config.connections)
+
+        return reachable
+
+    def _validate_connections(self):
+        """Validate that only router nodes have multiple connections."""
+        for node_config in self.pipeline_schema.nodes:
+            if len(node_config.connections) > 1 and not node_config.is_router:
+                raise ValueError(
+                    f"Node {node_config.node.__name__} has multiple connections but is not marked as a router."
+                )

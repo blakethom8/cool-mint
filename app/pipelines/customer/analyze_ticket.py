@@ -1,6 +1,6 @@
 from enum import Enum
 from core.task import TaskContext
-from core.llm import LLMStep
+from core.llm import LLMNode
 from services.prompt_loader import PromptManager
 from pydantic import BaseModel, Field
 from services.llm_factory import LLMFactory
@@ -19,7 +19,7 @@ class CustomerIntent(str, Enum):
         }
 
 
-class AnalyzeTicket(LLMStep):
+class AnalyzeTicket(LLMNode):
     class ContextModel(BaseModel):
         sender: str
         subject: str
@@ -65,7 +65,10 @@ class AnalyzeTicket(LLMStep):
         )
 
     def process(self, task_context: TaskContext) -> TaskContext:
-        context: AnalyzeTicket.ContextModel = self.get_context(task_context)
-        completion: AnalyzeTicket.ResponseModel = self.create_completion(context)
-        task_context.steps[self.step_name] = completion
+        context = self.get_context(task_context)
+        response_model, completion = self.create_completion(context)
+        task_context.nodes[self.node_name] = {
+            "response_model": response_model,
+            "usage": completion.usage,
+        }
         return task_context

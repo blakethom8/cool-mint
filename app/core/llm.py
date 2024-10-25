@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
 from core.task import TaskContext
-from core.base import Step
+from core.base import Node
 from pydantic import BaseModel
 
 
-class LLMStep(Step, ABC):
+class LLMNode(Node, ABC):
     class ContextModel(BaseModel):
         pass
 

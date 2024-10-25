@@ -1,5 +1,5 @@
 from core.pipeline import Pipeline
-from core.schema import PipelineSchema, StepConfig
+from core.schema import PipelineSchema, NodeConfig
 from pipelines.internal.analyze_ticket import AnalyzeTicket
 from pipelines.internal.route_ticket import TicketRouter
 from pipelines.internal.generate_response import GenerateResponse
@@ -12,29 +12,21 @@ class InternalHelpdeskPipeline(Pipeline):
         description="Pipeline for handling internal support tickets using the helpdesk@ email",
         start=AnalyzeTicket,
         nodes=[
-            StepConfig(
+            NodeConfig(
                 node=AnalyzeTicket,
                 connections=[TicketRouter],
                 description="Analyze the incoming internal ticket",
             ),
-            StepConfig(
+            NodeConfig(
                 node=TicketRouter,
                 connections=[GenerateResponse, GetAppointment],
                 is_router=True,
                 description="Route the ticket based on analysis",
             ),
-            StepConfig(
-                node=GetAppointment,
-                description="Call the appointment service",
-            ),
-            StepConfig(
+            NodeConfig(
                 node=GenerateResponse,
                 connections=[SendReply],
-                description="Generate an automated response",
-            ),
-            StepConfig(
-                node=SendReply,
-                description="Send the reply to the internal user",
+                description="Send the reply after generating a response",
             ),
         ],
     )

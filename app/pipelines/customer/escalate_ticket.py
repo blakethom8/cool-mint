@@ -1,11 +1,11 @@
-from core.base import Step
+from core.base import Node
 from core.task import TaskContext
 import logging
 
 
-class EscalateTicket(Step):
+class EscalateTicket(Node):
     def process(self, task_context: TaskContext) -> TaskContext:
-        analysis = task_context.steps["AnalyzeTicket"]
+        analysis = task_context.nodes["AnalyzeTicket"]
         escalation_reason = (
             f"Ticket escalated due to {analysis.intent.value} intent."
             if analysis.intent.escalate
@@ -17,4 +17,4 @@ class EscalateTicket(Step):
     def _escalate_ticket(self, task_context: TaskContext, escalation_reason: str):
         ticket_id = task_context.event.ticket_id
         logging.info(f"Ticket {ticket_id} escalated: {escalation_reason}")
-        task_context.steps[self.step_name] = {"escalation_reason": escalation_reason}
+        task_context.nodes[self.node_name] = {"escalation_reason": escalation_reason}

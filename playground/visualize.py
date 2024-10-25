@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 
 from app.utils.visualize_pipeline import visualize_pipeline
-from pipelines.customer_pipeline import CustomerPipeline
+from pipelines.customer_pipeline import CustomerSupportPipeline
 
-pipeline = CustomerPipeline()
+pipeline = CustomerSupportPipeline()
 visualize_pipeline(pipeline)

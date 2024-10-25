@@ -1,4 +1,4 @@
-from core.llm import LLMStep
+from core.llm import LLMNode
 from services.prompt_loader import PromptManager
 from pydantic import BaseModel, Field
 from core.task import TaskContext
@@ -6,11 +6,11 @@ from services.llm_factory import LLMFactory
 from services.vector_store import VectorStore
 
 
-class GenerateResponse(LLMStep):
+class GenerateResponse(LLMNode):
     """
-    A step to generate a response for an internal ticket.
+    A node to generate a response for an internal ticket.
 
-    This class inherits from LLMStep and implements the necessary methods
+    This class inherits from LLMNode and implements the necessary methods
     to process an internal ticket and generate a response using RAG.
 
     Attributes:
@@ -52,7 +52,7 @@ class GenerateResponse(LLMStep):
         rag_context = self.search_kb(context.body)
         llm = LLMFactory("openai")
         SYSTEM_PROMPT = PromptManager.get_prompt(template="internal_ticket_response")
-        completion = llm.create_completion(
+        response_model, completion = llm.create_completion(
             response_model=self.ResponseModel,
             messages=[
                 {
@@ -69,13 +69,14 @@ class GenerateResponse(LLMStep):
                 },
             ],
         )
-        return completion, rag_context
+        return response_model, completion, rag_context
 
     def process(self, task_context: TaskContext) -> TaskContext:
-        context: self.ContextModel = self.get_context(task_context)
-        completion, rag_context = self.create_completion(context)
-        task_context.steps[self.step_name] = {
-            "completion": completion,
+        context = self.get_context(task_context)
+        response_model, completion, rag_context = self.create_completion(context)
+        task_context.nodes[self.node_name] = {
+            "response_model": response_model,
             "rag_context": rag_context,
+            "usage": completion.usage,
         }
         return task_context

@@ -1,17 +1,16 @@
 from typing import List, Type, Optional
-from core.base import Step
+from core.base import Node
 from pydantic import BaseModel, Field
 
 
-class StepConfig(BaseModel):
-    node: Type[Step]
-    connections: List[Type[Step]] = Field(default_factory=list)
+class NodeConfig(BaseModel):
+    node: Type[Node]
+    connections: List[Type[Node]] = Field(default_factory=list)
     is_router: bool = False
-    is_end: bool = False
     description: Optional[str] = None
 
 
 class PipelineSchema(BaseModel):
     description: Optional[str] = None
-    start: Type[Step]
-    nodes: List[StepConfig]
+    start: Type[Node]
+    nodes: List[NodeConfig]

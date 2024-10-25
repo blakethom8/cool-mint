@@ -56,8 +56,8 @@ All services are containerized using Docker, ensuring consistency across develop
 │   ├── alembic            # Database migration scripts
 │   ├── api                # API endpoints and routers
 │   ├── config             # Configuration files
+│   ├── core               # Components for pipeline and task processing
 │   ├── database           # Database models and utilities
-│   ├── models             # Data models
 │   ├── pipelines          # AI pipeline definitions
 │   ├── prompts            # Prompt templates for AI models
 │   ├── services           # Business logic and services

@@ -7,22 +7,19 @@ from pipelines.internal_pipeline import InternalHelpdeskPipeline
 
 
 class PipelineRegistry:
+    """
+    Implement your logic to determine the pipeline type based on the event.
+    We're currently using the email address to determine the pipeline type.
+    The options are "support" (CustomerSupportPipeline) and "helpdesk" (InternalHelpdeskPipeline)
+    """
+
     pipelines: Dict[str, Type[Pipeline]] = {
         "support": CustomerSupportPipeline,
         "helpdesk": InternalHelpdeskPipeline,
     }
 
-    """
-    Implement your logic to determine the pipeline type based on the event.
-    """
-
     @staticmethod
     def get_pipeline_type(event: EventSchema) -> str:
-        """
-        Implement your logic to determine the pipeline type based on the event.
-        We're currently using the email address to determine the pipeline type.
-        The options are "support" (CustomerPipeline) and "helpdesk" (InternalPipeline)
-        """
         return event.to_email.split("@")[0]
 
     @staticmethod

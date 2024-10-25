@@ -1,5 +1,6 @@
-from typing import Set
+from typing import Set, Type
 
+from core.base import Step
 from core.schema import PipelineSchema
 
 
@@ -11,7 +12,7 @@ class PipelineValidator:
 
     def validate(self) -> bool:
         """
-        Validate that the pipeline schema forms a DAG and non-router steps have only one next step.
+        Validate that the pipeline schema forms a DAG and non-router nodes have only one next node.
 
         Returns:
             bool: True if the schema is valid.
@@ -19,39 +20,46 @@ class PipelineValidator:
         Raises:
             ValueError: If the schema is invalid, with a description of the issue.
         """
-        visited: Set[str] = set()
-        stack: Set[str] = set()
+        visited: Set[Type[Step]] = set()
+        stack: Set[Type[Step]] = set()
 
-        def dfs(node: str) -> None:
-            if node in stack:
-                raise ValueError(f"Cycle detected involving step: {node}")
-            if node in visited:
+        def dfs(node_class: Type[Step]) -> None:
+            if node_class in stack:
+                raise ValueError(
+                    f"Cycle detected involving node: {node_class.__name__}"
+                )
+            if node_class in visited:
                 return
 
-            visited.add(node)
-            stack.add(node)
+            visited.add(node_class)
+            stack.add(node_class)
 
-            step_config = self.schema.steps.get(node)
-            if step_config:
-                # Check that non-router steps have only one next step
-                if not step_config.is_router and len(step_config.next) > 1:
+            node_config = next(
+                (nc for nc in self.schema.nodes if nc.node == node_class), None
+            )
+            if node_config:
+                # Check that non-router nodes have only one next node
+                if not node_config.is_router and len(node_config.connections) > 1:
                     raise ValueError(
-                        f"Non-router step '{node}' has multiple next steps"
+                        f"Non-router node '{node_class.__name__}' has multiple next nodes"
                     )
 
-                for next_step in step_config.next:
-                    if next_step not in self.schema.steps:
+                for next_node in node_config.connections:
+                    if next_node not in [nc.node for nc in self.schema.nodes]:
                         raise ValueError(
-                            f"Step '{next_step}' referenced but not defined"
+                            f"Node '{next_node.__name__}' referenced but not defined"
                         )
-                    dfs(next_step)
+                    dfs(next_node)
 
-            stack.remove(node)
+            stack.remove(node_class)
 
         dfs(self.schema.start)
 
-        unreachable = set(self.schema.steps.keys()) - visited
+        all_nodes = {nc.node for nc in self.schema.nodes}
+        unreachable = all_nodes - visited
         if unreachable:
-            raise ValueError(f"Unreachable steps detected: {', '.join(unreachable)}")
+            raise ValueError(
+                f"Unreachable nodes detected: {', '.join(node.__name__ for node in unreachable)}"
+            )
 
         return True

@@ -7,18 +7,34 @@ from pipelines.internal.get_appointments import GetAppointment
 from pipelines.customer.send_reply import SendReply
 
 
-class InternalPipeline(Pipeline):
+class InternalHelpdeskPipeline(Pipeline):
     pipeline_schema = PipelineSchema(
-        start="AnalyzeTicket",
-        steps={
-            "AnalyzeTicket": StepConfig(step=AnalyzeTicket, next=["TicketRouter"]),
-            "TicketRouter": StepConfig(
-                step=TicketRouter,
-                next=["GenerateResponse", "GetAppointment"],
-                is_router=True,
+        description="Pipeline for handling internal support tickets using the helpdesk@ email",
+        start=AnalyzeTicket,
+        nodes=[
+            StepConfig(
+                node=AnalyzeTicket,
+                connections=[TicketRouter],
+                description="Analyze the incoming internal ticket",
             ),
-            "GenerateResponse": StepConfig(step=GenerateResponse, next=["SendReply"]),
-            "GetAppointment": StepConfig(step=GetAppointment),
-            "SendReply": StepConfig(step=SendReply),
-        },
+            StepConfig(
+                node=TicketRouter,
+                connections=[GenerateResponse, GetAppointment],
+                is_router=True,
+                description="Route the ticket based on analysis",
+            ),
+            StepConfig(
+                node=GetAppointment,
+                description="Call the appointment service",
+            ),
+            StepConfig(
+                node=GenerateResponse,
+                connections=[SendReply],
+                description="Generate an automated response",
+            ),
+            StepConfig(
+                node=SendReply,
+                description="Send the reply to the internal user",
+            ),
+        ],
     )

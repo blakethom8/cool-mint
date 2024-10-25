@@ -1,12 +1,12 @@
 import logging
 from abc import ABC
 from contextlib import contextmanager
-from typing import Dict, Optional, ClassVar
+from typing import Dict, Optional, ClassVar, Type
 
 from api.event_schema import EventSchema
 from core.base import Step
 from core.router import BaseRouter
-from core.schema import PipelineSchema, StepConfig
+from core.schema import PipelineSchema
 from core.task import TaskContext
 from core.validate import PipelineValidator
 
@@ -23,64 +23,67 @@ class Pipeline(ABC):
     def __init__(self):
         self.validator = PipelineValidator(self.pipeline_schema)
         self.validator.validate()
-        self.steps: Dict[str, Step] = self._initialize_steps()
+        self.nodes: Dict[Type[Step], Step] = self._initialize_nodes()
 
     @contextmanager
-    def step_context(self, step_name: str):
-        """Context manager for logging step execution."""
-        logging.info(f"Starting step: {step_name}")
+    def node_context(self, node_name: str):
+        """Context manager for logging node execution."""
+        logging.info(f"Starting node: {node_name}")
         try:
             yield
         except Exception as e:
-            logging.error(f"Error in step {step_name}: {str(e)}")
+            logging.error(f"Error in node {node_name}: {str(e)}")
             raise
         finally:
-            logging.info(f"Finished step: {step_name}")
+            logging.info(f"Finished node: {node_name}")
 
-    def _initialize_steps(self) -> Dict[str, Step]:
-        """Initialize the pipeline steps."""
+    def _initialize_nodes(self) -> Dict[Type[Step], Step]:
+        """Initialize the pipeline nodes."""
         return {
-            step_name: self._instantiate_step(step_config)
-            for step_name, step_config in self.pipeline_schema.steps.items()
+            node_config.node: self._instantiate_node(node_config.node)
+            for node_config in self.pipeline_schema.nodes
         }
 
     @staticmethod
-    def _instantiate_step(step_config: StepConfig) -> Step:
-        """Instantiate a single step."""
-        return step_config.step()
+    def _instantiate_node(node_class: Type[Step]) -> Step:
+        """Instantiate a single node."""
+        return node_class()
 
     def run(self, event: EventSchema) -> TaskContext:
         """Run the pipeline."""
         task_context = TaskContext(event=event, pipeline=self)
-        current_step_name = self.pipeline_schema.start
+        current_node_class = self.pipeline_schema.start
 
-        while current_step_name:
-            current_step = self.steps[current_step_name]
-            with self.step_context(current_step_name):
-                task_context = current_step.process(task_context)
-            current_step_name = self._get_next_step_name(
-                current_step_name, task_context
+        while current_node_class:
+            current_node = self.nodes[current_node_class]
+            with self.node_context(current_node_class.__name__):
+                task_context = current_node.process(task_context)
+            current_node_class = self._get_next_node_class(
+                current_node_class, task_context
             )
 
         return task_context
 
-    def _get_next_step_name(
-        self, current_step_name: str, task_context: TaskContext
-    ) -> Optional[str]:
-        """Determine the next step in the pipeline."""
-        step_config = self.pipeline_schema.steps[current_step_name]
+    def _get_next_node_class(
+        self, current_node_class: Type[Step], task_context: TaskContext
+    ) -> Optional[Type[Step]]:
+        """Determine the next node in the pipeline."""
+        node_config = next(
+            (nc for nc in self.pipeline_schema.nodes if nc.node == current_node_class),
+            None,
+        )
 
-        if not step_config.next:
+        if not node_config or not node_config.connections:
             return None
 
-        if step_config.is_router:
-            return self._handle_router(self.steps[current_step_name], task_context)
+        if node_config.is_router:
+            return self._handle_router(self.nodes[current_node_class], task_context)
 
-        return step_config.next[0]
+        return node_config.connections[0]
 
     def _handle_router(
         self, router: BaseRouter, task_context: TaskContext
-    ) -> Optional[str]:
-        """Handle routing logic for router steps."""
-        next_step = router.route(task_context)
-        return next_step.step_name if next_step else None
+    ) -> Optional[Type[Step]]:
+        """Handle routing logic for router nodes."""
+        next_node = router.route(task_context)
+        return next_node.__class__ if next_node else None

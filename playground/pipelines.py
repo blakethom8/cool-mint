@@ -32,3 +32,13 @@ event = EventFactory.create_event(event_key="policy_question")
 pipeline = PipelineRegistry.get_pipeline(event)
 output = pipeline.run(event)
 output.model_dump()
+
+
+# --------------------------------------------------------------
+# Test service desk event (internal pipeline)
+# --------------------------------------------------------------
+
+event = EventFactory.create_event(event_key="service_desk")
+pipeline = PipelineRegistry.get_pipeline(event)
+output = pipeline.run(event)
+output.model_dump()

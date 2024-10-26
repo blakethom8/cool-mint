@@ -34,6 +34,9 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
   - [Deployment](#deployment)
   - [Troubleshooting](#troubleshooting)
     - [Issues During Initial Deployment](#issues-during-initial-deployment)
+    - [Support](#support)
+  - [License](#license)
+    - [Key Points:](#key-points)
 
 ## Overview
 
@@ -332,6 +335,31 @@ cd docker
 
 If problems persist, ensure that all environment variables are correctly set in your `.env` files and that there are no conflicts with other services running on your machine.
 
+### Support
+
+For bug reports, feature requests, or any issues related to the GenAI Launchpad:
+
+1. **GitHub Issues**: Please open an issue on our [GitHub repository](https://github.com/datalumina/genai-launchpad/issues). This is the preferred method for tracking and resolving problems, as it allows our community to collaborate and share solutions.
+
+2. **Email**: For inquiries that don't fit the scope of GitHub issues, you can reach us at launchpad@datalumina.com. However, we strongly encourage using GitHub issues for most support needs to benefit the entire community.
+
+By using GitHub issues, you help us maintain a public knowledge base that can assist other users facing similar challenges. It also allows for faster resolution as our community can contribute to solving problems.
+
 ---
 
 For further assistance or to contribute to the GenAI Launchpad, please consult the project maintainers or refer to the contribution guidelines.
+
+## License
+
+This project is licensed under the DATALUMINA License. See the [LICENCE.txt](LICENCE.txt) file for details.
+
+### Key Points:
+
+- You are free to use this code for personal or commercial projects, including client work.
+- You can modify and build upon the code.
+- You cannot resell or distribute this code as a template or part of a package where the primary value is in the code itself.
+- The software is provided "AS IS", without warranty of any kind.
+
+For the full license text, please refer to the [LICENCE.txt](LICENCE.txt) file in the repository.
+
+---

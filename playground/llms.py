@@ -9,7 +9,7 @@ from pydantic import BaseModel
 llm = LLMFactory(provider="anthropic")
 
 # --------------------------------------------------------------
-# Test the LLM with structured output
+# Test your LLM with structured output
 # --------------------------------------------------------------
 
 
@@ -27,4 +27,4 @@ intent, completion = llm.create_completion(
     ],
 )
 
-print(completion)
+print(intent)

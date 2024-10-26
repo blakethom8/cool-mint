@@ -74,7 +74,7 @@ All services are containerized using Docker, ensuring consistency across develop
 ### Prerequisites
 
 - Python 3
-- Docker
+- Docker (Updated to support docker compose)
 - Git
 - VS Code or Cursor (optional, but recommended)
 
@@ -106,6 +106,8 @@ OPENAI_API_KEY=your_openai_api_key_here
 cd ./docker
 ./start.sh
 ```
+
+To run .sh scripts on Windows, install Git Bash, then right-click in the script’s folder and select “Git Bash Here.” Use ./scriptname.sh in the Git Bash terminal to execute the script.
 
 4. Make database migrations:
 

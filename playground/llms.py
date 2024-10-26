@@ -6,7 +6,7 @@ from services.llm_factory import LLMFactory
 from pipelines.customer.analyze_ticket import CustomerIntent
 from pydantic import BaseModel
 
-llm = LLMFactory(provider="anthropic")
+llm = LLMFactory(provider="openai")
 
 # --------------------------------------------------------------
 # Test your LLM with structured output

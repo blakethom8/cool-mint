@@ -107,7 +107,7 @@ cd ./docker
 ./start.sh
 ```
 
-To run .sh scripts on Windows, install Git Bash, then right-click in the script’s folder and select “Git Bash Here.” Use ./scriptname.sh in the Git Bash terminal to execute the script.
+To run .sh scripts on Windows, install [Git Bash](https://git-scm.com/downloads/win), then right-click in the script’s folder and select “Git Bash Here.” Use ./scriptname.sh in the Git Bash terminal to execute the script.
 
 4. Make database migrations:
 

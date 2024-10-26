@@ -19,6 +19,16 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Quick Start](#quick-start)
+      - [1. Clone the repository:](#1-clone-the-repository)
+      - [2. Set up environment files:](#2-set-up-environment-files)
+      - [3. Build and start the Docker containers:](#3-build-and-start-the-docker-containers)
+      - [4. Make database migrations:](#4-make-database-migrations)
+      - [5. Start logging:](#5-start-logging)
+      - [6. Create virtual environment and install requirements:](#6-create-virtual-environment-and-install-requirements)
+      - [7. Populate the vector store:](#7-populate-the-vector-store)
+      - [8. Send event:](#8-send-event)
+      - [9. Check database:](#9-check-database)
+      - [10. Experiment in the playground:](#10-experiment-in-the-playground)
   - [Configuration](#configuration)
   - [Development Workflow](#development-workflow)
   - [Deployment](#deployment)
@@ -80,14 +90,14 @@ All services are containerized using Docker, ensuring consistency across develop
 
 ### Quick Start
 
-1. Clone the repository:
+#### 1. Clone the repository:
 
 ```bash
 git clone https://github.com/datalumina/genai-launchpad.git
 cd genai-launchpad
 ```
 
-2. Set up environment files:
+#### 2. Set up environment files:
 
 ```bash
 cp app/.env.example app/.env
@@ -100,7 +110,7 @@ You can leave the `docker/.env` file as is for the quick start. However, you nee
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-3. Build and start the Docker containers:
+#### 3. Build and start the Docker containers:
 
 ```bash
 cd ./docker
@@ -109,7 +119,7 @@ cd ./docker
 
 To run .sh scripts on Windows, install [Git Bash](https://git-scm.com/downloads/win), then right-click in the script’s folder and select “Git Bash Here.” Use ./scriptname.sh in the Git Bash terminal to execute the script.
 
-4. Make database migrations:
+#### 4. Make database migrations:
 
 ```bash
 cd ../app
@@ -119,14 +129,14 @@ cd ../app
 
 When prompted for a migration message, you can enter a brief description like "Initial migration" or "Launch".
 
-5. Start logging:
+#### 5. Start logging:
 
 ```bash
 cd ../docker
 ./logs.sh
 ```
 
-6. Create virtual environment and install requirements:
+#### 6. Create virtual environment and install requirements:
 
   a. Create a new virtual environment:
     ```bash
@@ -149,7 +159,7 @@ cd ../docker
     pip install -r requirements.txt
     ```
 
-7. Populate the vector store:
+#### 7. Populate the vector store:
 
 To initialize the vector store with sample data, run:
 
@@ -157,7 +167,7 @@ To initialize the vector store with sample data, run:
 python -m app/utils/insert_vectors.py
 ```
 
-8. Send event:
+#### 8. Send event:
 
 Run the following command to send a test event using the invoice.json file and the request library:
 
@@ -169,7 +179,7 @@ You should get a `202` status code back and see the response logged in the termi
 
 This step creates necessary tables, indexes, and inserts initial vector data into the database.
 
-9. Check database:
+#### 9. Check database:
 
 Connect to the database using your favorite database explorer. The default settings are:
 
@@ -181,7 +191,7 @@ Connect to the database using your favorite database explorer. The default setti
 
 In the `events` table, you should see the event you just processed. It contains the raw data (JSON) in the `data` column and the processed event (JSON) with in the `task_context` column.
 
-10. Experiment in the playground:
+#### 10. Experiment in the playground:
 
 The playground directory contains several Python scripts to help you experiment with different components of the GenAI Launchpad:
 

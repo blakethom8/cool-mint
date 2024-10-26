@@ -64,6 +64,8 @@ All services are containerized using Docker, ensuring consistency across develop
 
 ## Project Structure
 
+The Launchpad follows a logical, scalable, and reasonably standardized project structure for building event-driven GenAI apps.
+
 ```text
 ├── app
 │   ├── alembic            # Database migration scripts

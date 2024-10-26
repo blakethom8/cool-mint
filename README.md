@@ -345,10 +345,6 @@ For bug reports, feature requests, or any issues related to the GenAI Launchpad:
 
 By using GitHub issues, you help us maintain a public knowledge base that can assist other users facing similar challenges. It also allows for faster resolution as our community can contribute to solving problems.
 
----
-
-For further assistance or to contribute to the GenAI Launchpad, please consult the project maintainers or refer to the contribution guidelines.
-
 ## License
 
 This project is licensed under the DATALUMINA License. See the [LICENCE.txt](LICENCE.txt) file for details.
@@ -363,3 +359,5 @@ This project is licensed under the DATALUMINA License. See the [LICENCE.txt](LIC
 For the full license text, please refer to the [LICENCE.txt](LICENCE.txt) file in the repository.
 
 ---
+
+For further assistance or to contribute to the GenAI Launchpad, please consult the project maintainers or refer to the contribution guidelines.

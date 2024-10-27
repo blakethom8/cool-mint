@@ -11,8 +11,9 @@ Brief guide on how to deploy the GenAI Launchpad on any virtual machine running 
     - Git
     - Any text editor (vim, vi, nano etc.)
 3. SSH user with root access.
-3. Custom domain that is pointed to your virtual machine.
-4. Make sure that the default ports for http and https are not blocked by your firewall. So ports 80 and 443 should be
+4. SSH key access to GitHub account.
+5. Custom domain that is pointed to your virtual machine.
+6. Make sure that the default ports for http and https are not blocked by your firewall. So ports 80 and 443 should be
    publicly accessible. This is mandatory for setting up a SSL certificate.
 
 ## Deployment

@@ -1,6 +1,6 @@
 # GenAI Launchpad
 
-With AI innovation moving beyond the speed of light, your time to develop is now more precious than ever. That’s why we’ve built the GenAI Launchpad – your secret weapon to shipping game-changing apps, faster.
+With AI innovation moving beyond the speed of light, your time to develop is now more precious than ever. That’s why we’ve built the GenAI Launchpad – your secret weapon to shipping production-ready AI apps, faster.
 
 ## Introduction
 

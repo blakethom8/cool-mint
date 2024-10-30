@@ -1,6 +1,6 @@
 # GenAI Launchpad
 
-With AI innovation moving beyond the speed of light, your time to develop is now more precious than ever. That’s why we’ve built the GenAI Launchpad – your secret weapon to shipping game-changing apps, faster.
+With AI innovation moving beyond the speed of light, your time to develop is now more precious than ever. That’s why we’ve built the GenAI Launchpad – your secret weapon to shipping production-ready AI apps, faster.
 
 ## Introduction
 
@@ -19,11 +19,24 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Quick Start](#quick-start)
+      - [1. Clone the repository](#1-clone-the-repository)
+      - [2. Set up environment files](#2-set-up-environment-files)
+      - [3. Build and start the Docker containers](#3-build-and-start-the-docker-containers)
+      - [4. Make database migrations](#4-make-database-migrations)
+      - [5. Start logging:](#5-start-logging)
+      - [6. Create virtual environment and install requirements](#6-create-virtual-environment-and-install-requirements)
+      - [7. Populate the vector store](#7-populate-the-vector-store)
+      - [8. Send event](#8-send-event)
+      - [9. Check database](#9-check-database)
+      - [10. Experiment in the playground](#10-experiment-in-the-playground)
   - [Configuration](#configuration)
   - [Development Workflow](#development-workflow)
   - [Deployment](#deployment)
   - [Troubleshooting](#troubleshooting)
     - [Issues During Initial Deployment](#issues-during-initial-deployment)
+    - [Support](#support)
+  - [License](#license)
+    - [Key Points:](#key-points)
 
 ## Overview
 
@@ -51,13 +64,15 @@ All services are containerized using Docker, ensuring consistency across develop
 
 ## Project Structure
 
+The Launchpad follows a logical, scalable, and reasonably standardized project structure for building event-driven GenAI apps.
+
 ```text
 ├── app
 │   ├── alembic            # Database migration scripts
 │   ├── api                # API endpoints and routers
 │   ├── config             # Configuration files
+│   ├── core               # Components for pipeline and task processing
 │   ├── database           # Database models and utilities
-│   ├── models             # Data models
 │   ├── pipelines          # AI pipeline definitions
 │   ├── prompts            # Prompt templates for AI models
 │   ├── services           # Business logic and services
@@ -73,21 +88,21 @@ All services are containerized using Docker, ensuring consistency across develop
 
 ### Prerequisites
 
-- Python 3
-- Docker
 - Git
+- Python 3
+- Docker (Updated to support docker compose)
 - VS Code or Cursor (optional, but recommended)
 
 ### Quick Start
 
-1. Clone the repository:
+#### 1. Clone the repository
 
 ```bash
 git clone https://github.com/datalumina/genai-launchpad.git
-cd genai-project-launchpad
+cd genai-launchpad
 ```
 
-2. Set up environment files:
+#### 2. Set up environment files
 
 ```bash
 cp app/.env.example app/.env
@@ -100,14 +115,16 @@ You can leave the `docker/.env` file as is for the quick start. However, you nee
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-3. Build and start the Docker containers:
+#### 3. Build and start the Docker containers
 
 ```bash
 cd ./docker
 ./start.sh
 ```
 
-4. Make database migrations:
+To run .sh scripts on Windows, install [Git Bash](https://git-scm.com/downloads/win), then right-click in the script’s folder and select “Git Bash Here.” Use ./scriptname.sh in the Git Bash terminal to execute the script.
+
+#### 4. Make database migrations
 
 ```bash
 cd ../app
@@ -117,22 +134,45 @@ cd ../app
 
 When prompted for a migration message, you can enter a brief description like "Initial migration" or "Launch".
 
-5. Start logging:
+#### 5. Start logging:
 
 ```bash
 cd ../docker
 ./logs.sh
 ```
 
-6. Populate the vector store:
+#### 6. Create virtual environment and install requirements
+
+  a. Create a new virtual environment:
+    ```bash
+    python -m venv venv
+    ```
+
+  b. Activate the virtual environment:
+    - On Windows:
+      ```bash
+      venv\Scripts\activate
+      ```
+    - On macOS and Linux:
+      ```bash
+      source venv/bin/activate
+      ```
+
+  c. Install the required packages:
+    ```bash
+    cd app
+    pip install -r requirements.txt
+    ```
+
+#### 7. Populate the vector store
 
 To initialize the vector store with sample data, run:
 
 ```bash
-python -m app.utils.insert_vectors
+python -m app/utils/insert_vectors.py
 ```
 
-7. Send event:
+#### 8. Send event
 
 Run the following command to send a test event using the invoice.json file and the request library:
 
@@ -142,10 +182,9 @@ python requests/send_event.py
 
 You should get a `202` status code back and see the response logged in the terminal where you are running `./logs.sh`. Here you should see that the invoice service should be called and that the task is successfully completed.
 
-
 This step creates necessary tables, indexes, and inserts initial vector data into the database.
 
-8. Check database:
+#### 9. Check database
 
 Connect to the database using your favorite database explorer. The default settings are:
 
@@ -157,7 +196,7 @@ Connect to the database using your favorite database explorer. The default setti
 
 In the `events` table, you should see the event you just processed. It contains the raw data (JSON) in the `data` column and the processed event (JSON) with in the `task_context` column.
 
-9. Experiment in the playground:
+#### 10. Experiment in the playground
 
 The playground directory contains several Python scripts to help you experiment with different components of the GenAI Launchpad:
 
@@ -219,11 +258,11 @@ Refer to the `.env.example` files for available options.
 Here's a high-level action plan to update the template for your unique project:
 
 1. Update the '.env' files with your API keys and passwords
-2. Update your settings in `app/config/settings.py`
+2. Update your settings in `app/config`
 3. Define the event(s) in `requests/events` (your incoming data)
-4. Update the API schema in `app/api/schema/event.py` (matching your events)
+4. Update the API schema in `app/api/event_schema.py` (matching your events)
 5. Define your AI pipelines and processing steps in `app/pipelines/`
-6. Define your result model in `app/models/domain/result.py`
+6. Add your vector embeddings to the database using `app/utils/insert_vectors.py` (optional, for RAG)
 7. Experiment with different AI models, data, and settings in the 'playground'
 8. Fine-tune your pipelines and application flow
 
@@ -297,6 +336,29 @@ cd docker
 ```
 
 If problems persist, ensure that all environment variables are correctly set in your `.env` files and that there are no conflicts with other services running on your machine.
+
+### Support
+
+For bug reports, feature requests, or any issues related to the GenAI Launchpad:
+
+1. **GitHub Issues**: Please open an issue on our [GitHub repository](https://github.com/datalumina/genai-launchpad/issues). This is the preferred method for tracking and resolving problems, as it allows our community to collaborate and share solutions.
+
+2. **Email**: For inquiries that don't fit the scope of GitHub issues, you can reach us at launchpad@datalumina.com. However, we strongly encourage using GitHub issues for most support needs to benefit the entire community.
+
+By using GitHub issues, you help us maintain a public knowledge base that can assist other users facing similar challenges. It also allows for faster resolution as our community can contribute to solving problems.
+
+## License
+
+This project is licensed under the DATALUMINA License. See the [LICENCE.txt](LICENCE.txt) file for details.
+
+### Key Points:
+
+- You are free to use this code for personal or commercial projects, including client work.
+- You can modify and build upon the code.
+- You cannot resell or distribute this code as a template or part of a package where the primary value is in the code itself.
+- The software is provided "AS IS", without warranty of any kind.
+
+For the full license text, please refer to the [LICENCE.txt](LICENCE.txt) file in the repository.
 
 ---
 

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Type
+from typing import Any, Dict, List, Type, Tuple
 
 import instructor
 from anthropic import Anthropic
@@ -53,7 +53,7 @@ class OpenAIProvider(LLMProvider):
 
     def create_completion(
         self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
-    ) -> Any:
+    ) -> Tuple[BaseModel, Any]:
         completion_params = {
             "model": kwargs.get("model", self.settings.default_model),
             "temperature": kwargs.get("temperature", self.settings.temperature),
@@ -62,7 +62,7 @@ class OpenAIProvider(LLMProvider):
             "response_model": response_model,
             "messages": messages,
         }
-        return self.client.chat.completions.create(**completion_params)
+        return self.client.chat.completions.create_with_completion(**completion_params)
 
 
 class AnthropicProvider(LLMProvider):
@@ -94,7 +94,7 @@ class AnthropicProvider(LLMProvider):
         if system_message:
             completion_params["system"] = system_message
 
-        return self.client.messages.create(**completion_params)
+        return self.client.messages.create_with_completion(**completion_params)
 
 
 class LlamaProvider(LLMProvider):
@@ -121,7 +121,7 @@ class LlamaProvider(LLMProvider):
             "response_model": response_model,
             "messages": messages,
         }
-        return self.client.chat.completions.create(**completion_params)
+        return self.client.chat.completions.create_with_completion(**completion_params)
 
 
 class LLMFactory:
@@ -129,7 +129,8 @@ class LLMFactory:
 
     def __init__(self, provider: str):
         self.provider = provider
-        self.settings = getattr(get_settings(), provider)
+        settings = get_settings()
+        self.settings = getattr(settings.llm, provider)
         self.llm_provider = self._create_provider()
 
     def _create_provider(self) -> LLMProvider:
@@ -145,5 +146,8 @@ class LLMFactory:
 
     def create_completion(
         self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
-    ) -> Any:
+    ) -> Tuple[BaseModel, Any]:
+        if not issubclass(response_model, BaseModel):
+            raise TypeError("response_model must be a subclass of pydantic.BaseModel")
+
         return self.llm_provider.create_completion(response_model, messages, **kwargs)

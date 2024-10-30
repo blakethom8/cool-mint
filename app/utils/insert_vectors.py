@@ -1,12 +1,16 @@
 import json
+import sys
 from datetime import datetime
 
 import pandas as pd
-from database.pgvector import VectorStore
+from services.vector_store import VectorStore
 from timescale_vector.client import uuid_from_time
 
+sys.path.append("..")
+
+
 # Initialize VectorStore
-vec = VectorStore()
+vec = VectorStore(local=True)
 
 # Read the JSON file
 with open("../data/dataset.json", "r") as f:

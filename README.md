@@ -339,13 +339,13 @@ If problems persist, ensure that all environment variables are correctly set in 
 
 ### Support
 
-For bug reports, feature requests, or any issues related to the GenAI Launchpad:
+For support, questions, and collaboration related to the GenAI Launchpad:
 
-1. **GitHub Issues**: Please open an issue on our [GitHub repository](https://github.com/datalumina/genai-launchpad/issues). This is the preferred method for tracking and resolving problems, as it allows our community to collaborate and share solutions.
+1. **Discord Community**: Join our [Discord server](https://discord.gg/H67KUD6vXe) for quick questions, real-time support, and feature discussions. This is the fastest way to get help and connect with other users.
 
-2. **Email**: For inquiries that don't fit the scope of GitHub issues, you can reach us at launchpad@datalumina.com. However, we strongly encourage using GitHub issues for most support needs to benefit the entire community.
+2. **GitHub Issues**: For bug reports and technical problems, please open an issue on our [GitHub repository](https://github.com/datalumina/genai-launchpad/issues). This helps us track issues systematically and builds a searchable knowledge base for the community.
 
-By using GitHub issues, you help us maintain a public knowledge base that can assist other users facing similar challenges. It also allows for faster resolution as our community can contribute to solving problems.
+3. **Email**: For private inquiries or matters that don't fit Discord or GitHub, you can reach us at launchpad@datalumina.com. However, we encourage using Discord or GitHub for most support needs to benefit the entire community.
 
 ## License
 

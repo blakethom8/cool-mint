@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
 
-app_root = Path(__file__).parent.parent
-sys.path.append(str(app_root / "app"))
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root / "app"))
 
 from services.llm_factory import LLMFactory  # noqa: E402
 from pipelines.customer.analyze_ticket import CustomerIntent  # noqa: E402

@@ -4,12 +4,12 @@ from pathlib import Path
 app_root = Path(__file__).parent.parent
 sys.path.append(str(app_root))
 
-import json
-from datetime import datetime
+import json  # noqa: E402
+from datetime import datetime  # noqa: E402
 
-import pandas as pd
-from services.vector_store import VectorStore
-from timescale_vector.client import uuid_from_time
+import pandas as pd  # noqa: E402
+from services.vector_store import VectorStore  # noqa: E402
+from timescale_vector.client import uuid_from_time  # noqa: E402
 
 # Initialize VectorStore
 vec = VectorStore(local=True)

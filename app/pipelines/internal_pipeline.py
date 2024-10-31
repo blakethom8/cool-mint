@@ -6,6 +6,11 @@ from pipelines.internal.generate_response import GenerateResponse
 from pipelines.internal.get_appointments import GetAppointment
 from pipelines.customer.send_reply import SendReply
 
+"""
+Internal Helpdesk Pipeline that is used for helpdesk@ emails.
+This is an example pipeline that is used in the tutorial.
+"""
+
 
 class InternalHelpdeskPipeline(Pipeline):
     pipeline_schema = PipelineSchema(

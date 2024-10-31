@@ -6,6 +6,10 @@ from pydantic_settings import BaseSettings
 
 load_dotenv()
 
+"""
+Configuration for the VectorStore.
+"""
+
 
 class VectorStoreConfig(BaseSettings):
     """Settings for the VectorStore."""

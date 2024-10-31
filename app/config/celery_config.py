@@ -5,6 +5,10 @@ from config.settings import get_settings
 
 settings = get_settings()
 
+"""
+Configuration for Celery.
+"""
+
 
 def get_redis_url():
     """

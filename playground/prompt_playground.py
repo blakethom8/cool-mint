@@ -1,9 +1,14 @@
 import sys
+from pathlib import Path
 
-sys.path.append("..")
+app_root = Path(__file__).parent.parent
+sys.path.append(str(app_root / "app"))
 
-from services.prompt_loader import PromptManager
+from services.prompt_loader import PromptManager  # noqa: E402
 
+"""
+This playground is used to test the PromptManager and the prompts themselves.
+"""
 
 # --------------------------------------------------------------
 # Test support prompt

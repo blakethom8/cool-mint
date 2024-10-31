@@ -3,6 +3,13 @@ from typing import Generic, TypeVar, Type, List, Optional
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
+"""
+Generic Repository Module
+
+This module provides a generic repository for database operations.
+It supports basic CRUD operations and additional methods for querying and updating data.
+"""
+
 T = TypeVar("T")
 
 

@@ -1,5 +1,4 @@
 import logging
-import time
 from datetime import datetime
 from typing import Any, List, Optional, Tuple, Union
 
@@ -9,6 +8,18 @@ from psycopg2.extras import RealDictCursor
 from config.settings import get_settings
 from openai import OpenAI
 from timescale_vector import client
+from utils.timer import timer
+
+"""
+Vector Store Management Module
+
+This module provides functionality for managing vector embeddings and similarity search
+operations using TimescaleDB and OpenAI embeddings. It supports semantic search,
+keyword search, and hybrid search capabilities with metadata filtering.
+
+The implementation uses the timescale-vector client for efficient vector operations
+and supports both exact and approximate nearest neighbor search through StreamingDiskANN.
+"""
 
 
 class VectorStore:
@@ -60,17 +71,15 @@ class VectorStore:
             A list of floats representing the embedding.
         """
         text = text.replace("\n", " ")
-        start_time = time.time()
-        embedding = (
-            self.openai_client.embeddings.create(
-                input=[text],
-                model=self.embedding_model,
+        with timer("Embedding generation"):
+            embedding = (
+                self.openai_client.embeddings.create(
+                    input=[text],
+                    model=self.embedding_model,
+                )
+                .data[0]
+                .embedding
             )
-            .data[0]
-            .embedding
-        )
-        elapsed_time = time.time() - start_time
-        logging.info(f"Embedding generated in {elapsed_time:.3f} seconds")
         return embedding
 
     def create_tables(self) -> None:
@@ -149,8 +158,6 @@ class VectorStore:
         """
         query_embedding = self.get_embedding(query)
 
-        start_time = time.time()
-
         search_args = {
             "limit": limit,
         }
@@ -165,10 +172,8 @@ class VectorStore:
             start_date, end_date = time_range
             search_args["uuid_time_filter"] = client.UUIDTimeRange(start_date, end_date)
 
-        results = self.vec_client.search(query_embedding, **search_args)
-        elapsed_time = time.time() - start_time
-
-        self._log_search_time("Vector", elapsed_time)
+        with timer("Vector search"):
+            results = self.vec_client.search(query_embedding, **search_args)
 
         if return_dataframe:
             return self._create_dataframe_from_results(results)
@@ -248,16 +253,6 @@ class VectorStore:
                 f"Deleted records matching metadata filter from {self.vector_settings.table_name}"
             )
 
-    def _log_search_time(self, search_type: str, elapsed_time: float) -> None:
-        """
-        Log the time taken for a search operation.
-
-        Args:
-            search_type: The type of search performed (e.g., 'Vector', 'Keyword').
-            elapsed_time: The time taken for the search operation in seconds.
-        """
-        logging.info(f"{search_type} search completed in {elapsed_time:.3f} seconds")
-
     def keyword_search(
         self, query: str, limit: int = 5, return_dataframe: bool = True
     ) -> Union[List[Tuple[str, str, float]], pd.DataFrame]:
@@ -284,16 +279,12 @@ class VectorStore:
         LIMIT %s
         """
 
-        start_time = time.time()
-
-        # Create a new connection using psycopg2
-        with psycopg2.connect(self.settings.database.service_url) as conn:
-            with conn.cursor(cursor_factory=RealDictCursor) as cur:
-                cur.execute(search_sql, (query, limit))
-                results = cur.fetchall()
-
-        elapsed_time = time.time() - start_time
-        self._log_search_time("Keyword", elapsed_time)
+        with timer("Keyword search"):
+            # Create a new connection using psycopg2
+            with psycopg2.connect(self.settings.database.service_url) as conn:
+                with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                    cur.execute(search_sql, (query, limit))
+                    results = cur.fetchall()
 
         if return_dataframe:
             if not results:

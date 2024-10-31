@@ -36,7 +36,7 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
     - [Issues During Initial Deployment](#issues-during-initial-deployment)
     - [Support](#support)
   - [License](#license)
-    - [Key Points:](#key-points)
+    - [Key Points](#key-points)
 
 ## Overview
 
@@ -226,19 +226,19 @@ If you're a VS Code or Cursor user, I also recommend adding the following settin
 For example, to experiment with the LLM factory and structured output:
 
 ```bash
-python playground/models.py
+python playground/llm_playground.py
 ```
 
 To run the pipeline with a sample event:
 
 ```bash
-python playground/pipeline.py
+python playground/pipeline_playground.py
 ```
 
 To test prompt templates:
 
 ```bash
-python playground/prompts.py
+python playground/prompt_playground.py
 ```
 
 Feel free to modify these scripts and use the example events in the `requests/events/` directory to better understand how the different components work together.
@@ -351,7 +351,7 @@ For support, questions, and collaboration related to the GenAI Launchpad:
 
 This project is licensed under the DATALUMINA License. See the [LICENSE](/LICENSE) file for details.
 
-### Key Points:
+### Key Points
 
 - You are free to use this code for personal or commercial projects, including client work.
 - You can modify and build upon the code.

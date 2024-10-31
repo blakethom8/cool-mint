@@ -200,9 +200,9 @@ In the `events` table, you should see the event you just processed. It contains 
 
 The playground directory contains several Python scripts to help you experiment with different components of the GenAI Launchpad:
 
-- Use `playground/models.py` to experiment with the LLM factory and structured output.
-- Use `playground/pipeline.py` to run the pipeline with different example events.
-- Use `playground/prompts.py` to test and refine prompt templates.
+- Use `playground/llm_playground.py` to experiment with the LLM factory and structured output.
+- Use `playground/pipeline_playground.py` to run the pipeline with different example events.
+- Use `playground/prompt_playground.py` to test and refine prompt templates.
 
 It is recommended to run these with the **Python interactive window**, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346). Also, make sure to create a new `venv` or `conda` environment and install the `requirements.txt`:
 

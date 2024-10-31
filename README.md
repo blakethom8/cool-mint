@@ -349,7 +349,7 @@ For support, questions, and collaboration related to the GenAI Launchpad:
 
 ## License
 
-This project is licensed under the DATALUMINA License. See the [LICENCE](LICENCE) file for details.
+This project is licensed under the DATALUMINA License. See the [LICENCE](/LICENCE) file for details.
 
 ### Key Points:
 
@@ -358,7 +358,7 @@ This project is licensed under the DATALUMINA License. See the [LICENCE](LICENCE
 - You cannot resell or distribute this code as a template or part of a package where the primary value is in the code itself.
 - The software is provided "AS IS", without warranty of any kind.
 
-For the full license text, please refer to the [LICENCE](LICENCE) file in the repository.
+For the full license text, please refer to the [LICENCE](/LICENCE) file in the repository.
 
 ---
 

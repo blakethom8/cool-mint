@@ -8,20 +8,11 @@ from openai import OpenAI
 from pydantic import BaseModel
 
 """
-LLM Factory and Provider System
+LLM Provider Factory Module
 
-This module implements a flexible system for integrating various Language Model (LLM) providers
-using a factory pattern. It supports multiple providers and can be easily extended.
-
-For detailed documentation, including how to implement new providers and use the system,
-please refer to the full documentation at:
-
-docs/llm_factory.md
-
-Brief overview:
-- Uses a factory pattern to create LLM providers (OpenAI, Anthropic, Llama, etc.)
-- Supports structured output using Pydantic models via the Instructor library
-- Easily extensible for new LLM providers
+This module implements a factory pattern for creating and managing different LLM providers
+(OpenAI, Anthropic, etc.). It provides a unified interface for LLM interactions while
+supporting structured output using Pydantic models.
 """
 
 
@@ -125,7 +116,18 @@ class LlamaProvider(LLMProvider):
 
 
 class LLMFactory:
-    """Factory class for creating LLM providers."""
+    """
+    Factory class for creating and managing LLM provider instances.
+
+    This class implements the Factory pattern to create appropriate LLM provider
+    instances based on the specified provider type. It supports multiple providers
+    and handles their initialization and configuration.
+
+    Attributes:
+        provider: The name of the LLM provider to use
+        settings: Configuration settings for the LLM provider
+        llm_provider: The initialized LLM provider instance
+    """
 
     def __init__(self, provider: str):
         self.provider = provider
@@ -147,6 +149,21 @@ class LLMFactory:
     def create_completion(
         self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
     ) -> Tuple[BaseModel, Any]:
+        """
+        Create a completion using the configured LLM provider.
+
+        Args:
+            response_model: Pydantic model class defining the expected response structure
+            messages: List of message dictionaries containing the conversation
+            **kwargs: Additional arguments to pass to the provider
+
+        Returns:
+            Tuple containing the parsed response model and raw completion
+
+        Raises:
+            TypeError: If response_model is not a Pydantic BaseModel
+            ValueError: If the provider is not supported
+        """
         if not issubclass(response_model, BaseModel):
             raise TypeError("response_model must be a subclass of pydantic.BaseModel")
 

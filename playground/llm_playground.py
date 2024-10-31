@@ -1,10 +1,16 @@
 import sys
+from pathlib import Path
 
-sys.path.append("..")
+app_root = Path(__file__).parent.parent
+sys.path.append(str(app_root / "app"))
 
-from services.llm_factory import LLMFactory
-from pipelines.customer.analyze_ticket import CustomerIntent
-from pydantic import BaseModel
+from services.llm_factory import LLMFactory  # noqa: E402
+from pipelines.customer.analyze_ticket import CustomerIntent  # noqa: E402
+from pydantic import BaseModel  # noqa: E402
+
+"""
+This playground is used to test the LLMFactory and the LLM classes.
+"""
 
 llm = LLMFactory(provider="openai")
 

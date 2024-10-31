@@ -1,10 +1,20 @@
 import os
+import sys
+from pathlib import Path
+
+app_root = Path(__file__).parent.parent
+sys.path.append(str(app_root / "app"))
+
 
 # Set database host to localhost since we're connecting to it outside of docker
 os.environ["DATABASE_HOST"] = "localhost"
 
-from utils.event_factory import EventFactory
-from pipelines.registry import PipelineRegistry
+from pipelines.registry import PipelineRegistry  # noqa: E402
+from utils.event_factory import EventFactory  # noqa: E402
+
+"""
+This playground is used to test the PipelineRegistry and the pipelines themselves.
+"""
 
 # --------------------------------------------------------------
 # Test invoice event (customer pipeline)

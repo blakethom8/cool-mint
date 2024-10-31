@@ -1,12 +1,16 @@
 import logging
 from typing import Generator
 
-from sqlalchemy.orm import Session
-
 from database.session import SessionLocal
+from sqlalchemy.orm import Session
 
 
 def db_session() -> Generator:
+    """Database Session Dependency.
+
+    This function provides a database session for each request.
+    It ensures that the session is committed after successful operations.
+    """
     session: Session = SessionLocal()
     try:
         yield session

@@ -7,6 +7,11 @@ from pipelines.customer.route_ticket import TicketRouter
 from pipelines.customer.generate_response import GenerateResponse
 from pipelines.customer.send_reply import SendReply
 
+"""
+Customer Support Pipeline that is used for support@ emails.
+This is an example pipeline that is used in the tutorial.
+"""
+
 
 class CustomerSupportPipeline(Pipeline):
     pipeline_schema = PipelineSchema(

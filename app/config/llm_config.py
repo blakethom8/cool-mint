@@ -5,6 +5,10 @@ import os
 
 load_dotenv()
 
+"""
+Configuration for LLM providers.
+"""
+
 
 class LLMProviderSettings(BaseSettings):
     """Base settings for LLM providers."""

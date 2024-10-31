@@ -1,9 +1,18 @@
 import os
+import sys
+from pathlib import Path
+
+app_root = Path(__file__).parent.parent
+sys.path.append(str(app_root / "app"))
 
 # Set database host to localhost since we're connecting to it outside of docker
 os.environ["DATABASE_HOST"] = "localhost"
-from services.vector_store import VectorStore
 
+from services.vector_store import VectorStore  # noqa: E402
+
+"""
+This playground is used to test the VectorStore and the RAG functionality.
+"""
 
 vec = VectorStore()
 

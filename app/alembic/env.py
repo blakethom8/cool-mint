@@ -11,6 +11,12 @@ from database.session import Base
 # This import is required for autogenerate support
 from database.event import *
 
+"""
+Alembic Environment Module
+
+This module provides the environment for Alembic migrations.
+"""
+
 load_dotenv()
 
 

@@ -6,6 +6,10 @@ from config.database_config import DatabaseConfig
 
 load_dotenv()
 
+"""
+Main settings for the application using Pydantic Settings.
+"""
+
 
 class Settings(BaseSettings):
     """Main settings for the application."""

@@ -1,23 +1,33 @@
-import json
 import sys
+from pathlib import Path
+
+# Get absolute path to app root ("/app")
+app_root = Path(__file__).parent.parent
+sys.path.append(str(app_root))
+
+import json
 from datetime import datetime
 
 import pandas as pd
 from services.vector_store import VectorStore
 from timescale_vector.client import uuid_from_time
 
-sys.path.append("..")
-
-
 # Initialize VectorStore
 vec = VectorStore(local=True)
 
-# Read the JSON file
-with open("../data/dataset.json", "r") as f:
-    data = json.load(f)
 
-# Convert JSON data to DataFrame
-df = pd.DataFrame(data)
+def load_data():
+    try:
+        data_file = app_root.parent / "data" / "dataset.json"
+        if not data_file.exists():
+            raise FileNotFoundError(f"Dataset file not found at: {data_file}")
+
+        with open(data_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data
+    except (json.JSONDecodeError, FileNotFoundError) as e:
+        print(f"Error loading dataset: {e}")
+        sys.exit(1)
 
 
 # Prepare data for insertion
@@ -56,6 +66,9 @@ def prepare_record(row):
     )
 
 
+# Load data from JSON file
+data = load_data()
+df = pd.DataFrame(data)
 records_df = df.apply(prepare_record, axis=1)
 
 # Create tables and insert data

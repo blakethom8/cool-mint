@@ -169,7 +169,7 @@ cd ../docker
 To initialize the vector store with sample data, run:
 
 ```bash
-python -m app/utils/insert_vectors.py
+python app/utils/insert_vectors.py
 ```
 
 #### 8. Send event

@@ -9,7 +9,6 @@ the Product, Licensee agrees to be bound by the terms and conditions of this Agr
 
 1. Grant of License
 
-1.1 Individual License
 Subject to the terms and conditions of this Agreement, Datalumina Solutions B.V. grants Licensee 
 a non-exclusive, non-transferable, and non-sublicensable Individual License to use the GenAI 
 Launchpad for the following purposes:
@@ -18,7 +17,7 @@ Launchpad for the following purposes:
 * Build and develop applications or solutions for personal use, client work, or internal business purposes.
 * Modify, customize, and expand upon the code to suit specific project needs.
 
-2. Restrictions
+1. Restrictions
 
 Licensee shall not:
 
@@ -60,7 +59,7 @@ This Agreement constitutes the entire agreement between Licensee and Datalumina 
 concerning the subject matter herein and supersedes all prior or contemporaneous agreements, 
 representations, warranties, and understandings.
 
-Last updated: October 28, 2024
+Last updated: October 31, 2024
 
 Datalumina Solutions B.V.
 Contact Information: info@datalumina.com

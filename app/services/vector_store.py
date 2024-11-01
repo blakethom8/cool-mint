@@ -30,7 +30,7 @@ class VectorStore:
         Initialize the VectorStore with settings, OpenAI client, and Timescale Vector client.
 
         Args:
-            environment: The environment to use for database connection. Defaults to "production".
+            local (bool): If True, overrides .env to use localhost DB for running outside Docker.
         """
         self.settings = get_settings()
         self.openai_client = OpenAI(api_key=self.settings.llm.openai.api_key)

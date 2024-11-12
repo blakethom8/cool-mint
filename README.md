@@ -12,7 +12,7 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
 > - [`main`](https://github.com/datalumina/genai-launchpad/tree/main): Contains a complete example implementation to demonstrate the Launchpad's capabilities
 > - [`boilerplate`](https://github.com/datalumina/genai-launchpad/tree/boilerplate): A stripped-down version with just the core components, perfect for starting new projects from scratch
 >
-> We recommend following the Accelerator Course first to understand the example implementation in the main branch before exploring the boilerplate branch for your own projects.
+> We recommend following the Accelerator Course first to understand the example implementation in the `main` branch before exploring the boilerplate branch for your own projects.
 
 ## Table of Contents
 

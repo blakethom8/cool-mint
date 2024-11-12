@@ -6,7 +6,13 @@ With AI innovation moving beyond the speed of light, your time to develop is now
 
 Welcome to the GenAI Launchpad – your all-in-one repository for building powerful, scalable Generative AI applications. Whether you’re prototyping or deploying at scale, this Docker-based setup has you covered with everything from event-driven architecture to seamless AI pipeline integration.
 
-No need to start from scratch or waste time on repetitive configurations. The GenAI Launchpad is engineered to get you up and running fast, with a flexible design that fits your workflow – all while keeping things production-ready from day one
+No need to start from scratch or waste time on repetitive configurations. The GenAI Launchpad is engineered to get you up and running fast, with a flexible design that fits your workflow – all while keeping things production-ready from day one.
+
+> **Note**: This repository has two main branches:
+> - `main`: Contains a complete example implementation to demonstrate the Launchpad's capabilities
+> - [`boilerplate`](https://github.com/datalumina/genai-launchpad/tree/boilerplate): A stripped-down version with just the core components, perfect for starting new projects from scratch
+>
+> We recommend following the [Accelerator course](https://github.com/datalumina/genai-launchpad) first to understand the example implementation in the main branch before exploring the boilerplate branch for your own projects.
 
 ## Table of Contents
 

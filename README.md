@@ -143,26 +143,20 @@ cd ../docker
 
 #### 6. Create virtual environment and install requirements
 
-  a. Create a new virtual environment:
-    ```bash
-    python -m venv venv
-    ```
+```bash
+# Create a new virtual environment
+python -m venv venv
 
-  b. Activate the virtual environment:
-    - On Windows:
-      ```bash
-      venv\Scripts\activate
-      ```
-    - On macOS and Linux:
-      ```bash
-      source venv/bin/activate
-      ```
+# Activate the virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS and Linux:
+source venv/bin/activate
 
-  c. Install the required packages:
-    ```bash
-    cd app
-    pip install -r requirements.txt
-    ```
+# Install the required packages
+cd app
+pip install -r requirements.txt
+```
 
 #### 7. Populate the vector store
 

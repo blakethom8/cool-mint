@@ -21,6 +21,7 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Key Features](#key-features)
+  - [Documentation](#documentation)
   - [Project Structure](#project-structure)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
@@ -67,6 +68,10 @@ All services are containerized using Docker, ensuring consistency across develop
 - **Production-Ready**: Includes essential components for a production environment, including logging, monitoring, and security features.
 - **Rapid Development**: Boilerplate code and project structure to accelerate development.
 - **Docker-Based Deployment**: Complete Docker-based strategy for straightforward deployment.
+
+## Documentation
+
+While the code is already properly documented, we also included a dedicated `docs` folder in the repository. The documentation covers everything from initial setup through advanced topics like vector storage, LLM integration, and deployment strategies, organized into five main sections (Getting Started, Architecture, Core Components, Guides, and Concepts). For a complete overview and navigation through all topics, see the [documentation index](docs/README.md).
 
 ## Project Structure
 
@@ -243,6 +248,7 @@ python playground/prompt_playground.py
 
 Feel free to modify these scripts and use the example events in the `requests/events/` directory to better understand how the different components work together.
 
+
 ## Configuration
 
 Configuration is managed through environment variables and settings files. Key configuration files:
@@ -265,7 +271,6 @@ Here's a high-level action plan to update the template for your unique project:
 6. Add your vector embeddings to the database using `app/utils/insert_vectors.py` (optional, for RAG)
 7. Experiment with different AI models, data, and settings in the 'playground'
 8. Fine-tune your pipelines and application flow
-
 
 ## Deployment
 

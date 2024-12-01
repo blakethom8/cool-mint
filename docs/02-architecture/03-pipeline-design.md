@@ -86,13 +86,13 @@ class AnalyzeNode(LLMNode):
 
     def create_completion(self, context: ContextModel) -> ResponseModel:
         # Implement LLM call
-        response = self.llm.analyze(context.text)
-        return self.ResponseModel(**response)
+        response = self.llm.creat_completion(context.text)
+        return response
 
     def process(self, task_context: TaskContext) -> TaskContext:
         context = self.get_context(task_context)
         response = self.create_completion(context)
-        task_context.nodes[self.node_name] = response.dict()
+        task_context.nodes[self.node_name] = response
         return task_context
 ```
 

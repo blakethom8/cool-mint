@@ -26,6 +26,9 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
   - [Development Workflow](#development-workflow)
+  - [Video Tutorials](#video-tutorials)
+    - [Accelerator Course](#accelerator-course)
+    - [Boilerplate Deep Dive](#boilerplate-deep-dive)
   - [Support](#support)
   - [License](#license)
     - [Key Points](#key-points)
@@ -99,6 +102,26 @@ We provide two comprehensive guides for setting up the GenAI Launchpad:
 The GenAI Launchpad follows a structured development approach that emphasizes clean architecture and iterative development. Starting with the boilerplate branch, developers can quickly set up their environment, define events, create schemas, and build AI pipelines. The platform includes a playground for experimentation and comprehensive testing utilities to ensure robust implementation.
 
 For detailed instructions, see our [Development Workflow Guide](docs/04-guides/06-development-workflow.md).
+
+## Video Tutorials
+
+We offer two video Tutorials to help you master the GenAI Launchpad:
+
+### Accelerator Course
+A step-by-step guide through the complete example implementation, perfect for getting started.
+
+- Link: [Accelerator Course Video](https://datalumina.wistia.com/medias/inidp48v10)
+- Password: xXH3VzfdiFBToQDuUdeT
+- Duration: 70 minutes
+
+### Boilerplate Deep Dive
+An in-depth exploration of building projects from scratch using the boilerplate.
+
+- Link: [GenAI Launchpad - Boilerplate](https://datalumina.wistia.com/medias/pd280tdw7s)
+- Password: ybAziu4QbyfU44QTrMqU
+- Duration: 40 minutes
+
+Both tutorials include instructions and real-world examples to ensure you can effectively leverage the repository for your projects.
 
 ## Support
 

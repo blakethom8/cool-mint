@@ -2,8 +2,6 @@
 
 Welcome to the GenAI Launchpad documentation! This guide will help you understand, set up, and make the most of the repository. The GenAI Launchpad simplifies the process of building, testing, and deploying generative AI applications by providing a robust, scalable infrastructure and standardized development patterns.
 
-Whether you're building a chatbot, content generation system, or complex AI-powered application, this documentation will guide you through every step of the process.
-
 ## Chapters
 
 ### 1. Getting Started

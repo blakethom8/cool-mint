@@ -25,6 +25,7 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
   - [Project Structure](#project-structure)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
+  - [Development Workflow](#development-workflow)
   - [Support](#support)
   - [License](#license)
     - [Key Points](#key-points)
@@ -92,6 +93,12 @@ We provide two comprehensive guides for setting up the GenAI Launchpad:
 - Python 3.9 or higher
 - Docker (Updated to support docker compose)
 - VS Code or Cursor (optional, but recommended)
+
+## Development Workflow
+
+The GenAI Launchpad follows a structured development approach that emphasizes clean architecture and iterative development. Starting with the boilerplate branch, developers can quickly set up their environment, define events, create schemas, and build AI pipelines. The platform includes a playground for experimentation and comprehensive testing utilities to ensure robust implementation.
+
+For detailed instructions, see our [Development Workflow Guide](docs/04-guides/06-development-workflow.md).
 
 ## Support
 

@@ -1,6 +1,6 @@
 # Installation Guide
 
-This guide walks you through setting up the GenAI Launchpad development environment.
+This guide provides a detailed, comprehensive walkthrough for setting up the GenAI Launchpad development environment. It is intended for developers who want a complete understanding of the installation process, including detailed explanations of each component, security considerations, and troubleshooting steps. If you're looking for a faster setup process, see the Quick Start guide instead.
 
 ## Prerequisites
 

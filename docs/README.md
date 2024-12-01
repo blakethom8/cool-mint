@@ -32,6 +32,7 @@ Welcome to the GenAI Launchpad documentation! This guide will help you understan
 - [Event Testing](04-guides/03-testing-events.md)
 - [Deployment Guide](04-guides/04-deployment.md)
 - [Troubleshooting](04-guides/05-troubleshooting.md)
+- [Development Workflow](04-guides/06-development-workflow.md)
 
 ### 5. Concepts
 

@@ -85,9 +85,24 @@ class AnalyzeNode(LLMNode):
         )
 
     def create_completion(self, context: ContextModel) -> ResponseModel:
-        # Implement LLM call
-        response = self.llm.creat_completion(context.text)
-        return response
+        llm = LLMFactory("openai")
+        prompt = PromptManager.get_prompt(
+            "extract",
+            pipeline="support",
+        )
+        return llm.create_completion(
+            response_model=self.ResponseModel,
+            messages=[
+                {
+                    "role": "system",
+                    "content": prompt,
+                },
+                {
+                    "role": "user",
+                    "content": f"# New data:\n{context.model_dump()}",
+                },
+            ],
+        )
 
     def process(self, task_context: TaskContext) -> TaskContext:
         context = self.get_context(task_context)

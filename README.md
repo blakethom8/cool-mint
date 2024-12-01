@@ -14,25 +14,6 @@ No need to start from scratch or waste time on repetitive configurations. The Ge
 >
 > We recommend following the Accelerator Course first to understand the example implementation in the `main` branch before exploring the boilerplate branch for your own projects.
 
-## 📋 Table of Contents
-
-- [GenAI Launchpad](#genai-launchpad)
-  - [🚀 Introduction](#-introduction)
-  - [📋 Table of Contents](#-table-of-contents)
-  - [🎯 Overview](#-overview)
-  - [⭐ Key Features](#-key-features)
-  - [📚 Documentation](#-documentation)
-  - [🏗️ Project Structure](#️-project-structure)
-  - [🚦 Getting Started](#-getting-started)
-    - [Prerequisites](#prerequisites)
-  - [🛠️ Development Workflow](#️-development-workflow)
-  - [🎥 Video Tutorials](#-video-tutorials)
-    - [Accelerator Course](#accelerator-course)
-    - [Boilerplate Deep Dive](#boilerplate-deep-dive)
-  - [💬 Support](#-support)
-  - [⚖️ License](#️-license)
-    - [Key Points](#key-points)
-
 ## 🎯 Overview
 
 The GenAI Launchpad isn’t just another framework – it’s your shortcut to a production-ready AI infrastructure. Built for speed and control, its modular architecture brings together the best tools and design patterns to help you deploy faster without compromising flexibility.

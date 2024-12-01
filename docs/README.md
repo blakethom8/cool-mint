@@ -10,6 +10,7 @@ Whether you're building a chatbot, content generation system, or complex AI-powe
 
 - [Introduction](01-getting-started/01-introduction.md)
 - [Installation Guide](01-getting-started/02-installation.md)
+- [Quick Start](01-getting-started/03-quick-start.md)
 
 ### 2. Architecture
 

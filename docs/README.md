@@ -1,23 +1,58 @@
-# Documentation Coming Soon
+# GenAI Launchpad Documentation
 
-We are actively working on comprehensive documentation for this project. In the meantime, you can:
+Welcome to the GenAI Launchpad documentation! This guide will help you understand, set up, and make the most of the repository. The GenAI Launchpad simplifies the process of building, testing, and deploying generative AI applications by providing a robust, scalable infrastructure and standardized development patterns.
 
-1. Reference the accelerator course video materials
-2. Review the inline documentation provided in each code file
+Whether you're building a chatbot, content generation system, or complex AI-powered application, this documentation will guide you through every step of the process.
 
-We've made every effort to document the code thoroughly with clear comments and docstrings. However, we understand that you might need additional clarification or find areas that need better documentation.
+## Chapters
 
-## Need Help?
+### 1. Getting Started
 
-If you:
+- [Introduction](01-getting-started/01-introduction.md)
+- [Installation Guide](01-getting-started/02-installation.md)
+
+### 2. Architecture
+
+- [Overview](02-architecture/01-overview.md)
+- [Core Pipeline System](02-architecture/02-core-system.md)
+- [Pipeline Design](02-architecture/03-pipeline-design.md)
+- [Worker System](02-architecture/04-worker-system.md)
+
+### 3. Core Components
+
+- [API Reference](03-core-components/01-api-reference.md)
+- [Database and Migrations](03-core-components/02-database.md)
+- [Vector Store](03-core-components/03-vector-store.md)
+- [LLM Factory](03-core-components/04-llm-factory.md)
+- [Prompt Management](03-core-components/05-prompt-management.md)
+
+### 4. Guides
+
+- [Configuration Management](04-guides/01-configuration.md)
+- [Docker Infrastructure](04-guides/02-docker-compose.md)
+- [Event Testing](04-guides/03-testing-events.md)
+- [Deployment Guide](04-guides/04-deployment.md)
+
+### 5. Concepts
+
+- [Design Philosophy](05-concepts/01-philosopy.md)
+
+## Contributing
+
+We welcome contributions to our documentation. If you:
 
 - Find anything unclear
 - Notice missing documentation
 - Have suggestions for improvement
 
-Please don't hesitate to:
+Please:
 
-- Join our Discord community for discussions
 - Open an issue on GitHub
+- Submit a pull request
+- Join our community discussions
 
-Your feedback helps us improve the documentation for everyone!
+## Need Help?
+
+- Join our Discord community
+- Contact support
+

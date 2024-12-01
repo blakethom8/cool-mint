@@ -33,6 +33,7 @@ Whether you're building a chatbot, content generation system, or complex AI-powe
 - [Docker Infrastructure](04-guides/02-docker-compose.md)
 - [Event Testing](04-guides/03-testing-events.md)
 - [Deployment Guide](04-guides/04-deployment.md)
+- [Troubleshooting](04-guides/05-troubleshooting.md)
 
 ### 5. Concepts
 

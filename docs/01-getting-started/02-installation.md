@@ -6,7 +6,7 @@ This guide provides a detailed, comprehensive walkthrough for setting up the Gen
 
 Before you begin, ensure you have the following installed:
 
-- Python 3.9 or higher
+- Python 3.12 or higher
 - Docker and Docker Compose
 - Git
 - A code editor (VS Code or Cursor recommended)
@@ -97,16 +97,6 @@ Expected running containers:
 - launchpad_redis
 - launchpad_caddy
 
-2. Test Database Connection:
-```bash
-psql -h localhost -p 5432 -U postgres -d launchpad
-```
-
-3. Verify API Access:
-```bash
-curl http://localhost:8000/health
-```
-
 ## Common Installation Issues
 
 ### Database Connection Errors
@@ -116,7 +106,7 @@ curl http://localhost:8000/health
 
 ### Docker Issues
 - Run `docker compose down -v` to clean up
-- Check Docker logs: `docker compose logs`
+- Run the `./logs` script inside the docker folder to tail the logs with timestamps
 - Ensure ports 8000, 5432, and 6379 are available
 
 ### Python Environment Issues

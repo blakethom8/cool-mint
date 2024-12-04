@@ -4,10 +4,10 @@ This guide provides the minimum steps needed to get GenAI Launchpad up and runni
 
 ### Prerequisites
 
+- Python 3.12 or higher
+- Docker and Docker Compose
 - Git
-- Python 3
-- Docker (Updated to support docker compose)
-- VS Code or Cursor (optional, but recommended)
+- A code editor (VS Code or Cursor recommended)
 
 ### Quick Start
 
@@ -114,12 +114,7 @@ The playground directory contains several Python scripts to help you experiment 
 - Use `playground/pipeline_playground.py` to run the pipeline with different example events.
 - Use `playground/prompt_playground.py` to test and refine prompt templates.
 
-It is recommended to run these with the **Python interactive window**, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346). Also, make sure to create a new `venv` or `conda` environment and install the `requirements.txt`:
-
-```bash
-cd ./app
-pip install -requirements.txt
-```
+It is recommended to run these with the **Python interactive window**, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346).
 
 If you're a VS Code or Cursor user, I also recommend adding the following settings to your `.code-workspace` file to help with imports and refactoring:
 

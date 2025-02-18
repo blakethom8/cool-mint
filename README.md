@@ -88,10 +88,10 @@ For detailed instructions, see our [Development Workflow Guide](docs/04-guides/0
 
 We offer two video Tutorials to help you master the GenAI Launchpad:
 
-### Accelerator Course
+### Quickstart Course
 A step-by-step guide through the complete example implementation, perfect for getting started.
 
-- Link: [Accelerator Course Video](https://datalumina.wistia.com/medias/inidp48v10)
+- Link: [Quickstart Course](https://datalumina.wistia.com/medias/inidp48v10)
 - Password: xXH3VzfdiFBToQDuUdeT
 - Duration: 70 minutes
 

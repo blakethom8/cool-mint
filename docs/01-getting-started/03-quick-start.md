@@ -4,7 +4,7 @@ This guide provides the minimum steps needed to get GenAI Launchpad up and runni
 
 ### Prerequisites
 
-- Python 3.12 or higher
+- Python 3.12.x
 - Docker and Docker Compose
 - Git
 - A code editor (VS Code or Cursor recommended)
@@ -12,6 +12,7 @@ This guide provides the minimum steps needed to get GenAI Launchpad up and runni
 ### Quick Start
 
 #### 1. Clone the repository
+**Note for Windows users only: make sure the line endings setting in your IDE is set to 'LF' otherwise the bash scripts will fail**
 
 ```bash
 git clone https://github.com/datalumina/genai-launchpad.git

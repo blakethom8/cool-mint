@@ -6,7 +6,7 @@ This guide provides a detailed, comprehensive walkthrough for setting up the Gen
 
 Before you begin, ensure you have the following installed:
 
-- Python 3.12 or higher
+- Python 3.12.x
 - Docker and Docker Compose
 - Git
 - A code editor (VS Code or Cursor recommended)
@@ -14,7 +14,7 @@ Before you begin, ensure you have the following installed:
 ## Step-by-Step Installation
 
 ### 1. Clone the Repository
-
+**Note for Windows users only: make sure the line endings setting in your IDE is set to 'LF' otherwise the bash scripts will fail**
 ```bash
 git clone -b boilerplate https://github.com/datalumina/genai-launchpad.git
 cd genai-launchpad
@@ -41,7 +41,6 @@ CADDY_DOMAIN=your_domain.com  # For production
 ```
 
 ### 3. Docker Environment
-
 Navigate to the docker directory and start the containers:
 
 ```bash

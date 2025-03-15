@@ -110,7 +110,7 @@ class Pipeline(ABC):
         Raises:
             Exception: Any exception that occurs during pipeline execution
         """
-        task_context = TaskContext(event=event, pipeline=self)
+        task_context = TaskContext(event=event)
         current_node_class = self.pipeline_schema.start
 
         while current_node_class:

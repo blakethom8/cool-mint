@@ -1,14 +1,22 @@
+---
+id: getting-started
+title: Intro
+sidebar_position: 0
+---
+
 # GenAI Launchpad Documentation
 
-Welcome to the GenAI Launchpad documentation! This guide will help you understand, set up, and make the most of the repository. The GenAI Launchpad simplifies the process of building, testing, and deploying generative AI applications by providing a robust, scalable infrastructure and standardized development patterns.
+Welcome to the GenAI Launchpad documentation! This guide will help you understand, set up, and make the most of the
+repository. The GenAI Launchpad simplifies the process of building, testing, and deploying generative AI applications by
+providing a robust, scalable infrastructure and standardized development patterns.
 
 ## Chapters
 
 ### 1. Getting Started
 
 - [Introduction](01-getting-started/01-introduction.md)
-- [Installation Guide](01-getting-started/02-installation.md)
-- [Quick Start](01-getting-started/03-quick-start.md)
+- [Installation](01-getting-started/02-installation/01-windows.md)
+- [Quick start](01-getting-started/03-quick-start.md)
 
 ### 2. Architecture
 
@@ -28,9 +36,8 @@ Welcome to the GenAI Launchpad documentation! This guide will help you understan
 ### 4. Guides
 
 - [Configuration Management](04-guides/01-configuration.md)
-- [Docker Infrastructure](04-guides/02-docker-compose.md)
+- [Docker Infrastructure](04-guides/02-docker-infrastructure.md)
 - [Event Testing](04-guides/03-testing-events.md)
-- [Deployment Guide](04-guides/04-deployment.md)
 - [Troubleshooting](04-guides/05-troubleshooting.md)
 - [Development Workflow](04-guides/06-development-workflow.md)
 

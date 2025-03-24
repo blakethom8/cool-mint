@@ -44,23 +44,3 @@ providing a robust, scalable infrastructure and standardized development pattern
 ### 5. Concepts
 
 - [Design Philosophy](05-concepts/01-philosopy.md)
-
-## Contributing
-
-We welcome contributions to our documentation. If you:
-
-- Find anything unclear
-- Notice missing documentation
-- Have suggestions for improvement
-
-Please:
-
-- Open an issue on GitHub
-- Submit a pull request
-- Join our community discussions
-
-## Need Help?
-
-- Join our Discord community
-- Contact support
-

@@ -1,81 +1,8 @@
-## Quick Start
+# Quick start
 
-This guide provides the minimum steps needed to get GenAI Launchpad up and running quickly. It's perfect for developers who want to test the platform or get started with minimal setup. For a more detailed installation process, security considerations, and troubleshooting information, please refer to the Installation Guide.
+The quick start assumes you have already completed all the installation steps from the previous chapter.
 
-### Prerequisites
-
-- Python 3.12.x
-- Docker and Docker Compose
-- Git
-- A code editor (VS Code or Cursor recommended)
-
-### Quick Start
-
-#### 1. Clone the repository
-**Note for Windows users only: make sure the line endings setting in your IDE is set to 'LF' otherwise the bash scripts will fail**
-
-```bash
-git clone https://github.com/datalumina/genai-launchpad.git
-cd genai-launchpad
-```
-
-#### 2. Set up environment files
-
-```bash
-cp app/.env.example app/.env
-cp docker/.env.example docker/.env
-```
-
-You can leave the `docker/.env` file as is for the quick start. However, you need to add your OpenAI API key to the `app/.env` file. Open `app/.env` and locate the `OPENAI_API_KEY` variable. Replace its value with your actual OpenAI API key:
-
-```yaml
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
-#### 3. Build and start the Docker containers
-
-```bash
-cd ./docker
-./start.sh
-```
-
-To run .sh scripts on Windows, install [Git Bash](https://git-scm.com/downloads/win), then right-click in the script’s folder and select “Git Bash Here.” Use ./scriptname.sh in the Git Bash terminal to execute the script.
-
-#### 4. Make database migrations
-
-```bash
-cd ../app
-./makemigration.sh  # Create a new migration
-./migrate.sh        # Apply migrations
-```
-
-When prompted for a migration message, you can enter a brief description like "Initial migration" or "Launch".
-
-#### 5. Start logging:
-
-```bash
-cd ../docker
-./logs.sh
-```
-
-#### 6. Create virtual environment and install requirements
-
-```bash
-# Create a new virtual environment
-python -m venv venv
-
-# Activate the virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS and Linux:
-source venv/bin/activate
-
-# Install the required packages
-cd app
-pip install -r requirements.txt
-```
-
-#### 7. Populate the vector store
+#### Populate the vector store
 
 To initialize the vector store with sample data, run:
 
@@ -83,7 +10,7 @@ To initialize the vector store with sample data, run:
 python app/utils/insert_vectors.py
 ```
 
-#### 8. Send event
+#### Send event
 
 Run the following command to send a test event using the invoice.json file and the request library:
 
@@ -91,11 +18,10 @@ Run the following command to send a test event using the invoice.json file and t
 python requests/send_event.py
 ```
 
-You should get a `202` status code back and see the response logged in the terminal where you are running `./logs.sh`. Here you should see that the invoice service should be called and that the task is successfully completed.
+You should get a `202` status code back and see the response logged in the terminal where you are running `./logs.sh`.
+Here you should see that the invoice service should be called and that the task is successfully completed.
 
-This step creates necessary tables, indexes, and inserts initial vector data into the database.
-
-#### 9. Check database
+#### Check database
 
 Connect to the database using your favorite database explorer. The default settings are:
 
@@ -105,27 +31,35 @@ Connect to the database using your favorite database explorer. The default setti
 - Username: postgres
 - Password: super-secret-postgres-password
 
-In the `events` table, you should see the event you just processed. It contains the raw data (JSON) in the `data` column and the processed event (JSON) with in the `task_context` column.
+In the `events` table, you should see the event you just processed. It contains the raw data (JSON) in the `data` column
+and the processed event (JSON) with in the `task_context` column.
 
-#### 10. Experiment in the playground
+#### Experiment in the playground
 
-The playground directory contains several Python scripts to help you experiment with different components of the GenAI Launchpad:
+The playground directory contains several Python scripts to help you experiment with different components of the GenAI
+Launchpad:
 
 - Use `playground/llm_playground.py` to experiment with the LLM factory and structured output.
 - Use `playground/pipeline_playground.py` to run the pipeline with different example events.
 - Use `playground/prompt_playground.py` to test and refine prompt templates.
 
-It is recommended to run these with the **Python interactive window**, which you can learn more about[here](https://youtu.be/mpk4Q5feWaw?t=1346).
+It is recommended to run these with the **Python interactive window**, which you can learn more
+about [here](https://youtu.be/mpk4Q5feWaw?t=1346).
 
-If you're a VS Code or Cursor user, I also recommend adding the following settings to your `.code-workspace` file to help with imports and refactoring:
+If you're a VS Code or Cursor user, I also recommend adding the following settings to your `.code-workspace` file to
+help with imports and refactoring:
 
 ```json
-"settings": {
-  "jupyter.notebookFileRoot": "${workspaceFolder}/app",
-  "python.analysis.extraPaths": ["./app"],
-  "python.testing.pytestArgs": [
-   "app"
-  ],
+{
+  "settings": {
+    "jupyter.notebookFileRoot": "${workspaceFolder}/app",
+    "python.analysis.extraPaths": [
+      "./app"
+    ],
+    "python.testing.pytestArgs": [
+      "app"
+    ]
+  }
 }
 ```
 
@@ -147,8 +81,8 @@ To test prompt templates:
 python playground/prompt_playground.py
 ```
 
-Feel free to modify these scripts and use the example events in the `requests/events/` directory to better understand how the different components work together.
-
+Feel free to modify these scripts and use the example events in the `requests/events/` directory to better understand
+how the different components work together.
 
 ## Configuration
 
@@ -191,7 +125,9 @@ Caddy is pre-configured to handle HTTPS, simplifying the deployment process.
 
 ### Issues During Initial Deployment
 
-If you encounter any errors during the initial deployment, especially related to database connections or missing tables, it's recommended to remove all containers and volumes to start with a clean slate. This ensures that you're working with a fresh environment without any conflicting data from previous attempts.
+If you encounter any errors during the initial deployment, especially related to database connections or missing tables,
+it's recommended to remove all containers and volumes to start with a clean slate. This ensures that you're working with
+a fresh environment without any conflicting data from previous attempts.
 
 Follow these steps to clean up your Docker environment:
 
@@ -227,18 +163,20 @@ cd docker
 ```
 
 6. Re-run the migration scripts:
- 
+
 ```bash
 cd ../app
 ./makemigration.sh
 ./migrate.sh
 ```
 
-After performing these steps, you should have a clean environment to work with. If you continue to experience issues, please check the logs for more detailed error messages:
+After performing these steps, you should have a clean environment to work with. If you continue to experience issues,
+please check the logs for more detailed error messages:
 
 ```bash
 cd docker
 ./logs.sh
 ```
 
-If problems persist, ensure that all environment variables are correctly set in your `.env` files and that there are no conflicts with other services running on your machine.
+If problems persist, ensure that all environment variables are correctly set in your `.env` files and that there are no
+conflicts with other services running on your machine.

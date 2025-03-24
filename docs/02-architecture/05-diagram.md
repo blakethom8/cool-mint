@@ -1,3 +1,6 @@
+---
+title: Diagram
+---
 ```mermaid
 graph TB
     %% Nodes with icons and enhanced styling

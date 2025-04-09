@@ -6,7 +6,7 @@ from typing import Dict, Optional, ClassVar, Type
 from api.event_schema import EventSchema
 from core.base import Node
 from core.router import BaseRouter
-from core.schema import PipelineSchema
+from core.schema import PipelineSchema, NodeConfig
 from core.task import TaskContext
 from core.validate import PipelineValidator
 
@@ -80,10 +80,14 @@ class Pipeline(ABC):
         """
         nodes = {}
         for node_config in self.pipeline_schema.nodes:
-            nodes[node_config.node] = self._instantiate_node(node_config.node)
+            node_config.node = self._instantiate_node(node_config.node)
+            nodes[node_config.node.__class__] = node_config
+
             for connected_node in node_config.connections:
                 if connected_node not in nodes:
-                    nodes[connected_node] = self._instantiate_node(connected_node)
+                    connected_node_config = NodeConfig(node=connected_node)
+                    connected_node_config.node = self._instantiate_node(connected_node)
+                    nodes[connected_node] = connected_node_config
         return nodes
 
     @staticmethod
@@ -111,16 +115,17 @@ class Pipeline(ABC):
             Exception: Any exception that occurs during pipeline execution
         """
         task_context = TaskContext(event=event)
+        task_context.metadata['nodes'] = self.nodes
         current_node_class = self.pipeline_schema.start
 
         while current_node_class:
-            current_node = self.nodes[current_node_class]
+            current_node = self.nodes[current_node_class].node
             with self.node_context(current_node_class.__name__):
                 task_context = current_node.process(task_context)
+
             current_node_class = self._get_next_node_class(
                 current_node_class, task_context
             )
-
         return task_context
 
     def _get_next_node_class(
@@ -136,7 +141,7 @@ class Pipeline(ABC):
             The class of the next node to execute, or None if at the end
         """
         node_config = next(
-            (nc for nc in self.pipeline_schema.nodes if nc.node == current_node_class),
+            (nc for nc in self.pipeline_schema.nodes if nc.node.__class__ == current_node_class),
             None,
         )
 
@@ -144,7 +149,7 @@ class Pipeline(ABC):
             return None
 
         if node_config.is_router:
-            return self._handle_router(self.nodes[current_node_class], task_context)
+            return self._handle_router(self.nodes[current_node_class].node, task_context)
 
         return node_config.connections[0]
 

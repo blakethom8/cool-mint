@@ -36,6 +36,7 @@ class NodeConfig(BaseModel):
     connections: List[Type[Node]] = Field(default_factory=list)
     is_router: bool = False
     description: Optional[str] = None
+    parallel_nodes: Optional[List[Type[Node]]] = Field(default_factory=list)
 
 
 class PipelineSchema(BaseModel):

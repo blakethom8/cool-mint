@@ -126,6 +126,7 @@ class Pipeline(ABC):
             current_node_class = self._get_next_node_class(
                 current_node_class, task_context
             )
+        task_context.metadata.pop('nodes')
         return task_context
 
     def _get_next_node_class(

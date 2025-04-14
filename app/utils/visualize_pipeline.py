@@ -27,7 +27,7 @@ def visualize_pipeline(pipeline: Pipeline) -> Image:
 
         # Add nodes
         for node_config in pipeline.pipeline_schema.nodes:
-            node_name = node_config.node.__name__
+            node_name = str(node_config.node.node_name)
             if node_config.is_router:
                 # Use diamond shape for router nodes
                 dot.node(node_name, node_name, shape="diamond")
@@ -40,7 +40,7 @@ def visualize_pipeline(pipeline: Pipeline) -> Image:
         dot.edge("Event", start_node, tailport="e", headport="w")
 
         for node_config in pipeline.pipeline_schema.nodes:
-            node_name = node_config.node.__name__
+            node_name = str(node_config.node.node_name)
             for connection in node_config.connections:
                 dot.edge(node_name, connection.__name__, tailport="e", headport="w")
 

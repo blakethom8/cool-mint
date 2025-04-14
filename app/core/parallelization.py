@@ -7,6 +7,14 @@ from core.task import TaskContext
 
 
 class ParallelizationNode(Node, ABC):
+    """
+    Represents a node capable of executing other nodes in parallel.
+
+    This abstract class serves as the base class for implementing nodes
+    that process tasks concurrently using multithreading. Subclasses
+    must implement the `process` method to define specific processing
+    logic.
+    """
     def execute_nodes_in_parallel(self, task_context: TaskContext):
         node_config: NodeConfig = task_context.metadata['nodes'][self.__class__]
         future_list = []
@@ -20,5 +28,4 @@ class ParallelizationNode(Node, ABC):
 
     @abstractmethod
     def process(self, task_context: TaskContext) -> TaskContext:
-        self.execute_nodes_in_parallel(task_context)
-        return task_context
+        pass

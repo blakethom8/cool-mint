@@ -104,8 +104,9 @@ The playground provides a fast feedback loop for developing and testing your AI 
 As you develop your application, maintain a comprehensive suite of test events in `requests/events/`. Use the testing utilities to validate your pipelines:
 
 ```python
-from utils.event_factory import EventFactory
+from playground.utils import EventFactory
 from pipelines.your_pipeline import YourPipeline
+
 
 def test_pipeline():
     event = EventFactory.create_event("your_test_event")

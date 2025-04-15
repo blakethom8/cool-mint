@@ -32,7 +32,7 @@ Example event JSON:
 The EventFactory provides a convenient way to load and create event objects during local development and testing:
 
 ```python
-from utils.event_factory import EventFactory
+from playground.utils import EventFactory
 
 # Create event from JSON file
 event = EventFactory.create_event("support_ticket")
@@ -63,17 +63,18 @@ You can use the EventFactory to test pipelines directly without going through th
 
 ```python
 # Test script example
-from utils.event_factory import EventFactory
+from playground.utils import EventFactory
 from pipelines.support import SupportPipeline
+
 
 def test_support_pipeline():
     # Create test event
     event = EventFactory.create_event("support_ticket")
-    
+
     # Initialize and run pipeline
     pipeline = SupportPipeline()
     result = pipeline.run(event)
-    
+
     # Validate results
     assert result.nodes["AnalyzeNode"]["intent"] == "account_access"
     assert result.nodes["RouterNode"]["next_node"] == "UrgentResponse"
@@ -120,18 +121,20 @@ The results will be stored in the database for you to review. Please note that t
 ```
 
 2. **Local Pipeline Testing**:
+
 ```python
 # test_pipeline.py
-from utils.event_factory import EventFactory
+from playground.utils import EventFactory
+
 
 def test_pipeline():
     # Load test event
     event = EventFactory.create_event("test_event")
-    
+
     # Run pipeline
     pipeline = YourPipeline()
     result = pipeline.run(event)
-    
+
     # Validate results
     print(result.nodes)
 ```

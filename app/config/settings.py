@@ -1,8 +1,9 @@
 from functools import lru_cache
-from pydantic_settings import BaseSettings
+
 from dotenv import load_dotenv
+from pydantic_settings import BaseSettings
+
 from config.llm_config import LLMConfig
-from config.database_config import DatabaseConfig
 
 load_dotenv()
 
@@ -16,7 +17,6 @@ class Settings(BaseSettings):
 
     app_name: str = "GenAI Project Template"
     llm: LLMConfig = LLMConfig()
-    database: DatabaseConfig = DatabaseConfig()
 
 
 @lru_cache

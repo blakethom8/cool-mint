@@ -1,15 +1,15 @@
 import json
 from http import HTTPStatus
 
-from config.celery_config import celery_app
-from database.event import Event
-from database.repository import GenericRepository
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import Response
 
-from api.dependencies import db_session
 from api.event_schema import EventSchema
+from config.celery_config import celery_app
+from database.event import Event
+from database.repository import GenericRepository
+from database.session import db_session
 
 """
 Event Submission Endpoint Module
@@ -30,14 +30,13 @@ This pattern ensures high availability and responsiveness of the API
 while allowing for potentially long-running processing operations.
 """
 
-
 router = APIRouter()
 
 
 @router.post("/", dependencies=[])
 def handle_event(
-    data: EventSchema,
-    session: Session = Depends(db_session),
+        data: EventSchema,
+        session: Session = Depends(db_session),
 ) -> Response:
     """Handles incoming event submissions.
 

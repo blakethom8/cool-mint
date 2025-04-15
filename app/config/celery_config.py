@@ -1,9 +1,7 @@
 import os
 from functools import lru_cache
-from celery import Celery
-from config.settings import get_settings
 
-settings = get_settings()
+from celery import Celery
 
 """
 Configuration for Celery.

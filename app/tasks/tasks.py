@@ -1,10 +1,10 @@
 from contextlib import contextmanager
 
-from api.dependencies import db_session
 from api.event_schema import EventSchema
 from config.celery_config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
+from database.session import db_session
 from pipelines.registry import PipelineRegistry
 
 """

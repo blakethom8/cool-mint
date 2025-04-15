@@ -1,10 +1,8 @@
 import logging
 from typing import Dict, Type
+
 from api.event_schema import EventSchema
 from core.pipeline import Pipeline
-from pipelines.customer_pipeline import CustomerSupportPipeline
-from pipelines.internal_pipeline import InternalHelpdeskPipeline
-
 
 """
 Pipeline Registry Module
@@ -26,20 +24,14 @@ class PipelineRegistry:
         pipelines: Dictionary mapping pipeline type strings to pipeline classes
     """
 
-    pipelines: Dict[str, Type[Pipeline]] = {
-        "support": CustomerSupportPipeline,
-        "helpdesk": InternalHelpdeskPipeline,
-    }
+    pipelines: Dict[str, Type[Pipeline]] = {}
 
     @staticmethod
     def get_pipeline_type(event: EventSchema) -> str:
         """
         Implement your logic to determine the pipeline type based on the event.
-        We're currently using the email address to determine the pipeline type.
-        The options are "support" (CustomerSupportPipeline) and
-        "helpdesk" (InternalHelpdeskPipeline)
         """
-        return event.to_email.split("@")[0]
+        return ""
 
     @staticmethod
     def get_pipeline(event: EventSchema) -> Pipeline:

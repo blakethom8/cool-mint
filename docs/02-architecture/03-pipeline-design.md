@@ -37,22 +37,27 @@ A typical pipeline consists of multiple nodes arranged in a DAG:
 
 ```python
 class ContentAnalysisPipeline(Pipeline):
-    pipeline_schema = PipelineSchema(
-        description="Analyzes content using AI",
-        start=ExtractNode,
-        nodes=[
-            NodeConfig(node=ExtractNode, connections=[AnalyzeNode]),
-            NodeConfig(node=AnalyzeNode, connections=[RouterNode]),
-            NodeConfig(
-                node=RouterNode, 
-                connections=[SummarizeNode, TranslateNode],
-                is_router=True
-            ),
-            NodeConfig(node=SummarizeNode, connections=[FormatNode]),
-            NodeConfig(node=TranslateNode, connections=[FormatNode]),
-            NodeConfig(node=FormatNode, connections=[])
-        ]
-    )
+   pipeline_schema = PipelineSchema(
+      description="Analyzes content using AI",
+      start=GuardrailsNode,
+      nodes=[
+         NodeConfig(
+            node=GuardrailsNode,
+            connections=[ExtractNode],
+            parallel_nodes=[FilterContentNode, FilterSQLInjectionNode, FilterSpamNode]
+         ),
+         NodeConfig(node=ExtractNode, connections=[AnalyzeNode]),
+         NodeConfig(node=AnalyzeNode, connections=[RouterNode]),
+         NodeConfig(
+            node=RouterNode,
+            connections=[SummarizeNode, TranslateNode],
+            is_router=True
+         ),
+         NodeConfig(node=SummarizeNode, connections=[FormatNode]),
+         NodeConfig(node=TranslateNode, connections=[FormatNode]),
+         NodeConfig(node=FormatNode, connections=[])
+      ]
+   )
 ```
 
 ### Node Types and Implementation
@@ -108,6 +113,15 @@ class AnalyzeNode(LLMNode):
         context = self.get_context(task_context)
         response = self.create_completion(context)
         task_context.nodes[self.node_name] = response
+        return task_context
+```
+
+4. **Parallel Node**:
+The nodes to be executed in parallel are defined in the pipeline schema.
+```python
+class GuardrailsNode(ParallelNode):
+    def process(self, task_context: TaskContext) -> TaskContext:
+        self.execute_nodes_in_parallel(task_context)
         return task_context
 ```
 

@@ -1,6 +1,8 @@
 from typing import List, Type, Optional
-from core.base import Node
+
 from pydantic import BaseModel, Field
+
+from core.base import Node
 
 """
 Pipeline Schema Module

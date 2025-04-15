@@ -6,7 +6,7 @@ from core.schema import NodeConfig
 from core.task import TaskContext
 
 
-class ParallelizationNode(Node, ABC):
+class ParallelNode(Node, ABC):
     """
     Represents a node capable of executing other nodes in parallel.
 

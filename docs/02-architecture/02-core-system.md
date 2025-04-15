@@ -77,7 +77,7 @@ Key features:
 - Handles routing decisions
 - Provides error handling and logging
 
-### LLM Integration (llm.py)
+### LLM Node Integration (llm.py)
 
 The LLMNode provides a structured approach to AI model integration:
 
@@ -104,6 +104,29 @@ This design:
 - Separates context preparation from model interaction
 - Enables type-safe response handling
 - Facilitates integration with the instructor library for structured outputs
+
+### Parallel Node
+
+The **ParallelNode** enables asynchronous processing of multiple nodes, making it ideal for scenarios where tasks can be executed concurrently. This approach is particularly useful for implementing workflows where specific steps, such as applying guardrails or validations, can occur simultaneously, thus improving efficiency and reducing processing time.
+
+
+```python
+class ParallelNode(Node, ABC):
+    def execute_nodes_in_parallel(self, task_context: TaskContext):
+        node_config: NodeConfig = task_context.metadata['nodes'][self.__class__]
+        future_list = []
+        with ThreadPoolExecutor() as executor:
+            for node in node_config.parallel_nodes:
+                future = executor.submit(node().process, task_context)
+                future_list.append(future)
+
+            results = [future.result() for future in future_list]
+        return results
+
+    @abstractmethod
+    def process(self, task_context: TaskContext) -> TaskContext:
+        pass
+```
 
 ### Routing Logic (router.py)
 

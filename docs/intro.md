@@ -15,7 +15,7 @@ providing a robust, scalable infrastructure and standardized development pattern
 ### 1. Getting Started
 
 - [Introduction](01-getting-started/01-introduction.md)
-- [Installation](01-getting-started/02-installation/01-windows.md)
+- [Installation](01-installation/01-windows.md)
 - [Quick start](01-getting-started/03-quick-start.md)
 
 ### 2. Architecture

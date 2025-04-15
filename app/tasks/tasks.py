@@ -1,11 +1,10 @@
 from contextlib import contextmanager
 
-from api.event_schema import EventSchema
 from config.celery_config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
-from pipelines.registry import PipelineRegistry
+from pipelines.registry import PipelineRegistry, PipelineType
 
 """
 Pipeline Task Processing Module
@@ -17,7 +16,7 @@ pipeline execution and result storage.
 
 
 @celery_app.task(name="process_incoming_event")
-def process_incoming_event(event_id: str):
+def process_incoming_event(event_id: str, pipeline_type: PipelineType):
     """Processes an incoming event through its designated pipeline.
 
     This Celery task handles the asynchronous processing of events by:
@@ -28,6 +27,7 @@ def process_incoming_event(event_id: str):
 
     Args:
         event_id: Unique identifier of the event to process
+        pipeline_type: Type of pipeline to use for processing the event
     """
     with contextmanager(db_session)() as session:
         # Initialize repository for database operations
@@ -38,12 +38,10 @@ def process_incoming_event(event_id: str):
         if db_event is None:
             raise ValueError(f"Event with id {event_id} not found")
 
-        # Convert to schema and determine pipeline
-        event = EventSchema(**db_event.data)
-        pipeline = PipelineRegistry.get_pipeline(event)
+        pipeline = PipelineRegistry().get_pipeline(pipeline_type)
 
         # Execute pipeline and store results
-        task_context = pipeline.run(event).model_dump(mode="json")
+        task_context = pipeline.run(db_event.data).model_dump(mode="json")
         db_event.task_context = task_context
 
         # Update event with processing results

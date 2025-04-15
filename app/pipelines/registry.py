@@ -1,7 +1,7 @@
 import logging
+from enum import Enum
 from typing import Dict, Type
 
-from api.event_schema import EventSchema
 from core.pipeline import Pipeline
 
 """
@@ -12,39 +12,15 @@ and their mappings. It determines which pipeline to use based on event attribute
 currently using email addresses as the routing mechanism.
 """
 
+class PipelineType(str, Enum):
+    pass
 
 class PipelineRegistry:
-    """Registry for managing and routing to different pipeline implementations.
+    def __init__(self):
+        self.pipelines: Dict[str, Type[Pipeline]] = {}
 
-    This class maintains a mapping of pipeline types to their implementations and
-    provides logic for determining which pipeline to use based on event attributes.
-    It implements a simple factory pattern for pipeline instantiation.
-
-    Attributes:
-        pipelines: Dictionary mapping pipeline type strings to pipeline classes
-    """
-
-    pipelines: Dict[str, Type[Pipeline]] = {}
-
-    @staticmethod
-    def get_pipeline_type(event: EventSchema) -> str:
-        """
-        Implement your logic to determine the pipeline type based on the event.
-        """
-        return ""
-
-    @staticmethod
-    def get_pipeline(event: EventSchema) -> Pipeline:
-        """Creates and returns the appropriate pipeline instance for the event.
-
-        Args:
-            event: Event schema containing routing information
-
-        Returns:
-            Instantiated pipeline object for processing the event
-        """
-        pipeline_type = PipelineRegistry.get_pipeline_type(event)
-        pipeline = PipelineRegistry.pipelines.get(pipeline_type)
+    def get_pipeline(self, pipeline_type: PipelineType) -> Pipeline:
+        pipeline = self.pipelines.get(pipeline_type)
         if pipeline:
             logging.info(f"Using pipeline: {pipeline.__name__}")
             return pipeline()

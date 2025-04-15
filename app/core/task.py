@@ -1,6 +1,5 @@
 from typing import Any, Dict
 
-from api.event_schema import EventSchema
 from pydantic import BaseModel, Field
 
 """
@@ -31,7 +30,7 @@ class TaskContext(BaseModel):
         )
     """
 
-    event: EventSchema
+    event: Dict[str, Any] = Field()
     nodes: Dict[str, Any] = Field(
         default_factory=dict,
         description="Stores results and state from each node's execution",

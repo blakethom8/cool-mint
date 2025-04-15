@@ -3,7 +3,6 @@ from abc import ABC
 from contextlib import contextmanager
 from typing import Dict, Optional, ClassVar, Type
 
-from api.event_schema import EventSchema
 from core.base import Node
 from core.router import BaseRouter
 from core.schema import PipelineSchema, NodeConfig
@@ -99,7 +98,7 @@ class Pipeline(ABC):
         """
         return node_class()
 
-    def run(self, event: EventSchema) -> TaskContext:
+    def run(self, event: Dict) -> TaskContext:
         """Executes the pipeline for a given event.
 
         Args:
@@ -127,7 +126,7 @@ class Pipeline(ABC):
         return task_context
 
     def _get_next_node_class(
-        self, current_node_class: Type[Node], task_context: TaskContext
+            self, current_node_class: Type[Node], task_context: TaskContext
     ) -> Optional[Type[Node]]:
         """Determines the next node to execute in the pipeline.
 
@@ -153,7 +152,7 @@ class Pipeline(ABC):
         return node_config.connections[0]
 
     def _handle_router(
-        self, router: BaseRouter, task_context: TaskContext
+            self, router: BaseRouter, task_context: TaskContext
     ) -> Optional[Type[Node]]:
         """Handles routing logic for router nodes.
 

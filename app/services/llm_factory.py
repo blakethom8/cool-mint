@@ -26,7 +26,7 @@ class LLMProvider(ABC):
 
     @abstractmethod
     def create_completion(
-        self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
+            self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
     ) -> Any:
         """Create a completion using the LLM provider."""
         pass
@@ -43,7 +43,7 @@ class OpenAIProvider(LLMProvider):
         return instructor.from_openai(OpenAI(api_key=self.settings.api_key))
 
     def create_completion(
-        self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
+            self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
     ) -> Tuple[BaseModel, Any]:
         completion_params = {
             "model": kwargs.get("model", self.settings.default_model),
@@ -67,7 +67,7 @@ class AnthropicProvider(LLMProvider):
         return instructor.from_anthropic(Anthropic(api_key=self.settings.api_key))
 
     def create_completion(
-        self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
+            self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
     ) -> Any:
         system_message = next(
             (m["content"] for m in messages if m["role"] == "system"), None
@@ -102,7 +102,7 @@ class LlamaProvider(LLMProvider):
         )
 
     def create_completion(
-        self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
+            self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
     ) -> Any:
         completion_params = {
             "model": kwargs.get("model", self.settings.default_model),
@@ -147,7 +147,7 @@ class LLMFactory:
         raise ValueError(f"Unsupported LLM provider: {self.provider}")
 
     def create_completion(
-        self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
+            self, response_model: Type[BaseModel], messages: List[Dict[str, str]], **kwargs
     ) -> Tuple[BaseModel, Any]:
         """
         Create a completion using the configured LLM provider.

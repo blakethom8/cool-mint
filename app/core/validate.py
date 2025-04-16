@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Set, Type
 
-from core.base import Node
+from core.nodes.base import Node
 from core.schema import PipelineSchema
 
 """

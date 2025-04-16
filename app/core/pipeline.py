@@ -3,8 +3,8 @@ from abc import ABC
 from contextlib import contextmanager
 from typing import Dict, Optional, ClassVar, Type
 
-from core.base import Node
-from core.router import BaseRouter
+from core.nodes.base import Node
+from core.nodes.router import BaseRouter
 from core.schema import PipelineSchema, NodeConfig
 from core.task import TaskContext
 from core.validate import PipelineValidator

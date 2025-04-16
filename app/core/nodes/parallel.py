@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 
-from core.base import Node
+from core.nodes.base import Node
 from core.schema import NodeConfig
 from core.task import TaskContext
 

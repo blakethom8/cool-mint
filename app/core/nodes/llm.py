@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from core.task import TaskContext
-from core.base import Node
+from core.nodes.base import Node
 from pydantic import BaseModel
 
 """

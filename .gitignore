@@ -92,3 +92,5 @@ target/
 # Alembic migrations
 app/alembic/versions/*
 !app/alembic/versions/.gitkeep
+
+playground/*.png

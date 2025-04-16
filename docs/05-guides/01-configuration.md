@@ -15,21 +15,6 @@ class Settings(BaseSettings):
 
 ## Core Configuration Components
 
-### Database Configuration (database_config.py)
-
-The database configuration manages all database-related settings, including vector store configurations. It provides smart defaults while allowing environment variable overrides:
-
-```python
-class DatabaseConfig(BaseSettings):
-    host: str = os.getenv("DATABASE_HOST", "launchpad_database")
-    port: str = os.getenv("DATABASE_PORT", "5432")
-    name: str = os.getenv("DATABASE_NAME", "launchpad")
-    
-    @property
-    def service_url(self) -> str:
-        return f"postgres://{self.pg_user}:{self.password}@{self.host}:{self.port}/{self.name}"
-```
-
 ### LLM Configuration (llm_config.py)
 
 The LLM configuration manages settings for different AI providers. It implements a provider-specific configuration pattern:
@@ -93,29 +78,6 @@ def get_settings() -> Settings:
     return Settings()
 ```
 
-### Type Safety
-
-All configuration classes inherit from BaseSettings, providing type validation:
-
-```python
-class VectorStoreConfig(BaseSettings):
-    table_name: str = "embeddings"
-    embedding_dimensions: int = 1536
-    time_partition_interval: timedelta = timedelta(days=7)
-```
-
-### Computed Properties
-
-Complex configuration values can be computed using properties:
-
-```python
-@property
-def service_url(self) -> str:
-    if self.local:
-        return f"postgres://{self.pg_user}:{self.password}@localhost:{self.port}/{self.name}"
-    return f"postgres://{self.pg_user}:{self.password}@{self.host}:{self.port}/{self.name}"
-```
-
 ## Security Considerations
 
 The configuration system implements several security best practices:
@@ -124,38 +86,3 @@ The configuration system implements several security best practices:
 2. API keys are loaded from environment variables
 3. Different configurations for different environments
 4. Validation of security-critical settings at startup
-
-## Extending the Configuration
-
-To add new configuration options:
-
-1. Create a new configuration class if needed
-2. Add the new settings to the appropriate configuration class
-3. Update the main Settings class if adding a new configuration category
-
-Example of adding a new configuration category:
-
-```python
-class CacheConfig(BaseSettings):
-    ttl: int = 3600
-    backend: str = "redis"
-    prefix: str = "cache"
-
-class Settings(BaseSettings):
-    # Existing configs...
-    cache: CacheConfig = CacheConfig()
-```
-
-## Configuration Usage
-
-Throughout the application, configuration is accessed through the get_settings function:
-
-```python
-from config.settings import get_settings
-
-settings = get_settings()
-database_url = settings.database.service_url
-openai_key = settings.llm.openai.api_key
-```
-
-This ensures consistent access to configuration values across the application while maintaining the benefits of caching and validation. 

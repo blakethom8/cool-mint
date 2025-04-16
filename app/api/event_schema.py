@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 """
@@ -9,5 +11,7 @@ events entering the system through the API endpoints.
 """
 
 
-class EventSchema(BaseModel):
-    pass
+class DefaultEventSchema(BaseModel):
+    event_id: str
+    event_type: str
+    source: Optional[str] = None

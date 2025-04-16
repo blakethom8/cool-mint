@@ -2,7 +2,6 @@ import json
 import logging
 from pathlib import Path
 from typing import Dict, Any, List
-from api.event_schema import EventSchema
 
 """
 Event Factory Module
@@ -35,7 +34,7 @@ class EventFactory:
     """
 
     @staticmethod
-    def create_event(event_key: str) -> EventSchema:
+    def create_event(event_key: str) -> Dict:
         """Creates an EventSchema instance from a JSON event definition.
 
         Args:
@@ -51,7 +50,7 @@ class EventFactory:
 
         event_data = events[event_key]
         logging.info(f"Created event: {event_key}")
-        return EventSchema(**event_data)
+        return event_data
 
     @staticmethod
     def get_all_event_keys() -> List[str]:

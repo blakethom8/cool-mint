@@ -2,10 +2,9 @@ import os
 from functools import lru_cache
 
 from celery import Celery
+from dotenv import load_dotenv
 
-"""
-Configuration for Celery.
-"""
+load_dotenv()
 
 
 def get_redis_url():

@@ -22,7 +22,7 @@ class Event(Base):
     """SQLAlchemy model for storing events and their processing results.
 
     This model serves as the primary storage for both incoming events and
-    their processing results. It uses JSONB columns for flexible schema
+    their processing results. It uses JSON columns for flexible schema
     storage of both raw data and processing context.
 
     Attributes:

@@ -50,6 +50,4 @@ def send_event(event_file: str):
 
 
 if __name__ == "__main__":
-    send_event(event_file="invoice.json")
-    send_event(event_file="product.json")
-    send_event(event_file="policy_question.json")
+    send_event(event_file="default_event.json")

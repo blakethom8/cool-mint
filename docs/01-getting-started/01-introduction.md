@@ -17,9 +17,8 @@ At its core, GenAI Launchpad is an architectural framework that provides:
 
 2. **AI Integration Framework**: Built-in abstractions for working with:
     - OpenAI's GPT models
-    - Anthropic's Claude
+    - Anthropic's Claude models
     - Custom AI models
-    - Vector embeddings and similarity search
     - Prompt management and versioning
 
 3. **Production Infrastructure**: Ready-to-use components including:

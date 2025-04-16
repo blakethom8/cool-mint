@@ -94,10 +94,8 @@ The production environment builds upon the development setup with additional sec
 - Structured logging for better observability
 
 ### Resource Management
-- Configurable CPU and memory limits
 - Volume mounts for data persistence
 - Automatic container recovery
-- Load balancing capabilities
 
 The production setup is designed to be both secure and maintainable, following Docker best practices and security guidelines. It provides a solid foundation for running your AI applications in any production environment, from single-server deployments to complex cloud infrastructures.
 

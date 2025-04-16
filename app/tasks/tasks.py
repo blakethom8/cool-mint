@@ -4,7 +4,7 @@ from config.celery_config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
-from pipelines.registry import PipelineRegistry, PipelineType
+from pipelines.registry import PipelineRegistry
 
 """
 Pipeline Task Processing Module
@@ -16,7 +16,7 @@ pipeline execution and result storage.
 
 
 @celery_app.task(name="process_incoming_event")
-def process_incoming_event(event_id: str, pipeline_type: PipelineType):
+def process_incoming_event(event_id: str, pipeline_type: str):
     """Processes an incoming event through its designated pipeline.
 
     This Celery task handles the asynchronous processing of events by:

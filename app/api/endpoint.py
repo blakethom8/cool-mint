@@ -1,15 +1,17 @@
 import json
 from http import HTTPStatus
+from typing import Dict
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import Response
 
-from api.event_schema import EventSchema
+from api.event_schema import DefaultEventSchema
 from config.celery_config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
+from pipelines.registry import PipelineType
 
 """
 Event Submission Endpoint Module
@@ -35,7 +37,7 @@ router = APIRouter()
 
 @router.post("/", dependencies=[])
 def handle_event(
-        data: EventSchema,
+        data: DefaultEventSchema,
         session: Session = Depends(db_session),
 ) -> Response:
     """Handles incoming event submissions.
@@ -63,10 +65,13 @@ def handle_event(
     event = Event(data=data.model_dump(mode="json"))
     repository.create(obj=event)
 
+    # Get the pipeline type
+    pipeline_type = get_pipeline_type(event.data)
+
     # Queue processing task
     task_id = celery_app.send_task(
         "process_incoming_event",
-        args=[str(event.id)],
+        args=[str(event.id), pipeline_type],
     )
 
     # Return acceptance response
@@ -74,3 +79,10 @@ def handle_event(
         content=json.dumps({"message": f"process_incoming_event started `{task_id}` "}),
         status_code=HTTPStatus.ACCEPTED,
     )
+
+
+def get_pipeline_type(event_data: Dict) -> str:
+    """
+        Implement your logic to determine the pipeline type based on the event data.
+    """
+    return PipelineType.DEFAULT_PIPELINE.value

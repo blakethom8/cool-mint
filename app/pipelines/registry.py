@@ -3,23 +3,23 @@ from enum import Enum
 from typing import Dict, Type
 
 from core.pipeline import Pipeline
+from pipelines.default_pipeline import DefaultPipeline
 
-"""
-Pipeline Registry Module
-
-This module provides a registry system for managing different pipeline types
-and their mappings. It determines which pipeline to use based on event attributes,
-currently using email addresses as the routing mechanism.
-"""
 
 class PipelineType(str, Enum):
-    pass
+    """
+        Replace and add your own pipeline types.
+    """
+    DEFAULT_PIPELINE = "default_pipeline"
+
 
 class PipelineRegistry:
     def __init__(self):
-        self.pipelines: Dict[str, Type[Pipeline]] = {}
+        self.pipelines: Dict[str, Type[Pipeline]] = {
+            PipelineType.DEFAULT_PIPELINE.value: DefaultPipeline,
+        }
 
-    def get_pipeline(self, pipeline_type: PipelineType) -> Pipeline:
+    def get_pipeline(self, pipeline_type: str) -> Pipeline:
         pipeline = self.pipelines.get(pipeline_type)
         if pipeline:
             logging.info(f"Using pipeline: {pipeline.__name__}")

@@ -2,7 +2,7 @@ from typing import List, Type, Optional
 
 from pydantic import BaseModel, Field
 
-from core.base import Node
+from core.nodes.base import Node
 
 """
 Pipeline Schema Module
@@ -51,6 +51,7 @@ class PipelineSchema(BaseModel):
 
     Attributes:
         description: Optional description of the pipeline's purpose
+        event_schema: Pydantic model for validating incoming events
         start: The entry point Node class for the pipeline
         nodes: List of NodeConfig objects defining the pipeline structure
 
@@ -66,5 +67,6 @@ class PipelineSchema(BaseModel):
     """
 
     description: Optional[str] = None
+    event_schema: Type[BaseModel]
     start: Type[Node]
     nodes: List[NodeConfig]

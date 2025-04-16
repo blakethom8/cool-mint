@@ -30,7 +30,7 @@ class TaskContext(BaseModel):
         )
     """
 
-    event: Dict[str, Any] = Field(default_factory=dict, description="Original event")
+    event: Any
     nodes: Dict[str, Any] = Field(
         default_factory=dict,
         description="Stores results and state from each node's execution",

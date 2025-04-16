@@ -1,7 +1,7 @@
 import logging
 from abc import ABC
 from contextlib import contextmanager
-from typing import Dict, Optional, ClassVar, Type
+from typing import Dict, Optional, ClassVar, Type, Any
 
 from core.nodes.base import Node
 from core.nodes.router import BaseRouter
@@ -98,7 +98,7 @@ class Pipeline(ABC):
         """
         return node_class()
 
-    def run(self, event: Dict) -> TaskContext:
+    def run(self, event: Any) -> TaskContext:
         """Executes the pipeline for a given event.
 
         Args:
@@ -111,6 +111,10 @@ class Pipeline(ABC):
             Exception: Any exception that occurs during pipeline execution
         """
         task_context = TaskContext(event=event)
+
+        # Parse the raw event to the Pydantic schema defined in the PipelineSchema
+        task_context.event = self.pipeline_schema.event_schema(**event)
+
         task_context.metadata['nodes'] = self.nodes
         current_node_class = self.pipeline_schema.start
 

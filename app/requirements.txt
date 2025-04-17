@@ -4,8 +4,6 @@ celery==5.4.0
 fastapi==0.111.1
 graphviz==0.20.3
 instructor==1.4.0
-ipython==8.31.0
-pandas==2.2.3
 psycopg2-binary==2.9.9
 pydantic==2.10.4
 pydantic-settings==2.7.0

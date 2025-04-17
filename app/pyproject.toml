@@ -1,20 +1,14 @@
-[tool.black]
-line-length = 135
-target-version = ['py39']
-skip-string-normalization = false
-skip-magic-trailing-comma = false
-exclude = '''
-/(
-    \.venv
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.tox
-  | \.hg
-  | \.git
-  | \.svn
-  | \.ipynb_checkpoints
-  | dist
-  | build
-  | __pycache__
-)/
-'''
+[project]
+name = "genai-launchpad"
+version = "1.0.0"
+description = "GenAI Launchpad by Datalumina"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.15.2",
+    "celery>=5.5.1",
+    "fastapi>=0.115.12",
+    "instructor>=1.7.9",
+    "psycopg2-binary>=2.9.10",
+    "pydantic>=2.11.3",
+    "redis>=5.2.1",
+]

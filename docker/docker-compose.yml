@@ -12,6 +12,7 @@ services:
     restart: always
     volumes:
       - ./../app/:/app
+
 #  caddy:
 #    container_name: "${PROJECT_NAME}_caddy"
 #    env_file:
@@ -27,6 +28,7 @@ services:
 #      - /var/log/caddy:/var/log/caddy
 #      - caddy_config:/config
 #      - caddy_data:/data
+
   celery_worker:
     build:
       context: ..
@@ -35,9 +37,11 @@ services:
     depends_on:
       - database
       - redis
+      - api
     restart: always
     volumes:
       - ./../app:/app
+
   database:
     image: timescale/timescaledb-ha:pg16
     container_name: "${PROJECT_NAME}_database"
@@ -72,7 +76,6 @@ volumes:
   caddy_config:
   caddy_data:
   postgres_data:
-  postgres_data_test:
   redis_data:
 
 networks:

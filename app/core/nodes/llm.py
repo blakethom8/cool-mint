@@ -7,7 +7,7 @@ from pydantic import BaseModel
 """
 LLM Node Module
 
-This module defines the base interface for Language Model nodes in the pipeline.
+This module defines the base interface for Language Model nodes in the workflow.
 It provides a standardized way to integrate different LLM providers and implementations
 while maintaining consistent interaction patterns.
 """
@@ -17,7 +17,7 @@ class LLMNode(Node, ABC):
     """Abstract base class for Language Model nodes.
 
     LLMNode provides a standardized interface for implementing language model
-    interactions within a pipeline. It defines the interface for context preparation,
+    interactions within a workflow. It defines the interface for context preparation,
     completion generation, and result processing.
 
     Each LLM implementation should define its own ContextModel and ResponseModel
@@ -61,11 +61,11 @@ class LLMNode(Node, ABC):
     def get_context(self, task_context: TaskContext) -> ContextModel:
         """Prepares context data for the language model.
 
-        Transforms the pipeline's TaskContext into the specific format
+        Transforms the workflow's TaskContext into the specific format
         required by the LLM implementation.
 
         Args:
-            task_context: Current pipeline task context
+            task_context: Current workflow task context
 
         Returns:
             ContextModel containing prepared data for the LLM
@@ -83,7 +83,7 @@ class LLMNode(Node, ABC):
         4. Updates task context with results
 
         Args:
-            task_context: Current pipeline task context
+            task_context: Current workflow task context
 
         Returns:
             Updated TaskContext with LLM results

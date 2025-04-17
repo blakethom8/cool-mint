@@ -1,22 +1,22 @@
-# Pipeline Design and Implementation
+# Workflow Design and Implementation
 
-The pipeline system in GenAI Launchpad provides a structured way to implement AI workflows. This guide explains how to design, implement, and register pipelines for processing through the Celery worker system.
+The workflow system in GenAI Launchpad provides a structured way to implement AI workflows. This guide explains how to design, implement, and register workflows for processing through the Celery worker system.
 
-## Pipeline Architecture
+## Workflow Architecture
 
 ### Registry System (registry.py)
 
-The PipelineRegistry acts as a central hub for managing different pipeline implementations:
+The WorkflowRegistry acts as a central hub for managing different workflow implementations:
 
 ```python
-class PipelineRegistry:
-    pipelines: Dict[str, Type[Pipeline]] = {
-        "support": CustomerSupportPipeline,
-        "content": ContentAnalysisPipeline,
+class WorkflowRegistry:
+    workflows: Dict[str, Type[Workflow]] = {
+        "support": CustomerSupportWorkflow,
+        "content": ContentAnalysisWorkflow,
     }
 
     @staticmethod
-    def get_pipeline_type(event: EventSchema) -> str:
+    def get_workflow_type(event: EventSchema) -> str:
         # Implement your routing logic
         if "support" in event.data.get("type"):
             return "support"
@@ -25,19 +25,19 @@ class PipelineRegistry:
 
 This registry:
 
-- Maps event types to specific pipeline implementations
-- Provides dynamic pipeline selection based on event attributes
-- Enables easy addition of new pipeline types
+- Maps event types to specific workflow implementations
+- Provides dynamic workflow selection based on event attributes
+- Enables easy addition of new workflow types
 
-## Creating Pipelines
+## Creating Workflows
 
-### Basic Pipeline Structure
+### Basic Workflow Structure
 
-A typical pipeline consists of multiple nodes arranged in a DAG:
+A typical workflow consists of multiple nodes arranged in a DAG:
 
 ```python
-class ContentAnalysisPipeline(Pipeline):
-   pipeline_schema = PipelineSchema(
+class ContentAnalysisWorkflow(Workflow):
+   workflow_schema = WorkflowSchema(
       description="Analyzes content using AI",
       start=GuardrailsNode,
       nodes=[
@@ -93,7 +93,7 @@ class AnalyzeNode(LLMNode):
         llm = LLMFactory("openai")
         prompt = PromptManager.get_prompt(
             "extract",
-            pipeline="support",
+            workflow="support",
         )
         return llm.create_completion(
             response_model=self.ResponseModel,
@@ -117,7 +117,7 @@ class AnalyzeNode(LLMNode):
 ```
 
 4. **Parallel Node**:
-The nodes to be executed in parallel are defined in the pipeline schema.
+The nodes to be executed in parallel are defined in the workflow schema.
 ```python
 class GuardrailsNode(ParallelNode):
     def process(self, task_context: TaskContext) -> TaskContext:
@@ -144,7 +144,7 @@ class SummaryRoute(RouterNode):
 
 ## Worker Integration
 
-The Celery worker (tasks.py) handles pipeline execution:
+The Celery worker (tasks.py) handles workflow execution:
 
 ```python
 @celery_app.task(name="process_incoming_event")
@@ -153,16 +153,16 @@ def process_incoming_event(event_id: str):
         # Get event from database
         event = repository.get(id=event_id)
         
-        # Determine and execute pipeline
-        pipeline = PipelineRegistry.get_pipeline(event)
-        result = pipeline.run(event)
+        # Determine and execute workflow
+        workflow = WorkflowRegistry.get_workflow(event)
+        result = workflow.run(event)
         
         # Store results
         event.task_context = result.model_dump()
         repository.update(event)
 ```
 
-## Pipeline Design Best Practices
+## Workflow Design Best Practices
 
 ### 1. Node Granularity
 
@@ -198,7 +198,7 @@ class SummarizeNode(LLMNode):
 
 Place routers at decision points:
 ```python
-pipeline_schema = PipelineSchema(
+workflow_schema = WorkflowSchema(
     start=ValidateNode,
     nodes=[
         NodeConfig(node=ValidateNode, connections=[RouterNode]),
@@ -228,43 +228,43 @@ class ProcessingNode(Node):
         return context
 ```
 
-## Pipeline Organization
+## Workflow Organization
 
-Structure your pipelines folder:
+Structure your workflows folder:
 ```
-pipelines/
+workflows/
 ├── __init__.py
 ├── registry.py
 ├── support/
 │   ├── __init__.py
 │   ├── nodes.py
-│   └── pipeline.py
+│   └── workflow.py
 └── content/
     ├── __init__.py
     ├── nodes.py
-    └── pipeline.py
+    └── workflow.py
 ```
 
-## Testing Pipelines
+## Testing Workflows
 
 Create comprehensive tests:
 ```python
-def test_content_pipeline():
+def test_content_workflow():
     # Create test event
     event = EventSchema(type="content_analysis", data={...})
     
-    # Initialize pipeline
-    pipeline = ContentAnalysisPipeline()
+    # Initialize workflow
+    workflow = ContentAnalysisWorkflow()
     
-    # Run pipeline
-    result = pipeline.run(event)
+    # Run workflow
+    result = workflow.run(event)
     
     # Assert expected results
     assert "AnalyzeNode" in result.nodes
     assert result.nodes["AnalyzeNode"]["sentiment"] == "positive"
 ```
 
-Remember that well-designed pipelines are:
+Remember that well-designed workflows are:
 
 - Easy to understand
 - Maintainable
@@ -272,18 +272,18 @@ Remember that well-designed pipelines are:
 - Reusable
 - Error-resistant
 
-The pipeline system provides the structure - your implementation provides the intelligence.
+The workflow system provides the structure - your implementation provides the intelligence.
 
-## Pipeline Strategy: Single vs. Multiple
+## Workflow Strategy: Single vs. Multiple
 
-### When to Use a Single Pipeline
+### When to Use a Single Workflow
 
-A single pipeline is often sufficient when:
+A single workflow is often sufficient when:
 
 1. **Common Processing Flow**: Your application handles variations of the same basic workflow:
 ```python
-class ContentPipeline(Pipeline):
-    pipeline_schema = PipelineSchema(
+class ContentWorkflow(Workflow):
+    workflow_schema = WorkflowSchema(
         start=ValidateNode,
         nodes=[
             NodeConfig(node=ValidateNode, connections=[RouterNode]),
@@ -329,37 +329,37 @@ class EnrichmentNode(Node):
         return context
 ```
 
-### When to Use Multiple Pipelines
+### When to Use Multiple Workflows
 
-Consider multiple pipelines when:
+Consider multiple workflows when:
 
 1. **Distinct Business Domains**:
 ```python
-class CustomerSupportPipeline(Pipeline):
+class CustomerSupportWorkflow(Workflow):
     # Handle customer inquiries
-    pipeline_schema = PipelineSchema(...)
+    workflow_schema = WorkflowSchema(...)
 
-class ContentModerationPipeline(Pipeline):
+class ContentModerationWorkflow(Workflow):
     # Handle content moderation
-    pipeline_schema = PipelineSchema(...)
+    workflow_schema = WorkflowSchema(...)
 ```
 
 2. **Different Security Requirements**:
 ```python
-class PublicPipeline(Pipeline):
+class PublicWorkflow(Workflow):
     # Public-facing processing
-    pipeline_schema = PipelineSchema(...)
+    workflow_schema = WorkflowSchema(...)
 
-class InternalPipeline(Pipeline):
+class InternalWorkflow(Workflow):
     # Internal, privileged processing
-    pipeline_schema = PipelineSchema(...)
+    workflow_schema = WorkflowSchema(...)
 ```
 
 3. **Completely Different Workflows**:
 ```python
-class DocumentProcessingPipeline(Pipeline):
+class DocumentProcessingWorkflow(Workflow):
     # Document-specific workflow
-    pipeline_schema = PipelineSchema(
+    workflow_schema = WorkflowSchema(
         nodes=[
             NodeConfig(node=OCRNode),
             NodeConfig(node=ClassificationNode),
@@ -367,9 +367,9 @@ class DocumentProcessingPipeline(Pipeline):
         ]
     )
 
-class ChatPipeline(Pipeline):
+class ChatWorkflow(Workflow):
     # Conversational workflow
-    pipeline_schema = PipelineSchema(
+    workflow_schema = WorkflowSchema(
         nodes=[
             NodeConfig(node=ContextNode),
             NodeConfig(node=ResponseNode),
@@ -380,7 +380,7 @@ class ChatPipeline(Pipeline):
 
 ### Hybrid Approach
 
-You can also use a hybrid approach where you have multiple pipelines that share common components:
+You can also use a hybrid approach where you have multiple workflows that share common components:
 
 ```python
 # Shared nodes module
@@ -390,9 +390,9 @@ class CommonNodes:
             # Common validation logic
             return context
 
-# Multiple pipelines using shared components
-class Pipeline1(Pipeline):
-    pipeline_schema = PipelineSchema(
+# Multiple workflows using shared components
+class Workflow1(Workflow):
+    workflow_schema = WorkflowSchema(
         start=CommonNodes.ValidationNode,
         nodes=[
             NodeConfig(node=CommonNodes.ValidationNode),
@@ -400,8 +400,8 @@ class Pipeline1(Pipeline):
         ]
     )
 
-class Pipeline2(Pipeline):
-    pipeline_schema = PipelineSchema(
+class Workflow2(Workflow):
+    workflow_schema = WorkflowSchema(
         start=CommonNodes.ValidationNode,
         nodes=[
             NodeConfig(node=CommonNodes.ValidationNode),
@@ -412,22 +412,22 @@ class Pipeline2(Pipeline):
 
 ### Decision Framework
 
-When deciding on pipeline structure, consider:
+When deciding on workflow structure, consider:
 
 1. **Complexity Management**:
-   - Single Pipeline: When variations are minimal
-   - Multiple Pipelines: When complexity becomes hard to manage in one pipeline
+   - Single Workflow: When variations are minimal
+   - Multiple Workflows: When complexity becomes hard to manage in one workflow
 
 2. **Maintenance**:
-   - Single Pipeline: Easier to maintain when logic is related
-   - Multiple Pipelines: Better when different teams manage different workflows
+   - Single Workflow: Easier to maintain when logic is related
+   - Multiple Workflows: Better when different teams manage different workflows
 
 3. **Performance**:
-   - Single Pipeline: Can optimize shared resources
-   - Multiple Pipelines: Can scale different workflows independently
+   - Single Workflow: Can optimize shared resources
+   - Multiple Workflows: Can scale different workflows independently
 
 4. **Security**:
-   - Single Pipeline: When security context is uniform
-   - Multiple Pipelines: When different security contexts are needed
+   - Single Workflow: When security context is uniform
+   - Multiple Workflows: When different security contexts are needed
 
-Remember: Start with a single pipeline and split only when necessary. It's easier to split a pipeline later than to combine multiple pipelines.
+Remember: Start with a single workflow and split only when necessary. It's easier to split a workflow later than to combine multiple workflows.

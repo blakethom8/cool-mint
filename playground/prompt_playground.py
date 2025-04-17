@@ -14,7 +14,5 @@ This playground is used to test the PromptManager and the prompts themselves.
 # Test support prompt
 # --------------------------------------------------------------
 
-support_prompt = PromptManager.get_prompt(
-    "template", pipeline="", ticket={}
-)
+support_prompt = PromptManager.get_prompt("template", workflow="", ticket={})
 print(support_prompt)

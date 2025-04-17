@@ -67,11 +67,11 @@ class DocumentAnalysisEvent(BaseModel):
 
 The schema definitions are crucial as they form the contract between your API and its clients, ensuring data consistency and providing automatic API documentation.
 
-## Building Your AI Pipelines
+## Building Your AI Workflows
 
-With your events and schemas defined, you can begin creating the pipelines that will process these events. In `app/pipelines/`, create a new directory for each major functionality area. Each pipeline should be composed of focused, reusable nodes that handle specific aspects of processing.
+With your events and schemas defined, you can begin creating the workflows that will process these events. In `app/workflows/`, create a new directory for each major functionality area. Each workflow should be composed of focused, reusable nodes that handle specific aspects of processing.
 
-For example, a document analysis pipeline might include:
+For example, a document analysis workflow might include:
 
 - Text extraction node
 - Classification node
@@ -94,30 +94,30 @@ The playground directory is your laboratory for testing and refining your AI int
 
 - Test different prompt strategies
 - Experiment with various LLM parameters
-- Validate pipeline behaviors
+- Validate workflow behaviors
 - Measure performance and costs
 
 The playground provides a fast feedback loop for developing and testing your AI components before integrating them into your main application flow.
 
 ## Testing and Validation
 
-As you develop your application, maintain a comprehensive suite of test events in `requests/events/`. Use the testing utilities to validate your pipelines:
+As you develop your application, maintain a comprehensive suite of test events in `requests/events/`. Use the testing utilities to validate your workflows:
 
 ```python
 from playground.utils import EventFactory
-from pipelines.your_pipeline import YourPipeline
+from workflows.your_workflow import YourWorkflow
 
 
-def test_pipeline():
+def test_workflow():
     event = EventFactory.create_event("your_test_event")
-    pipeline = YourPipeline()
-    result = pipeline.run(event)
+    workflow = YourWorkflow()
+    result = workflow.run(event)
     assert result.nodes["AnalysisNode"]["status"] == "success"
 ```
 
 ## Iterative Development
 
-Development with the GenAI Launchpad is an iterative process. Start with a minimal viable pipeline and gradually enhance it based on:
+Development with the GenAI Launchpad is an iterative process. Start with a minimal viable workflow and gradually enhance it based on:
 
 - Performance metrics
 - User feedback

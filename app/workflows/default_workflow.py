@@ -1,12 +1,12 @@
 from api.event_schema import DefaultEventSchema
-from core.pipeline import Pipeline
-from core.schema import PipelineSchema, NodeConfig
-from pipelines.default_pipeline_nodes.default_node import DefaultNode
+from core.workflow import Workflow
+from core.schema import WorkflowSchema, NodeConfig
+from workflows.default_workflow_nodes.default_node import DefaultNode
 
 
-class DefaultPipeline(Pipeline):
-    pipeline_schema = PipelineSchema(
-        description="Empty default pipeline",
+class DefaultWorkflow(Workflow):
+    workflow_schema = WorkflowSchema(
+        description="Empty default workflow",
         event_schema=DefaultEventSchema,
         start=DefaultNode,
         nodes=[

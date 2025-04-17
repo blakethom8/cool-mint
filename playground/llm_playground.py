@@ -19,6 +19,7 @@ llm = LLMFactory(provider="openai")
 # Test your LLM with structured output
 # --------------------------------------------------------------
 
+
 class CustomerIntent(str, Enum):
     GENERAL_QUESTION = "general/question"
     PRODUCT_QUESTION = "product/question"

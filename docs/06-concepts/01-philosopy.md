@@ -23,11 +23,11 @@ from prefect import flow
 
 @flow
 def my_prefect_flow(event_data):
-    # Create pipeline
-    pipeline = MyCustomPipeline()
+    # Create workflow
+    workflow = MyCustomWorkflow()
     
     # Process event
-    result = pipeline.run(event_data)
+    result = workflow.run(event_data)
     
     # Store results
     store_results(result)
@@ -49,7 +49,7 @@ class EnhancedTaskContext(TaskContext):
 
 3. **Custom Validation Logic**:
 ```python
-class CustomPipelineValidator(PipelineValidator):
+class CustomWorkflowValidator(WorkflowValidator):
     def validate(self):
         super().validate()
         self._validate_custom_rules()
@@ -85,7 +85,7 @@ The entire system hinges on the Chain of Responsibility pattern, which you can l
 
 ```python
 # Example of Chain of Responsibility in action
-class Pipeline:
+class Workflow:
     def run(self, event: EventSchema) -> TaskContext:
         context = TaskContext(event=event)
         

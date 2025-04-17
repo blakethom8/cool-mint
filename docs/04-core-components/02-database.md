@@ -81,7 +81,7 @@ and Object-Relational Mapping (ORM) library.
 - Version Control Database Schemas: Alembic keeps track of different versions of your database schema, enabling you to upgrade or downgrade to any version as needed.
 - Generate Migration Scripts: It can automatically generate migration scripts by comparing your current database schema with your SQLAlchemy models. These scripts describe the changes to be applied, such as adding a new table or modifying a column.
 - Apply Migrations Consistently: Using Alembic ensures that all developers on a project apply database changes in the same order and manner, reducing discrepancies between development environments.
-- Integrate with CI/CD Pipelines: Alembic can be incorporated into continuous integration and deployment workflows to automate database migrations during deployment.
+- Integrate with CI/CD Workflows: Alembic can be incorporated into continuous integration and deployment workflows to automate database migrations during deployment.
 
 ### Key Components
 

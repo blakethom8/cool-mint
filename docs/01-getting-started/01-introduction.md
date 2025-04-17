@@ -8,7 +8,7 @@ handles all the complex infrastructure pieces developers typically need to build
 
 At its core, GenAI Launchpad is an architectural framework that provides:
 
-1. **Event-Driven Foundation**: Every interaction in your application flows through a consistent event pipeline:
+1. **Event-Driven Foundation**: Every interaction in your application flows through a consistent event workflow:
     - Events enter through FastAPI endpoints
     - Get persisted in PostgreSQL
     - Process through Celery workers
@@ -37,13 +37,13 @@ At its core, GenAI Launchpad is an architectural framework that provides:
 
 ## What GenAI Launchpad Is Not
 
-- **Not an Agent Framework**: While you can build agent-like systems using our pipeline architecture, GenAI Launchpad
+- **Not an Agent Framework**: While you can build agent-like systems using our workflow architecture, GenAI Launchpad
   isn't primarily an agent framework like AutoGPT or LangChain Agents. Instead, it provides the infrastructure to build
   any type of AI application, including but not limited to agents.
 
-- **Not Opinionated About AI Logic**: We don't dictate how you should implement your AI logic. Our pipeline system is
+- **Not Opinionated About AI Logic**: We don't dictate how you should implement your AI logic. Our workflow system is
   flexible enough to work with any approach:
-    - Use our built-in pipeline system
+    - Use our built-in workflow system
     - Integrate LangChain
     - Implement LlamaIndex
     - Build custom solutions
@@ -52,7 +52,7 @@ At its core, GenAI Launchpad is an architectural framework that provides:
     - Swap PostgreSQL for MongoDB
     - Replace Redis with RabbitMQ
     - Use different AI providers
-    - Implement custom pipeline processors
+    - Implement custom workflow processors
 
 ## Real-World Usage
 
@@ -60,7 +60,7 @@ The GenAI Launchpad excels at building:
 
 - Content Analysis Systems
 - AI-Powered Workflows
-- Document Processing Pipelines
+- Document Processing Workflows
 - Custom ChatGPT-like Applications
 - AI Integration APIs
 - Automated Content Generation

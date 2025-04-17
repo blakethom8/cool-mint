@@ -11,7 +11,6 @@ from celery_worker.config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
-from pipelines.registry import PipelineType
 
 """
 Event Submission Endpoint Module
@@ -37,8 +36,8 @@ router = APIRouter()
 
 @router.post("/", dependencies=[])
 def handle_event(
-        data: DefaultEventSchema,
-        session: Session = Depends(db_session),
+    data: DefaultEventSchema,
+    session: Session = Depends(db_session),
 ) -> Response:
     """Handles incoming event submissions.
 
@@ -65,13 +64,13 @@ def handle_event(
     event = Event(data=data.model_dump(mode="json"))
     repository.create(obj=event)
 
-    # Get the pipeline type
-    pipeline_type = get_pipeline_type(event.data)
+    # Get the workflow type
+    workflow_type = get_workflow_type(event.data)
 
     # Queue processing task
     task_id = celery_app.send_task(
         "process_incoming_event",
-        args=[str(event.id), pipeline_type],
+        args=[str(event.id), workflow_type],
     )
 
     # Return acceptance response
@@ -81,8 +80,8 @@ def handle_event(
     )
 
 
-def get_pipeline_type(event_data: Dict) -> str:
+def get_workflow_type(event_data: Dict) -> str:
     """
-        Implement your logic to determine the pipeline type based on the event data.
+    Implement your logic to determine the workflow type based on the event data.
     """
-    return PipelineType.DEFAULT_PIPELINE.value
+    return ""

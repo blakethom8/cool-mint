@@ -1,6 +1,6 @@
 # Worker System
 
-The GenAI Launchpad uses Celery for asynchronous task processing, implementing a robust event processing pipeline that separates API request handling from actual task execution.
+The GenAI Launchpad uses Celery for asynchronous task processing, implementing a robust event processing workflow that separates API request handling from actual task execution.
 
 ## Architecture Overview
 
@@ -18,7 +18,7 @@ sequenceDiagram
     API->>Client: 202 Accepted
     Celery Worker->>Redis: Poll for Tasks
     Celery Worker->>Database: Get Event
-    Celery Worker->>Pipeline: Process Event
+    Celery Worker->>Workflow: Process Event
     Celery Worker->>Database: Store Results
 ```
 
@@ -136,10 +136,10 @@ def process_incoming_event(event_id: str):
         
         # Convert to schema and process
         event = EventSchema(**db_event.data)
-        pipeline = PipelineRegistry.get_pipeline(event)
+        workflow = WorkflowRegistry.get_workflow(event)
         
-        # Execute pipeline and store results
-        task_context = pipeline.run(event).model_dump(mode="json")
+        # Execute workflow and store results
+        task_context = workflow.run(event).model_dump(mode="json")
         db_event.task_context = task_context
         repository.update(obj=db_event)
 ```
@@ -147,6 +147,6 @@ def process_incoming_event(event_id: str):
 This implementation:
 
 - Retrieves event data from database
-- Determines appropriate pipeline
-- Executes processing pipeline
+- Determines appropriate workflow
+- Executes processing workflow
 - Stores results back to database

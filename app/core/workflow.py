@@ -5,34 +5,34 @@ from typing import Dict, Optional, ClassVar, Type, Any
 
 from core.nodes.base import Node
 from core.nodes.router import BaseRouter
-from core.schema import PipelineSchema, NodeConfig
+from core.schema import WorkflowSchema, NodeConfig
 from core.task import TaskContext
-from core.validate import PipelineValidator
+from core.validate import WorkflowValidator
 
 """
-Pipeline Orchestration Module
+Workflow Orchestration Module
 
-This module implements the core pipeline functionality.
-It provides a flexible framework for defining and executing pipelines with multiple
+This module implements the core workflow functionality.
+It provides a flexible framework for defining and executing workflows with multiple
 nodes and routing logic.
 """
 
 
-class Pipeline(ABC):
-    """Abstract base class for defining processing pipelines.
+class Workflow(ABC):
+    """Abstract base class for defining processing workflows.
 
-    The Pipeline class provides a framework for creating processing pipelines
-    with multiple nodes and routing logic. Each pipeline must define its structure
-    using a PipelineSchema.
+    The Workflow class provides a framework for creating processing workflows
+    with multiple nodes and routing logic. Each workflow must define its structure
+    using a WorkflowSchema.
 
     Attributes:
-        pipeline_schema: Class variable defining the pipeline's structure and flow
-        validator: Validates the pipeline schema
+        workflow_schema: Class variable defining the workflow's structure and flow
+        validator: Validates the workflow schema
         nodes: Dictionary mapping node classes to their instances
 
     Example:
-        class SupportPipeline(Pipeline):
-            pipeline_schema = PipelineSchema(
+        class SupportWorkflow(Workflow):
+            workflow_schema = WorkflowSchema(
                 start=AnalyzeNode,
                 nodes=[
                     NodeConfig(node=AnalyzeNode, connections=[RouterNode]),
@@ -41,11 +41,11 @@ class Pipeline(ABC):
             )
     """
 
-    pipeline_schema: ClassVar[PipelineSchema]
+    workflow_schema: ClassVar[WorkflowSchema]
 
     def __init__(self):
-        """Initializes the pipeline by validating schema and creating nodes."""
-        self.validator = PipelineValidator(self.pipeline_schema)
+        """Initializes the workflow by validating schema and creating nodes."""
+        self.validator = WorkflowValidator(self.workflow_schema)
         self.validator.validate()
         self.nodes: Dict[Type[Node], NodeConfig] = self._initialize_nodes()
 
@@ -72,13 +72,13 @@ class Pipeline(ABC):
             logging.info(f"Finished node: {node_name}")
 
     def _initialize_nodes(self) -> Dict[Type[Node], NodeConfig]:
-        """Initializes all nodes defined in the pipeline schema.
+        """Initializes all nodes defined in the workflow schema.
 
         Returns:
             Dictionary mapping node classes to their instances
         """
         nodes = {}
-        for node_config in self.pipeline_schema.nodes:
+        for node_config in self.workflow_schema.nodes:
             nodes[node_config.node] = node_config
             for connected_node in node_config.connections:
                 if connected_node not in nodes:
@@ -99,24 +99,24 @@ class Pipeline(ABC):
         return node_class()
 
     def run(self, event: Any) -> TaskContext:
-        """Executes the pipeline for a given event.
+        """Executes the workflow for a given event.
 
         Args:
-            event: The event to process through the pipeline
+            event: The event to process through the workflow
 
         Returns:
-            TaskContext containing the results of pipeline execution
+            TaskContext containing the results of workflow execution
 
         Raises:
-            Exception: Any exception that occurs during pipeline execution
+            Exception: Any exception that occurs during workflow execution
         """
         task_context = TaskContext(event=event)
 
-        # Parse the raw event to the Pydantic schema defined in the PipelineSchema
-        task_context.event = self.pipeline_schema.event_schema(**event)
+        # Parse the raw event to the Pydantic schema defined in the WorkflowSchema
+        task_context.event = self.workflow_schema.event_schema(**event)
 
-        task_context.metadata['nodes'] = self.nodes
-        current_node_class = self.pipeline_schema.start
+        task_context.metadata["nodes"] = self.nodes
+        current_node_class = self.workflow_schema.start
 
         while current_node_class:
             current_node = self.nodes[current_node_class].node
@@ -126,13 +126,13 @@ class Pipeline(ABC):
             current_node_class = self._get_next_node_class(
                 current_node_class, task_context
             )
-        task_context.metadata.pop('nodes')
+        task_context.metadata.pop("nodes")
         return task_context
 
     def _get_next_node_class(
-            self, current_node_class: Type[Node], task_context: TaskContext
+        self, current_node_class: Type[Node], task_context: TaskContext
     ) -> Optional[Type[Node]]:
-        """Determines the next node to execute in the pipeline.
+        """Determines the next node to execute in the workflow.
 
         Args:
             current_node_class: The class of the current node
@@ -142,7 +142,7 @@ class Pipeline(ABC):
             The class of the next node to execute, or None if at the end
         """
         node_config = next(
-            (nc for nc in self.pipeline_schema.nodes if nc.node == current_node_class),
+            (nc for nc in self.workflow_schema.nodes if nc.node == current_node_class),
             None,
         )
 
@@ -156,7 +156,7 @@ class Pipeline(ABC):
         return node_config.connections[0]
 
     def _handle_router(
-            self, router: BaseRouter, task_context: TaskContext
+        self, router: BaseRouter, task_context: TaskContext
     ) -> Optional[Type[Node]]:
         """Handles routing logic for router nodes.
 

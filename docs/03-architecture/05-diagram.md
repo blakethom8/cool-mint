@@ -16,10 +16,10 @@ graph TB
 
     subgraph Event Processing
         EH["fa:fa-cogs Event Handler"]:::handlerStyle
-        PR["fa:fa-stream Pipeline Registry"]:::pipelineStyle
-        subgraph Pipeline
-            PN1["fa:fa-dice-one Node 1"]:::pipelineNode
-            PN2["fa:fa-dice-two Node 2"]:::pipelineNode
+        PR["fa:fa-stream Workflow Registry"]:::workflowStyle
+        subgraph Workflow
+            PN1["fa:fa-dice-one Node 1"]:::workflowNode
+            PN2["fa:fa-dice-two Node 2"]:::workflowNode
             PN3["fa:fa-random Router Node"]:::routerStyle
             PN4["fa:fa-brain LLM Node"]:::llmNode
             PN1 --> PN2
@@ -61,11 +61,11 @@ graph TB
     EH -->|Queue| RD
     RD -->|Process| CW      
     CW -->|Load| PR
-    PR -->|Execute| Pipeline
+    PR -->|Execute| Workflow
     PN4 -->|Request| LF
     LF -->|Load| PM
     LF -->|Route| OAI & ANT & LMA
-    Pipeline -->|Update| ET
+    Workflow -->|Update| ET
 
     %% Styles
     classDef clientStyle fill:#FFFFFF,stroke:#00A1E4,stroke-width:2px;
@@ -73,8 +73,8 @@ graph TB
     classDef validationStyle fill:#C5E1A5,stroke:#558B2F,stroke-width:2px;
     classDef schemaStyle fill:#FFE082,stroke:#FFB300,stroke-width:2px;
     classDef handlerStyle fill:#F48FB1,stroke:#AD1457,stroke-width:2px;
-    classDef pipelineStyle fill:#BBDEFB,stroke:#1E88E5,stroke-width:2px;
-    classDef pipelineNode fill:#C5CAE9,stroke:#303F9F,stroke-width:2px;
+    classDef workflowStyle fill:#BBDEFB,stroke:#1E88E5,stroke-width:2px;
+    classDef workflowNode fill:#C5CAE9,stroke:#303F9F,stroke-width:2px;
     classDef routerStyle fill:#FFCDD2,stroke:#D32F2F,stroke-width:2px;
     classDef llmNode fill:#D7CCC8,stroke:#795548,stroke-width:2px;
     classDef queueStyle fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px;

@@ -36,7 +36,7 @@ This pattern guarantees that database sessions are properly managed regardless o
 
 ### Event Schema (event_schema.py)
 
-Event schemas define the contract between API clients and the system. Using Pydantic models, we enforce strict validation of incoming requests before they enter the processing pipeline. The schema system is extensible, allowing you to define custom validation rules for different event types.
+Event schemas define the contract between API clients and the system. Using Pydantic models, we enforce strict validation of incoming requests before they enter the processing workflow. The schema system is extensible, allowing you to define custom validation rules for different event types.
 
 #### Pydantic Model Integration
 
@@ -112,7 +112,7 @@ Through the repository pattern, the API layer persists events while maintaining 
 The API layer queues tasks for background processing using Celery. This integration point is crucial for the system's event-driven nature, allowing for asynchronous processing of potentially long-running operations.
 
 ### Validation Integration
-FastAPI's validation system works in concert with Pydantic models to ensure data integrity before events enter the processing pipeline.
+FastAPI's validation system works in concert with Pydantic models to ensure data integrity before events enter the processing workflow.
 
 ## Extending the API
 
@@ -121,6 +121,6 @@ To add new endpoints, follow these steps:
 1. Define new schemas in event_schema.py
 2. Create endpoint handlers in endpoint.py
 3. Update router configuration if needed
-4. Implement corresponding pipeline processors
+4. Implement corresponding workflow processors
 
 The modular design makes it straightforward to extend the API while maintaining consistency and reliability.

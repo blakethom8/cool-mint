@@ -21,7 +21,7 @@ sequenceDiagram
     API->>Client: 202 Accepted
     Celery Worker->>Redis: Poll for Tasks
     Celery Worker->>Database: Get Event
-    Celery Worker->>Pipeline: Process Event
+    Celery Worker->>Workflow: Process Event
     Celery Worker->>Database: Store Results
 ```
 
@@ -33,9 +33,9 @@ The Event Handler serves as the system's traffic controller. It performs two cri
 
 ### Asynchronous Processing
 
-The queuing system, built on Redis and Celery, forms the backbone of our asynchronous processing capabilities. Celery workers continuously monitor the queues, picking up events and routing them through appropriate processing pipelines. This architecture allows for horizontal scaling – simply add more workers when processing demands increase.
+The queuing system, built on Redis and Celery, forms the backbone of our asynchronous processing capabilities. Celery workers continuously monitor the queues, picking up events and routing them through appropriate processing workflows. This architecture allows for horizontal scaling – simply add more workers when processing demands increase.
 
-Each pipeline is composed of modular nodes that can be assembled like building blocks. A typical pipeline might include:
+Each workflow is composed of modular nodes that can be assembled like building blocks. A typical workflow might include:
 
 - Data transformation nodes
 - Business logic nodes
@@ -48,7 +48,7 @@ The AI services layer is particularly sophisticated, featuring a LLM Factory tha
 
 ### Vector Storage and Retrieval
 
-For applications requiring semantic search or similarity matching, the storage layer includes PostgreSQL with pgvector extension. This enables efficient storage and retrieval of high-dimensional vectors, essential for modern AI applications. The vector store is seamlessly integrated with the event processing pipeline, allowing for real-time updates to your vector index.
+For applications requiring semantic search or similarity matching, the storage layer includes PostgreSQL with pgvector extension. This enables efficient storage and retrieval of high-dimensional vectors, essential for modern AI applications. The vector store is seamlessly integrated with the event processing workflow, allowing for real-time updates to your vector index.
 
 ### Error Handling and Resilience
 
@@ -61,11 +61,11 @@ The system is designed with failure in mind. Each component includes robust erro
 
 ## Extensibility and Customization
 
-While GenAI Launchpad provides a complete foundation, it's designed for extensibility. The Pipeline Registry allows you to register custom processing nodes, and the LLM Factory can be extended to support new AI providers. The event-driven architecture means you can add new capabilities without modifying existing code.
+While GenAI Launchpad provides a complete foundation, it's designed for extensibility. The Workflow Registry allows you to register custom processing nodes, and the LLM Factory can be extended to support new AI providers. The event-driven architecture means you can add new capabilities without modifying existing code.
 
 ## Monitoring and Observability
 
-The architecture includes comprehensive monitoring points throughout the pipeline. Every event is tracked from ingestion to completion, with timing and status information stored in PostgreSQL. This enables detailed analysis of system performance and helps identify bottlenecks or issues before they impact users.
+The architecture includes comprehensive monitoring points throughout the workflow. Every event is tracked from ingestion to completion, with timing and status information stored in PostgreSQL. This enables detailed analysis of system performance and helps identify bottlenecks or issues before they impact users.
 
 ## Deployment Considerations
 

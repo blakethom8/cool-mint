@@ -20,10 +20,10 @@ class EventFactory:
     """Factory class for creating and managing event objects.
 
     This module provides a utility for loading and creating test events during
-    local development and pipeline testing. It allows developers to:
-    1. Bypass the API and Celery worker for direct pipeline testing
+    local development and workflow testing. It allows developers to:
+    1. Bypass the API and Celery worker for direct workflow testing
     2. Load predefined test events from JSON files
-    3. Evaluate pipeline behavior with known test cases
+    3. Evaluate workflow behavior with known test cases
 
 
     The factory loads events from a predefined directory structure and maintains

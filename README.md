@@ -4,7 +4,7 @@ With AI innovation moving beyond the speed of light, your time to develop is now
 
 ## 🚀 Introduction
 
-Welcome to the GenAI Launchpad – your all-in-one repository for building powerful, scalable Generative AI applications. Whether you’re prototyping or deploying at scale, this Docker-based setup has you covered with everything from event-driven architecture to seamless AI pipeline integration.
+Welcome to the GenAI Launchpad – your all-in-one repository for building powerful, scalable Generative AI applications. Whether you’re prototyping or deploying at scale, this Docker-based setup has you covered with everything from event-driven architecture to seamless AI workflow integration.
 
 No need to start from scratch or waste time on repetitive configurations. The GenAI Launchpad is engineered to get you up and running fast, with a flexible design that fits your workflow – all while keeping things production-ready from day one.
 
@@ -31,7 +31,7 @@ All services are containerized using Docker, ensuring consistency across develop
 ## ⭐ Key Features
 
 - **Event-Driven Architecture**: Built-in support for designing and implementing event-driven systems.
-- **AI Pipeline Support**: Pre-configured setup for integrating AI models and pipelines.
+- **AI Workflow Support**: Pre-configured setup for integrating AI models and workflows.
 - **Scalability**: Designed with scalability in mind, allowing easy expansion as your application grows.
 - **Flexibility**: Modular architecture that allows for easy customization and extension.
 - **Production-Ready**: Includes essential components for a production environment, including logging, monitoring, and security features.
@@ -51,22 +51,22 @@ The Launchpad follows a logical, scalable, and reasonably standardized project s
 │   ├── alembic            # Database migration scripts
 │   ├── api                # API endpoints and routers
 │   ├── config             # Configuration files
-│   ├── core               # Components for pipeline and task processing
+│   ├── core               # Components for workflow and task processing
 │   ├── database           # Database models and utilities
-│   ├── pipelines          # AI pipeline definitions
+│   ├── workflows          # AI workflow definitions
 │   ├── prompts            # Prompt templates for AI models
 │   ├── services           # Business logic and services
 │   ├── tasks              # Background task definitions
 │   └── utils              # Utility functions and helpers
 ├── docker                 # Docker configuration files
 ├── docs                   # Project documentation
-├── playground             # Run experiments for pipeline design
+├── playground             # Run experiments for workflow design
 └── requests               # Event definitions and handlers
 ```
 
 ## 🛠️ Development Workflow
 
-The GenAI Launchpad follows a structured development approach that emphasizes clean architecture and iterative development. Starting with the boilerplate branch, developers can quickly set up their environment, define events, create schemas, and build AI pipelines. The platform includes a playground for experimentation and comprehensive testing utilities to ensure robust implementation.
+The GenAI Launchpad follows a structured development approach that emphasizes clean architecture and iterative development. Starting with the boilerplate branch, developers can quickly set up their environment, define events, create schemas, and build AI workflows. The platform includes a playground for experimentation and comprehensive testing utilities to ensure robust implementation.
 
 For detailed instructions, see our [Development Workflow Guide](docs/04-guides/06-development-workflow.md).
 

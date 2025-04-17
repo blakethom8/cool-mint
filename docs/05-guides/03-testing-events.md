@@ -1,6 +1,6 @@
 # Event Testing System
 
-The GenAI Launchpad provides a comprehensive event testing system that enables developers to test pipelines both locally and through the API. This system consists of two main components: the EventFactory for local testing and a send_event utility for API testing.
+The GenAI Launchpad provides a comprehensive event testing system that enables developers to test workflows both locally and through the API. This system consists of two main components: the EventFactory for local testing and a send_event utility for API testing.
 
 ## Event Storage
 
@@ -57,23 +57,23 @@ class EventFactory:
         return EventSchema(**event_data)
 ```
 
-## Local Pipeline Testing
+## Local Workflow Testing
 
-You can use the EventFactory to test pipelines directly without going through the API:
+You can use the EventFactory to test workflows directly without going through the API:
 
 ```python
 # Test script example
 from playground.utils import EventFactory
-from pipelines.support import SupportPipeline
+from workflows.support import SupportWorkflow
 
 
-def test_support_pipeline():
+def test_support_workflow():
     # Create test event
     event = EventFactory.create_event("support_ticket")
 
-    # Initialize and run pipeline
-    pipeline = SupportPipeline()
-    result = pipeline.run(event)
+    # Initialize and run workflow
+    workflow = SupportWorkflow()
+    result = workflow.run(event)
 
     # Validate results
     assert result.nodes["AnalyzeNode"]["intent"] == "account_access"
@@ -120,20 +120,20 @@ The results will be stored in the database for you to review. Please note that t
 }
 ```
 
-2. **Local Pipeline Testing**:
+2. **Local Workflow Testing**:
 
 ```python
-# test_pipeline.py
+# test_workflow.py
 from playground.utils import EventFactory
 
 
-def test_pipeline():
+def test_workflow():
     # Load test event
     event = EventFactory.create_event("test_event")
 
-    # Run pipeline
-    pipeline = YourPipeline()
-    result = pipeline.run(event)
+    # Run workflow
+    workflow = YourWorkflow()
+    result = workflow.run(event)
 
     # Validate results
     print(result.nodes)
@@ -180,7 +180,7 @@ Create events for different scenarios:
 # Test different event types
 for event_key in EventFactory.get_all_event_keys():
     event = EventFactory.create_event(event_key)
-    result = pipeline.run(event)
+    result = workflow.run(event)
     validate_result(result)
 ```
 
@@ -188,19 +188,19 @@ for event_key in EventFactory.get_all_event_keys():
 
 1. **Local Development**:
 ```python
-# Quick pipeline testing
+# Quick workflow testing
 event = EventFactory.create_event("your_test_event")
-pipeline = YourPipeline()
-result = pipeline.run(event)
+workflow = YourWorkflow()
+result = workflow.run(event)
 ```
 
 2. **Result Validation**:
 ```python
-# Validate pipeline results
-def validate_pipeline_result(result):
+# Validate workflow results
+def validate_workflow_result(result):
     assert "AnalyzeNode" in result.nodes
     assert isinstance(result.nodes["AnalyzeNode"], dict)
     assert "confidence" in result.nodes["AnalyzeNode"]
 ```
 
-The event testing system provides a flexible and robust way to develop and test your AI pipelines, whether you're working locally or testing the complete system through the API.
+The event testing system provides a flexible and robust way to develop and test your AI workflows, whether you're working locally or testing the complete system through the API.

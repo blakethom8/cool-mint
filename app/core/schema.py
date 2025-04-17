@@ -5,19 +5,19 @@ from pydantic import BaseModel, Field
 from core.nodes.base import Node
 
 """
-Pipeline Schema Module
+Workflow Schema Module
 
-This module defines the schema classes used to configure pipeline structures.
-It provides a type-safe way to define node connections and pipeline layouts
+This module defines the schema classes used to configure workflow structures.
+It provides a type-safe way to define node connections and workflow layouts
 using Pydantic models.
 """
 
 
 class NodeConfig(BaseModel):
-    """Configuration model for pipeline nodes.
+    """Configuration model for workflow nodes.
 
     NodeConfig defines the structure and behavior of a single node within
-    a pipeline, including its connections to other nodes and routing properties.
+    a workflow, including its connections to other nodes and routing properties.
 
     Attributes:
         node: The Node class to be instantiated
@@ -43,21 +43,21 @@ class NodeConfig(BaseModel):
     parallel_nodes: Optional[List[Type[Node]]] = Field(default_factory=list)
 
 
-class PipelineSchema(BaseModel):
-    """Schema definition for a complete pipeline.
+class WorkflowSchema(BaseModel):
+    """Schema definition for a complete workflow.
 
-    PipelineSchema defines the overall structure of a processing pipeline,
+    WorkflowSchema defines the overall structure of a processing workflow,
     including its entry point and all constituent nodes.
 
     Attributes:
-        description: Optional description of the pipeline's purpose
+        description: Optional description of the workflow's purpose
         event_schema: Pydantic model for validating incoming events
-        start: The entry point Node class for the pipeline
-        nodes: List of NodeConfig objects defining the pipeline structure
+        start: The entry point Node class for the workflow
+        nodes: List of NodeConfig objects defining the workflow structure
 
     Example:
-        schema = PipelineSchema(
-            description="Support ticket processing pipeline",
+        schema = WorkflowSchema(
+            description="Support ticket processing workflow",
             start=AnalyzeNode,
             nodes=[
                 NodeConfig(node=AnalyzeNode, connections=[RouterNode]),

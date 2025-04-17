@@ -15,8 +15,9 @@ class ParallelNode(Node, ABC):
     must implement the `process` method to define specific processing
     logic.
     """
+
     def execute_nodes_in_parallel(self, task_context: TaskContext):
-        node_config: NodeConfig = task_context.metadata['nodes'][self.__class__]
+        node_config: NodeConfig = task_context.metadata["nodes"][self.__class__]
         future_list = []
         with ThreadPoolExecutor() as executor:
             for node in node_config.parallel_nodes:

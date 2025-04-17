@@ -5,18 +5,18 @@ from core.task import TaskContext
 """
 Base Node Module
 
-This module defines the foundational Node class that all pipeline nodes inherit from.
+This module defines the foundational Node class that all workflow nodes inherit from.
 It implements the Chain of Responsibility pattern, allowing nodes to process tasks
 sequentially and pass results to the next node in the chain.
 """
 
 
 class Node(ABC):
-    """Abstract base class for all pipeline processing nodes.
+    """Abstract base class for all workflow processing nodes.
 
     Node implements the Chain of Responsibility pattern, serving as the base
-    handler for all pipeline processing steps. Each concrete node implementation
-    represents a specific processing step in the pipeline chain.
+    handler for all workflow processing steps. Each concrete node implementation
+    represents a specific processing step in the workflow chain.
 
     The Chain of Responsibility pattern is implemented through the process()
     method, which each node uses to:
@@ -42,11 +42,11 @@ class Node(ABC):
         """Processes the task context in the responsibility chain.
 
         This method implements the Chain of Responsibility pattern's handle
-        method. Each node in the pipeline processes the task and passes it
-        to the next node through the pipeline orchestrator.
+        method. Each node in the workflow processes the task and passes it
+        to the next node through the workflow orchestrator.
 
         Args:
-            task_context: The shared context object passed through the pipeline
+            task_context: The shared context object passed through the workflow
 
         Returns:
             Updated TaskContext with this node's processing results

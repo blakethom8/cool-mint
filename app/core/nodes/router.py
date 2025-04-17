@@ -7,9 +7,9 @@ from core.nodes.base import Node
 """
 Router Module
 
-This module implements the routing logic for pipeline nodes.
+This module implements the routing logic for workflow nodes.
 It provides base classes for implementing routing decisions between nodes
-in a processing pipeline.
+in a processing workflow.
 """
 
 
@@ -17,7 +17,7 @@ class BaseRouter(Node):
     """Base router class for implementing node routing logic.
 
     The BaseRouter class provides core routing functionality for directing
-    task flow between pipeline nodes. It processes routing rules in sequence
+    task flow between workflow nodes. It processes routing rules in sequence
     and falls back to a default node if no rules match.
 
     Attributes:

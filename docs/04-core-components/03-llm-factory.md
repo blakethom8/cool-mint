@@ -142,7 +142,7 @@ class AnalyzeTicket(LLMNode):
         llm = LLMFactory("openai")
         prompt = PromptManager.get_prompt(
             "ticket_analysis",
-            pipeline="support",
+            workflow="support",
         )
         return llm.create_completion(
             response_model=self.ResponseModel,

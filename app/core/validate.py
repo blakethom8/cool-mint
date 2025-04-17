@@ -2,43 +2,43 @@ from collections import deque
 from typing import Set, Type
 
 from core.nodes.base import Node
-from core.schema import PipelineSchema
+from core.schema import WorkflowSchema
 
 """
-Pipeline Validator Module
+Workflow Validator Module
 
-This module provides validation logic for pipeline schemas.
-It ensures that pipelines form valid directed acyclic graphs (DAGs)
+This module provides validation logic for workflow schemas.
+It ensures that workflows form valid directed acyclic graphs (DAGs)
 and that routing configurations are correct.
 """
 
 
-class PipelineValidator:
-    """Validator for ensuring pipeline schema correctness.
+class WorkflowValidator:
+    """Validator for ensuring workflow schema correctness.
 
-    The PipelineValidator performs comprehensive validation of pipeline schemas,
+    The WorkflowValidator performs comprehensive validation of workflow schemas,
     checking for cycles, unreachable nodes, and proper routing configurations.
-    It ensures that the pipeline forms a valid directed acyclic graph (DAG)
+    It ensures that the workflow forms a valid directed acyclic graph (DAG)
     and that routing nodes are properly configured.
 
     Attributes:
-        pipeline_schema: The PipelineSchema to validate
+        workflow_schema: The WorkflowSchema to validate
 
     Example:
-        validator = PipelineValidator(pipeline_schema)
+        validator = WorkflowValidator(workflow_schema)
         validator.validate()  # Raises ValueError if validation fails
     """
 
-    def __init__(self, pipeline_schema: PipelineSchema):
-        """Initializes the validator with a pipeline schema.
+    def __init__(self, workflow_schema: WorkflowSchema):
+        """Initializes the validator with a workflow schema.
 
         Args:
-            pipeline_schema: The PipelineSchema to validate
+            workflow_schema: The WorkflowSchema to validate
         """
-        self.pipeline_schema = pipeline_schema
+        self.workflow_schema = workflow_schema
 
     def validate(self):
-        """Validates all aspects of the pipeline schema.
+        """Validates all aspects of the workflow schema.
 
         Performs comprehensive validation including DAG structure
         and routing configuration checks.
@@ -50,19 +50,19 @@ class PipelineValidator:
         self._validate_connections()
 
     def _validate_dag(self):
-        """Validates that the pipeline schema forms a proper DAG.
+        """Validates that the workflow schema forms a proper DAG.
 
         Checks for cycles and ensures all nodes are reachable
         from the start node.
 
         Raises:
-            ValueError: If the pipeline contains cycles or unreachable nodes
+            ValueError: If the workflow contains cycles or unreachable nodes
         """
         if self._has_cycle():
-            raise ValueError("Pipeline schema contains a cycle")
+            raise ValueError("Workflow schema contains a cycle")
 
         reachable_nodes = self._get_reachable_nodes()
-        all_nodes = set(nc.node for nc in self.pipeline_schema.nodes)
+        all_nodes = set(nc.node for nc in self.workflow_schema.nodes)
         unreachable_nodes = all_nodes - reachable_nodes
         if unreachable_nodes:
             raise ValueError(
@@ -70,7 +70,7 @@ class PipelineValidator:
             )
 
     def _has_cycle(self) -> bool:
-        """Detects cycles in the pipeline graph using DFS.
+        """Detects cycles in the workflow graph using DFS.
 
         Returns:
             bool: True if a cycle is detected, False otherwise
@@ -83,7 +83,7 @@ class PipelineValidator:
             rec_stack.add(node)
 
             node_config = next(
-                (nc for nc in self.pipeline_schema.nodes if nc.node == node), None
+                (nc for nc in self.workflow_schema.nodes if nc.node == node), None
             )
             if node_config:
                 for neighbor in node_config.connections:
@@ -96,7 +96,7 @@ class PipelineValidator:
             rec_stack.remove(node)
             return False
 
-        for node_config in self.pipeline_schema.nodes:
+        for node_config in self.workflow_schema.nodes:
             if node_config.node not in visited:
                 if dfs(node_config.node):
                     return True
@@ -110,14 +110,14 @@ class PipelineValidator:
             Set[Type[Node]]: Set of all reachable node classes
         """
         reachable = set()
-        queue = deque([self.pipeline_schema.start])
+        queue = deque([self.workflow_schema.start])
 
         while queue:
             node = queue.popleft()
             if node not in reachable:
                 reachable.add(node)
                 node_config = next(
-                    (nc for nc in self.pipeline_schema.nodes if nc.node == node), None
+                    (nc for nc in self.workflow_schema.nodes if nc.node == node), None
                 )
                 if node_config:
                     queue.extend(node_config.connections)
@@ -132,7 +132,7 @@ class PipelineValidator:
         Raises:
             ValueError: If a non-router node has multiple connections
         """
-        for node_config in self.pipeline_schema.nodes:
+        for node_config in self.workflow_schema.nodes:
             if len(node_config.connections) > 1 and not node_config.is_router:
                 raise ValueError(
                     f"Node {node_config.node.__name__} has multiple connections but is not marked as a router."

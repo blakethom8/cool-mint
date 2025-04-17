@@ -1,18 +1,18 @@
 from IPython.display import Image
 from graphviz import Digraph
 
-from core.pipeline import Pipeline
+from core.workflow import Workflow
 
 
-def visualize_pipeline(pipeline: Pipeline) -> Image:
+def visualize_workflow(workflow: Workflow) -> Image:
     """
-    Generates a visual representation of the pipeline flow with a modern look and returns a PNG image.
+    Generates a visual representation of the workflow flow with a modern look and returns a PNG image.
 
     Args:
-        pipeline: The Pipeline object to visualize.
+        workflow: The Workflow object to visualize.
 
     Returns:
-        An IPython Image object containing the PNG representation of the pipeline diagram.
+        An IPython Image object containing the PNG representation of the workflow diagram.
 
     Raises:
         ImportError: If graphviz or IPython is not installed.
@@ -23,11 +23,11 @@ def visualize_pipeline(pipeline: Pipeline) -> Image:
         Install dependencies with: pip install graphviz ipython
     """
     try:
-        dot = Digraph(comment="Pipeline Visualization")
+        dot = Digraph(comment="Workflow Visualization")
         _apply_graph_styling(dot)
 
         # Add nodes
-        for node_config in pipeline.pipeline_schema.nodes:
+        for node_config in workflow.workflow_schema.nodes:
             node_name = str(node_config.node.__name__)
             if node_config.is_router:
                 # Use diamond shape for router nodes
@@ -36,11 +36,11 @@ def visualize_pipeline(pipeline: Pipeline) -> Image:
                 dot.node(node_name, node_name)
 
         # Add edges
-        start_node = pipeline.pipeline_schema.start.__name__
+        start_node = workflow.workflow_schema.start.__name__
         dot.node("Event", "Event", shape="ellipse", fillcolor="#ececfd")
         dot.edge("Event", start_node, tailport="e", headport="w")
 
-        for node_config in pipeline.pipeline_schema.nodes:
+        for node_config in workflow.workflow_schema.nodes:
             node_name = str(node_config.node.__name__)
             for connection in node_config.connections:
                 dot.edge(node_name, connection.__name__, tailport="e", headport="w")

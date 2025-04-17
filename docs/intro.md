@@ -21,8 +21,8 @@ providing a robust, scalable infrastructure and standardized development pattern
 ### 2. Architecture
 
 - [Overview](02-architecture/01-overview.md)
-- [Core Pipeline System](02-architecture/02-core-system.md)
-- [Pipeline Design](02-architecture/03-pipeline-design.md)
+- [Core Workflow System](02-architecture/02-core-system.md)
+- [Workflow Design](02-architecture/03-workflow-design.md)
 - [Worker System](02-architecture/04-worker-system.md)
 
 ### 3. Core Components

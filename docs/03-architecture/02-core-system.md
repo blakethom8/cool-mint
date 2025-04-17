@@ -1,4 +1,4 @@
-# Core Pipeline System
+# Core Workflow System
 
 The core system implements a sophisticated yet minimalist approach to workflow automation using directed acyclic graphs (DAGs) and the Chain of Responsibility pattern. This design draws inspiration from Make.com and similar workflow automation tools, but implements these concepts in pure Python with a focus on AI integration.
 
@@ -10,13 +10,13 @@ The system is built around three key principles:
 
 2. **Chain of Responsibility**: Each processing step (node) handles its specific task and passes the context to the next node, maintaining clean separation of concerns while sharing state through a structured context object.
 
-3. **Structured Data Flow**: A single, well-defined `TaskContext` object flows through the pipeline, ensuring consistent data access and state management across all processing steps.
+3. **Structured Data Flow**: A single, well-defined `TaskContext` object flows through the workflow, ensuring consistent data access and state management across all processing steps.
 
 ## Core Components
 
 ### Base Node (base.py)
 
-The foundation of the pipeline system is the Node class, which implements the Chain of Responsibility pattern:
+The foundation of the workflow system is the Node class, which implements the Chain of Responsibility pattern:
 
 ```python
 class Node(ABC):
@@ -34,7 +34,7 @@ Each node:
 
 ### Task Context (task.py)
 
-The TaskContext serves as the shared state container flowing through the pipeline:
+The TaskContext serves as the shared state container flowing through the workflow:
 
 ```python
 class TaskContext(BaseModel):
@@ -47,20 +47,20 @@ This design:
 
 - Maintains the original event data
 - Stores each node's processing results
-- Provides structured access to pipeline state
+- Provides structured access to workflow state
 - Enables data sharing between nodes
 
-### Pipeline Orchestration (pipeline.py)
+### Workflow Orchestration (workflow.py)
 
-The Pipeline class orchestrates the flow of data through nodes:
+The Workflow class orchestrates the flow of data through nodes:
 
 ```python
-class Pipeline(ABC):
-    pipeline_schema: ClassVar[PipelineSchema]
+class Workflow(ABC):
+    workflow_schema: ClassVar[WorkflowSchema]
 
     def run(self, event: EventSchema) -> TaskContext:
-        task_context = TaskContext(event=event, pipeline=self)
-        current_node_class = self.pipeline_schema.start
+        task_context = TaskContext(event=event, workflow=self)
+        current_node_class = self.workflow_schema.start
         
         while current_node_class:
             current_node = self.nodes[current_node_class]
@@ -72,7 +72,7 @@ class Pipeline(ABC):
 
 Key features:
 
-- Validates pipeline structure at initialization
+- Validates workflow structure at initialization
 - Manages node execution sequence
 - Handles routing decisions
 - Provides error handling and logging
@@ -149,12 +149,12 @@ Features:
 - Fallback handling
 - Clear routing decision tracking
 
-### Pipeline Schema (schema.py)
+### Workflow Schema (schema.py)
 
-The schema system defines pipeline structure using Pydantic models:
+The schema system defines workflow structure using Pydantic models:
 
 ```python
-class PipelineSchema(BaseModel):
+class WorkflowSchema(BaseModel):
     description: Optional[str]
     start: Type[Node]
     nodes: List[NodeConfig]
@@ -162,17 +162,17 @@ class PipelineSchema(BaseModel):
 
 Benefits:
 
-- Type-safe pipeline definition
+- Type-safe workflow definition
 - Self-documenting structure
 - Validation at construction time
 - Clear visualization of flow
 
 ### Validation (validate.py)
 
-The validation system ensures pipeline integrity:
+The validation system ensures workflow integrity:
 
 ```python
-class PipelineValidator:
+class WorkflowValidator:
     def validate(self):
         self._validate_dag()
         self._validate_connections()
@@ -216,7 +216,7 @@ class RouterNode(ABC):
 
 ## Practical Usage
 
-Creating a pipeline involves:
+Creating a workflow involves:
 
 1. Define nodes for each processing step:
 ```python
@@ -226,10 +226,10 @@ class AnalyzeNode(Node):
         return context
 ```
 
-2. Define the pipeline structure:
+2. Define the workflow structure:
 ```python
-class AnalysisPipeline(Pipeline):
-    pipeline_schema = PipelineSchema(
+class AnalysisWorkflow(Workflow):
+    workflow_schema = WorkflowSchema(
         start=AnalyzeNode,
         nodes=[
             NodeConfig(node=AnalyzeNode, connections=[ResultNode])
@@ -237,10 +237,10 @@ class AnalysisPipeline(Pipeline):
     )
 ```
 
-3. Execute the pipeline:
+3. Execute the workflow:
 ```python
-pipeline = AnalysisPipeline()
-result = pipeline.run(event)
+workflow = AnalysisWorkflow()
+result = workflow.run(event)
 ```
 
 This architecture provides a robust foundation for building complex AI workflows while maintaining code clarity and preventing common pitfalls in AI system design.

@@ -96,7 +96,7 @@ class AnalyzeTicket(LLMNode):
         # Load prompt template
         prompt = PromptManager.get_prompt(
             "ticket_analysis",
-            pipeline="support",
+            workflow="support",
             sender=context.sender,
             subject=context.subject,
             body=context.body

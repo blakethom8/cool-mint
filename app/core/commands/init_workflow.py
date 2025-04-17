@@ -52,12 +52,12 @@ class WorkflowInitCommand:
         if not file_path.exists():
             print("Creating file:" + str(file_path))
             file_path.write_text(f"""from core.nodes.base import Node
-    from core.task import TaskContext
-    
-    
-    class InitialNode(Node):
-        def process(self, task_context: TaskContext) -> TaskContext:
-            return task_context
+from core.task import TaskContext
+
+
+class InitialNode(Node):
+    def process(self, task_context: TaskContext) -> TaskContext:
+        return task_context
             """)
         else:
             print(file_path, "already exists. Skipping.")
@@ -67,25 +67,25 @@ class WorkflowInitCommand:
         if not file_path.exists():
             print("Creating file:" + str(file_path))
             file_path.write_text(f"""from core.schema import WorkflowSchema, NodeConfig
-    from core.workflow import Workflow
-    from schemas.{self.workflow_name}_schema import {self.workflow_name_camel_case}EventSchema
-    from workflows.{self.workflow_name}_workflow_nodes.initial_node import InitialNode
-    
-    
-    class {self.workflow_name_camel_case}Workflow(Workflow):
-        workflow_schema = WorkflowSchema(
-            description="",
-            event_schema={self.workflow_name_camel_case}EventSchema,
-            start=InitialNode,
-            nodes=[
-                NodeConfig(
-                    node=InitialNode,
-                    connections=[],
-                    description="",
-                    parallel_nodes=[],
-                ),
-            ],
-        )
+from core.workflow import Workflow
+from schemas.{self.workflow_name}_schema import {self.workflow_name_camel_case}EventSchema
+from workflows.{self.workflow_name}_workflow_nodes.initial_node import InitialNode
+
+
+class {self.workflow_name_camel_case}Workflow(Workflow):
+    workflow_schema = WorkflowSchema(
+        description="",
+        event_schema={self.workflow_name_camel_case}EventSchema,
+        start=InitialNode,
+        nodes=[
+            NodeConfig(
+                node=InitialNode,
+                connections=[],
+                description="",
+                parallel_nodes=[],
+            ),
+        ],
+    )
     """)
         else:
             print(file_path, "already exists. Skipping.")
@@ -97,8 +97,8 @@ class WorkflowInitCommand:
             file_path.write_text(f"""from pydantic import BaseModel
     
     
-    class {self.workflow_name_camel_case}EventSchema(BaseModel):
-        pass""")
+class {self.workflow_name_camel_case}EventSchema(BaseModel):
+    pass""")
         else:
             print(file_path, "already exists. Skipping.")
 

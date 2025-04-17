@@ -11,6 +11,8 @@ from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
 
+from schemas.placeholder_schema import PlaceholderEventSchema
+
 """
 Event Submission Endpoint Module
 
@@ -35,7 +37,7 @@ router = APIRouter()
 
 @router.post("/", dependencies=[])
 def handle_event(
-    data: DefaultEventSchema,
+    data: PlaceholderEventSchema,
     session: Session = Depends(db_session),
 ) -> Response:
     """Handles incoming event submissions.

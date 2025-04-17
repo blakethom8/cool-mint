@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from starlette.responses import Response
 
 from api.event_schema import DefaultEventSchema
-from config.celery_config import celery_app
+from celery_worker.config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session

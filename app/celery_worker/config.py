@@ -1,5 +1,4 @@
 import os
-from functools import lru_cache
 
 from celery import Celery
 from dotenv import load_dotenv
@@ -18,7 +17,6 @@ def get_redis_url():
     return f"redis://{redis_host}:6379/0"
 
 
-@lru_cache
 def get_celery_config():
     """
     Get the Celery configuration.
@@ -42,4 +40,4 @@ celery_app = Celery("tasks")
 celery_app.config_from_object(get_celery_config())
 
 # Automatically discover and register tasks
-celery_app.autodiscover_tasks(["tasks"], force=True)
+celery_app.autodiscover_tasks(["celery_worker"], force=True)

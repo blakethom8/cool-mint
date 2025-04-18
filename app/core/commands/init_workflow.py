@@ -107,6 +107,9 @@ class {self.workflow_name_camel_case}EventSchema(BaseModel):
         self.create_workflow()
         self.create_schema()
 
+def main():
+    WorkflowInitCommand().run()
+
 
 if __name__ == "__main__":
-    WorkflowInitCommand().run()
+    main()

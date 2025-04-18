@@ -24,13 +24,6 @@ class Event(Base):
     This model serves as the primary storage for both incoming events and
     their processing results. It uses JSON columns for flexible schema
     storage of both raw data and processing context.
-
-    Attributes:
-        id: UUID primary key, auto-generated
-        data: Raw event data as received by the API
-        task_context: Results and metadata from workflow processing
-        created_at: Timestamp of event creation
-        updated_at: Timestamp of last update
     """
 
     __tablename__ = "events"
@@ -42,7 +35,7 @@ class Event(Base):
         doc="Unique identifier for the event",
     )
 
-    data = Column(JSON, doc="Raw event data as received from the API endpoint")
+    raw_event = Column(JSON, doc="Raw event data as received from the API endpoint")
     task_context = Column(JSON, doc="Processing results and metadata from the workflow")
 
     created_at = Column(

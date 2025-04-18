@@ -22,6 +22,9 @@ dev = [
     "ipython>=9.1.0",
 ]
 
+[tool.ruff]
+exclude = [".venv", "app/core/commands", "app/alembic", ".sh"]
+
 [project.scripts]
 createworkflow = "app.core.commands.init_workflow:main"
 

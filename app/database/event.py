@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import JSON, Column, DateTime
+from sqlalchemy import JSON, Column, DateTime, String
 from sqlalchemy.dialects.postgresql import UUID
 
 from database.session import Base
@@ -34,8 +34,12 @@ class Event(Base):
         default=uuid.uuid1,
         doc="Unique identifier for the event",
     )
-
-    raw_event = Column(JSON, doc="Raw event data as received from the API endpoint")
+    workflow_type = Column(
+        String(150),
+        nullable=False,
+        doc="Type of workflow associated with the event (e.g., 'support')",
+    )
+    data = Column(JSON, doc="Raw event data as received from the API endpoint")
     task_context = Column(JSON, doc="Processing results and metadata from the workflow")
 
     created_at = Column(

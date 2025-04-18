@@ -2,4 +2,5 @@ from pydantic import BaseModel
 
 
 class PlaceholderEventSchema(BaseModel):
-    pass
+    id: str
+    type: str

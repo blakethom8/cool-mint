@@ -12,6 +12,7 @@ from database.repository import GenericRepository
 from database.session import db_session
 
 from schemas.placeholder_schema import PlaceholderEventSchema
+from workflows.workflows import Workflows
 
 """
 Event Submission Endpoint Module
@@ -62,16 +63,14 @@ def handle_event(
         session=session,
         model=Event,
     )
-    event = Event(data=data.model_dump(mode="json"))
+    raw_event = data = data.model_dump(mode="json")
+    event = Event(data=raw_event, workflow_type=get_workflow_type(raw_event))
     repository.create(obj=event)
-
-    # Get the workflow type
-    workflow_type = get_workflow_type(event.data)
 
     # Queue processing task
     task_id = celery_app.send_task(
         "process_incoming_event",
-        args=[str(event.id), workflow_type],
+        args=[str(event.id)],
     )
 
     # Return acceptance response
@@ -81,8 +80,8 @@ def handle_event(
     )
 
 
-def get_workflow_type(event_data: Dict) -> str:
+def get_workflow_type(data: Dict) -> str:
     """
     Implement your logic to determine the workflow type based on the event data.
     """
-    return ""
+    return Workflows.PLACEHOLDER.name

@@ -50,4 +50,4 @@ def send_event(event_file: str):
 
 
 if __name__ == "__main__":
-    send_event(event_file="default_event.json")
+    send_event(event_file="placeholder_event.json")

@@ -4,6 +4,7 @@ from celery_worker.config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
+from workflows.workflows import Workflows
 
 """
 Workflow Task Processing Module
@@ -15,7 +16,7 @@ workflow execution and result storage.
 
 
 @celery_app.task(name="process_incoming_event")
-def process_incoming_event(event_id: str, workflow_type: str):
+def process_incoming_event(event_id: str):
     """Processes an incoming event through its designated workflow.
 
     This Celery task handles the asynchronous processing of events by:
@@ -38,8 +39,10 @@ def process_incoming_event(event_id: str, workflow_type: str):
             raise ValueError(f"Event with id {event_id} not found")
 
         # Execute workflow and store results
-        # task_context = workflow.run(db_event.data).model_dump(mode="json")
-        # db_event.task_context = task_context
+        workflow = Workflows[db_event.workflow_type].value()
+        task_context = workflow.run(db_event.data).model_dump(mode="json")
+
+        db_event.task_context = task_context
 
         # Update event with processing results
-        # repository.update(obj=db_event)
+        repository.update(obj=db_event)

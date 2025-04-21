@@ -13,7 +13,7 @@ dependencies = [
     "python-dotenv>=1.1.0",
     "python-frontmatter>=1.1.0",
     "redis>=5.2.1",
-    "uvicorn>=0.34.1",
+    "uvicorn>=0.34.2",
 ]
 
 [dependency-groups]

@@ -1,6 +1,6 @@
-{$CADDY_DOMAIN} {
+https://launchpad.your-domain.com {
 	log {
-		output file /var/log/caddy/{$CADDY_LOG_FILE_NAME}.log
+		output file /var/log/caddy/launchpad.log
 		format console
 		level info
 	}

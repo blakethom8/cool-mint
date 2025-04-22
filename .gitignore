@@ -93,4 +93,8 @@ target/
 app/alembic/versions/*
 !app/alembic/versions/.gitkeep
 
+# Launchpad playground
 playground/*.png
+
+# Docker db data
+docker/volumes/db/data/*

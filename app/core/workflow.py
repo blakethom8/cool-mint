@@ -1,6 +1,7 @@
 import logging
 from abc import ABC
 from contextlib import contextmanager
+from dotenv import load_dotenv
 from typing import Dict, Optional, ClassVar, Type, Any
 
 from core.nodes.base import Node
@@ -48,6 +49,7 @@ class Workflow(ABC):
         self.validator = WorkflowValidator(self.workflow_schema)
         self.validator.validate()
         self.nodes: Dict[Type[Node], NodeConfig] = self._initialize_nodes()
+        load_dotenv()
 
     @contextmanager
     def node_context(self, node_name: str):

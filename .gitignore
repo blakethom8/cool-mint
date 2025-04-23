@@ -95,6 +95,3 @@ app/alembic/versions/*
 
 # Launchpad playground
 playground/*.png
-
-# Docker db data
-docker/volumes/db/data/*

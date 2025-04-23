@@ -39,3 +39,6 @@ class TaskContext(BaseModel):
         default_factory=dict,
         description="Stores workflow-level metadata and configuration",
     )
+
+    def update_node(self, node_name: str, **kwargs):
+        self.nodes[node_name] = {**self.nodes.get(node_name, {}), **kwargs}

@@ -12,7 +12,7 @@ from database.repository import GenericRepository
 from database.session import db_session
 
 from schemas.placeholder_schema import PlaceholderEventSchema
-from workflows.workflows import Workflows
+from workflows.workflow_registry import WorkflowRegistry
 
 """
 Event Submission Endpoint Module
@@ -63,7 +63,7 @@ def handle_event(
         session=session,
         model=Event,
     )
-    raw_event = data = data.model_dump(mode="json")
+    raw_event = data.model_dump(mode="json")
     event = Event(data=raw_event, workflow_type=get_workflow_type(raw_event))
     repository.create(obj=event)
 
@@ -84,4 +84,4 @@ def get_workflow_type(data: Dict) -> str:
     """
     Implement your logic to determine the workflow type based on the event data.
     """
-    return Workflows.PLACEHOLDER.name
+    return WorkflowRegistry.PLACEHOLDER.name

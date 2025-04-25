@@ -4,7 +4,7 @@ from celery_worker.config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
-from workflows.workflows import Workflows
+from workflows.workflow_registry import WorkflowRegistry
 
 """
 Workflow Task Processing Module
@@ -39,7 +39,7 @@ def process_incoming_event(event_id: str):
             raise ValueError(f"Event with id {event_id} not found")
 
         # Execute workflow and store results
-        workflow = Workflows[db_event.workflow_type].value()
+        workflow = WorkflowRegistry[db_event.workflow_type].value()
         task_context = workflow.run(db_event.data).model_dump(mode="json")
 
         db_event.task_context = task_context

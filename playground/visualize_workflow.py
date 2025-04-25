@@ -3,7 +3,7 @@ from pathlib import Path
 
 from core.workflow import Workflow
 from playground.utils.visualize_workflow import visualize_workflow
-from workflows.default_workflow import DefaultWorkflow
+from workflows.placeholder_workflow import PlaceholderWorkflow
 
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root / "app"))
@@ -19,4 +19,4 @@ def generate(workflow: Workflow):
         f.write(image.data)
 
 
-generate(DefaultWorkflow())
+generate(PlaceholderWorkflow())

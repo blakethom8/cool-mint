@@ -9,8 +9,8 @@ Welcome to the GenAI Launchpad – your all-in-one repository for building power
 No need to start from scratch or waste time on repetitive configurations. The GenAI Launchpad is engineered to get you up and running fast, with a flexible design that fits your workflow – all while keeping things production-ready from day one.
 
 > **Note**: This repository has two main branches:
-> - [`main`](https://github.com/datalumina/genai-launchpad/tree/main): Contains a complete example implementation to demonstrate the Launchpad's capabilities
-> - [`boilerplate`](https://github.com/datalumina/genai-launchpad/tree/boilerplate): A stripped-down version with just the core components, perfect for starting new projects.
+> - [`main`](https://github.com/datalumina/genai-launchpad/tree/main): A stripped-down version with just the core components, perfect for starting new projects.
+> - [`quickstart`](https://github.com/datalumina/genai-launchpad/tree/boilerplate): Contains a complete example implementation to demonstrate the Launchpad's capabilities
 >
 > We recommend following the Accelerator Course first to understand the example implementation in the `main` branch before exploring the boilerplate branch for your own projects.
 
@@ -50,45 +50,17 @@ The Launchpad follows a logical, scalable, and reasonably standardized project s
 ├── app
 │   ├── alembic            # Database migration scripts
 │   ├── api                # API endpoints and routers
-│   ├── config             # Configuration files
+│   ├── celery_worker      # Background task definitions
 │   ├── core               # Components for workflow and task processing
 │   ├── database           # Database models and utilities
-│   ├── workflows          # AI workflow definitions
 │   ├── prompts            # Prompt templates for AI models
+│   ├── schemas            # Event schemas
 │   ├── services           # Business logic and services
-│   ├── tasks              # Background task definitions
-│   └── utils              # Utility functions and helpers
+│   ├── workflows          # AI workflow definitions
 ├── docker                 # Docker configuration files
-├── docs                   # Project documentation
 ├── playground             # Run experiments for workflow design
 └── requests               # Event definitions and handlers
 ```
-
-## 🛠️ Development Workflow
-
-The GenAI Launchpad follows a structured development approach that emphasizes clean architecture and iterative development. Starting with the boilerplate branch, developers can quickly set up their environment, define events, create schemas, and build AI workflows. The platform includes a playground for experimentation and comprehensive testing utilities to ensure robust implementation.
-
-For detailed instructions, see our [Development Workflow Guide](docs/04-guides/06-development-workflow.md).
-
-## 🎥 Video Tutorials
-
-We offer two video Tutorials to help you master the GenAI Launchpad:
-
-### Quickstart Course
-A step-by-step guide through the complete example implementation, perfect for getting started.
-
-- Link: [Quickstart Course](https://datalumina.wistia.com/medias/inidp48v10)
-- Password: xXH3VzfdiFBToQDuUdeT
-- Duration: 70 minutes
-
-### Boilerplate Deep Dive
-An in-depth exploration of building projects from scratch using the boilerplate.
-
-- Link: [GenAI Launchpad - Boilerplate](https://datalumina.wistia.com/medias/pd280tdw7s)
-- Password: ybAziu4QbyfU44QTrMqU
-- Duration: 40 minutes
-
-Both tutorials include instructions and real-world examples to ensure you can effectively leverage the repository for your projects.
 
 ## 💬 Support
 

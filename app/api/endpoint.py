@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import Response
 
-from celery_worker.config import celery_app
+from worker.config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session

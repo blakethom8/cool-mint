@@ -50,7 +50,7 @@ The Launchpad follows a logical, scalable, and reasonably standardized project s
 ├── app
 │   ├── alembic            # Database migration scripts
 │   ├── api                # API endpoints and routers
-│   ├── celery_worker      # Background task definitions
+│   ├── worker      # Background task definitions
 │   ├── core               # Components for workflow and task processing
 │   ├── database           # Database models and utilities
 │   ├── prompts            # Prompt templates for AI models

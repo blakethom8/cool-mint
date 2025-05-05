@@ -1,15 +1,18 @@
 import json
 from http import HTTPStatus
+from typing import Dict
 
-from config.celery_config import celery_app
-from database.event import Event
-from database.repository import GenericRepository
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import Response
 
-from api.dependencies import db_session
-from api.event_schema import EventSchema
+from worker.config import celery_app
+from database.event import Event
+from database.repository import GenericRepository
+from database.session import db_session
+
+from schemas.placeholder_schema import PlaceholderEventSchema
+from workflows.workflow_registry import WorkflowRegistry
 
 """
 Event Submission Endpoint Module
@@ -30,13 +33,12 @@ This pattern ensures high availability and responsiveness of the API
 while allowing for potentially long-running processing operations.
 """
 
-
 router = APIRouter()
 
 
 @router.post("/", dependencies=[])
 def handle_event(
-    data: EventSchema,
+    data: PlaceholderEventSchema,
     session: Session = Depends(db_session),
 ) -> Response:
     """Handles incoming event submissions.
@@ -61,7 +63,8 @@ def handle_event(
         session=session,
         model=Event,
     )
-    event = Event(data=data.model_dump(mode="json"))
+    raw_event = data.model_dump(mode="json")
+    event = Event(data=raw_event, workflow_type=get_workflow_type(raw_event))
     repository.create(obj=event)
 
     # Queue processing task
@@ -75,3 +78,10 @@ def handle_event(
         content=json.dumps({"message": f"process_incoming_event started `{task_id}` "}),
         status_code=HTTPStatus.ACCEPTED,
     )
+
+
+def get_workflow_type(data: Dict) -> str:
+    """
+    Implement your logic to determine the workflow type based on the event data.
+    """
+    return WorkflowRegistry.PLACEHOLDER.name

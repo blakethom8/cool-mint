@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import frontmatter
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, TemplateError, meta
 

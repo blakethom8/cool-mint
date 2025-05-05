@@ -92,3 +92,6 @@ target/
 # Alembic migrations
 app/alembic/versions/*
 !app/alembic/versions/.gitkeep
+
+# Launchpad playground
+playground/*.png

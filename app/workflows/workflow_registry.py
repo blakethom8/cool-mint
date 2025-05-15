@@ -1,7 +1,7 @@
 from enum import Enum
 
-from workflows.placeholder_workflow import PlaceholderWorkflow
+from workflows.langfuse_tracing_workflow import LangfuseTracingWorkflow
 
 
 class WorkflowRegistry(Enum):
-    PLACEHOLDER = PlaceholderWorkflow
+    LANGFUSE_TRACING = LangfuseTracingWorkflow

@@ -1,14 +1,18 @@
 import logging
 from abc import ABC
 from contextlib import contextmanager
-from dotenv import load_dotenv
 from typing import Dict, Optional, ClassVar, Type, Any
 
+from dotenv import load_dotenv
+
+from core.langfuse_config import LangfuseConfig
 from core.nodes.base import Node
 from core.nodes.router import BaseRouter
 from core.schema import WorkflowSchema, NodeConfig
 from core.task import TaskContext
 from core.validate import WorkflowValidator
+
+load_dotenv()
 
 """
 Workflow Orchestration Module
@@ -49,7 +53,7 @@ class Workflow(ABC):
         self.validator = WorkflowValidator(self.workflow_schema)
         self.validator.validate()
         self.nodes: Dict[Type[Node], NodeConfig] = self._initialize_nodes()
-        load_dotenv()
+        self.tracer = LangfuseConfig.get_tracer()
 
     @contextmanager
     def node_context(self, node_name: str):
@@ -112,27 +116,42 @@ class Workflow(ABC):
         Raises:
             Exception: Any exception that occurs during workflow execution
         """
-        task_context = TaskContext(event=event)
 
-        # Parse the raw event to the Pydantic schema defined in the WorkflowSchema
-        task_context.event = self.workflow_schema.event_schema(**event)
+        with self.tracer.start_as_current_span(self.__class__.__name__) as workflow_span:
+            task_context = TaskContext(event=event)
 
-        task_context.metadata["nodes"] = self.nodes
-        current_node_class = self.workflow_schema.start
+            # Parse the raw event to the Pydantic schema defined in the WorkflowSchema
+            task_context.event = self.workflow_schema.event_schema(**event)
 
-        while current_node_class:
-            current_node = self.nodes[current_node_class].node
-            with self.node_context(current_node_class.__name__):
-                task_context = current_node().process(task_context)
+            # input = task_context.model_dump_json(exclude="metadata")
+            # workflow_span.set_attribute("input", input)
 
-            current_node_class = self._get_next_node_class(
-                current_node_class, task_context
-            )
-        task_context.metadata.pop("nodes")
-        return task_context
+            task_context.metadata["nodes"] = self.nodes
+            current_node_class = self.workflow_schema.start
+            while current_node_class:
+                with self.tracer.start_as_current_span(current_node_class.__name__) as node_span:
+                    # input = task_context.model_dump_json(exclude="metadata")
+                    # node_span.set_attribute("input", input)
+
+                    current_node = self.nodes[current_node_class].node
+                    with self.node_context(current_node_class.__name__):
+                        task_context = current_node().process(task_context)
+
+                    # output = task_context.model_dump_json(exclude="metadata")
+                    # node_span.set_attribute("output", output)
+
+                    current_node_class = self._get_next_node_class(
+                        current_node_class, task_context
+                    )
+
+            # output = task_context.model_dump_json(exclude="metadata")
+            # workflow_span.set_attribute("output", output)
+            task_context.metadata.pop("nodes")
+
+            return task_context
 
     def _get_next_node_class(
-        self, current_node_class: Type[Node], task_context: TaskContext
+            self, current_node_class: Type[Node], task_context: TaskContext
     ) -> Optional[Type[Node]]:
         """Determines the next node to execute in the workflow.
 
@@ -158,7 +177,7 @@ class Workflow(ABC):
         return node_config.connections[0]
 
     def _handle_router(
-        self, router: BaseRouter, task_context: TaskContext
+            self, router: BaseRouter, task_context: TaskContext
     ) -> Optional[Type[Node]]:
         """Handles routing logic for router nodes.
 

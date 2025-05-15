@@ -43,6 +43,7 @@ class AgentConfig:
     model_name: Union[
         OpenAIModelName, AnthropicModelName, GeminiModelName, BedrockModelName
     ]
+    instrument: bool = False
 
 
 class AgentNode(Node, ABC):
@@ -61,6 +62,7 @@ class AgentNode(Node, ABC):
             model=self.__get_model_instance(
                 agent_wrapper.model_provider, agent_wrapper.model_name
             ),
+            instrument=agent_wrapper.instrument,
         )
 
     @abstractmethod

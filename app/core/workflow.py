@@ -4,6 +4,7 @@ from contextlib import contextmanager
 from typing import Dict, Optional, ClassVar, Type, Any
 
 from dotenv import load_dotenv
+from opentelemetry.sdk.trace import Span
 
 from core.langfuse_config import LangfuseConfig
 from core.nodes.base import Node
@@ -119,36 +120,39 @@ class Workflow(ABC):
 
         with self.tracer.start_as_current_span(self.__class__.__name__) as workflow_span:
             task_context = TaskContext(event=event)
+            task_context.metadata["nodes"] = self.nodes
 
             # Parse the raw event to the Pydantic schema defined in the WorkflowSchema
             task_context.event = self.workflow_schema.event_schema(**event)
 
-            # input = task_context.model_dump_json(exclude="metadata")
-            # workflow_span.set_attribute("input", input)
+            self._set_span_input(workflow_span, task_context)
 
-            task_context.metadata["nodes"] = self.nodes
             current_node_class = self.workflow_schema.start
             while current_node_class:
                 with self.tracer.start_as_current_span(current_node_class.__name__) as node_span:
-                    # input = task_context.model_dump_json(exclude="metadata")
-                    # node_span.set_attribute("input", input)
+                    self._set_span_input(node_span, task_context)
 
                     current_node = self.nodes[current_node_class].node
                     with self.node_context(current_node_class.__name__):
                         task_context = current_node().process(task_context)
 
-                    # output = task_context.model_dump_json(exclude="metadata")
-                    # node_span.set_attribute("output", output)
+                    self._set_span_output(node_span, task_context)
 
                     current_node_class = self._get_next_node_class(
                         current_node_class, task_context
                     )
 
-            # output = task_context.model_dump_json(exclude="metadata")
-            # workflow_span.set_attribute("output", output)
+            self._set_span_output(workflow_span, task_context)
+
             task_context.metadata.pop("nodes")
 
             return task_context
+
+    def _set_span_input(self, span: Span, task_context: TaskContext):
+        span.set_attribute("input", task_context.model_dump_json(exclude={"metadata": {"nodes"}}))
+
+    def _set_span_output(self, span: Span, task_context: TaskContext):
+        span.set_attribute("output", task_context.model_dump_json(exclude={"metadata": {"nodes"}}))
 
     def _get_next_node_class(
             self, current_node_class: Type[Node], task_context: TaskContext

@@ -136,7 +136,7 @@ class Workflow(ABC):
                     with self.node_context(current_node_class.__name__):
                         task_context = current_node().process(task_context)
 
-                    self._set_span_output(node_span, task_context)
+                    node_span.set_attribute("output", task_context.model_dump_json(include={"nodes": {current_node_class.__name__}}))
 
                     current_node_class = self._get_next_node_class(
                         current_node_class, task_context

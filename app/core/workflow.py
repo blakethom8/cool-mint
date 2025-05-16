@@ -118,7 +118,9 @@ class Workflow(ABC):
             Exception: Any exception that occurs during workflow execution
         """
 
-        with self.tracer.start_as_current_span(self.__class__.__name__) as workflow_span:
+        with self.tracer.start_as_current_span(
+            self.__class__.__name__
+        ) as workflow_span:
             task_context = TaskContext(event=event)
             task_context.metadata["nodes"] = self.nodes
 
@@ -129,14 +131,21 @@ class Workflow(ABC):
 
             current_node_class = self.workflow_schema.start
             while current_node_class:
-                with self.tracer.start_as_current_span(current_node_class.__name__) as node_span:
+                with self.tracer.start_as_current_span(
+                    current_node_class.__name__
+                ) as node_span:
                     self._set_span_input(node_span, task_context)
 
                     current_node = self.nodes[current_node_class].node
                     with self.node_context(current_node_class.__name__):
                         task_context = current_node().process(task_context)
 
-                    node_span.set_attribute("output", task_context.model_dump_json(include={"nodes": {current_node_class.__name__}}))
+                    node_span.set_attribute(
+                        "output",
+                        task_context.model_dump_json(
+                            include={"nodes": {current_node_class.__name__}}
+                        ),
+                    )
 
                     current_node_class = self._get_next_node_class(
                         current_node_class, task_context
@@ -149,13 +158,17 @@ class Workflow(ABC):
             return task_context
 
     def _set_span_input(self, span: Span, task_context: TaskContext):
-        span.set_attribute("input", task_context.model_dump_json(exclude={"metadata": {"nodes"}}))
+        span.set_attribute(
+            "input", task_context.model_dump_json(exclude={"metadata": {"nodes"}})
+        )
 
     def _set_span_output(self, span: Span, task_context: TaskContext):
-        span.set_attribute("output", task_context.model_dump_json(exclude={"metadata": {"nodes"}}))
+        span.set_attribute(
+            "output", task_context.model_dump_json(exclude={"metadata": {"nodes"}})
+        )
 
     def _get_next_node_class(
-            self, current_node_class: Type[Node], task_context: TaskContext
+        self, current_node_class: Type[Node], task_context: TaskContext
     ) -> Optional[Type[Node]]:
         """Determines the next node to execute in the workflow.
 
@@ -181,7 +194,7 @@ class Workflow(ABC):
         return node_config.connections[0]
 
     def _handle_router(
-            self, router: BaseRouter, task_context: TaskContext
+        self, router: BaseRouter, task_context: TaskContext
     ) -> Optional[Type[Node]]:
         """Handles routing logic for router nodes.
 

@@ -13,7 +13,7 @@ class ContextSummaryResult(AgentNode):
             deps_type=LangfuseTracingEventSchema,
             model_provider=ModelProvider.OPENAI,
             model_name="gpt-4.1",
-            instrument=True
+            instrument=True,
         )
 
     class ContextSummaryResult(AgentNode.OutputType):
@@ -25,7 +25,7 @@ class ContextSummaryResult(AgentNode):
 
         @self.agent.instructions
         async def add_context(
-                ctx: RunContext[LangfuseTracingEventSchema],
+            ctx: RunContext[LangfuseTracingEventSchema],
         ) -> str:
             return event.model_dump_json()
 

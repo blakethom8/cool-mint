@@ -11,14 +11,15 @@ load_dotenv()
 
 
 class LangfuseConfig:
-
     @staticmethod
     def get_tracer() -> Tracer:
         LANGFUSE_AUTH = base64.b64encode(
             f"{os.getenv('LANGFUSE_PUBLIC_KEY')}:{os.getenv('LANGFUSE_SECRET_KEY')}".encode()
         ).decode()
 
-        os.environ["OTEL_EXPORTER_OTLP_HEADERS"] = f"Authorization=Basic {LANGFUSE_AUTH}"
+        os.environ["OTEL_EXPORTER_OTLP_HEADERS"] = (
+            f"Authorization=Basic {LANGFUSE_AUTH}"
+        )
 
         import logfire
 

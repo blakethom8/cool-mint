@@ -3,19 +3,21 @@ import logging
 from core.nodes.base import Node
 from core.task import TaskContext
 from schemas.langfuse_tracing_schema import LangfuseTracingEventSchema
-from workflows.langfuse_tracing_workflow_nodes.violation_detection_node import ViolationDetectionNode
+from workflows.langfuse_tracing_workflow_nodes.violation_detection_node import (
+    ViolationDetectionNode,
+)
 
 
 class RemoveCommentNode(Node):
-
     def remove_comment(self, comment_id: str) -> str:
         result = f"Removed comment with ID: {comment_id}"
         logging.info(result)
         return result
 
     def process(self, task_context: TaskContext) -> TaskContext:
-        violation_result: ViolationDetectionNode.ViolationDetectionResult = \
+        violation_result: ViolationDetectionNode.ViolationDetectionResult = (
             task_context.nodes[ViolationDetectionNode.__name__]["results"]
+        )
 
         if violation_result.violation:
             event: LangfuseTracingEventSchema = task_context.event

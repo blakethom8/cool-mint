@@ -15,7 +15,7 @@ class ViolationDetectionNode(AgentNode):
             deps_type=LangfuseTracingEventSchema,
             model_provider=ModelProvider.OPENAI,
             model_name="gpt-4.1",
-            instrument=True
+            instrument=True,
         )
 
     class ViolationDetectionResult(AgentNode.OutputType):
@@ -28,7 +28,7 @@ class ViolationDetectionNode(AgentNode):
 
         @self.agent.system_prompt
         async def add_context(
-                ctx: RunContext[LangfuseTracingEventSchema],
+            ctx: RunContext[LangfuseTracingEventSchema],
         ) -> str:
             return event.model_dump_json()
 

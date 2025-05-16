@@ -36,6 +36,19 @@ class ModelProvider(str, Enum):
 
 @dataclass
 class AgentConfig:
+    """
+    Represents the configuration settings for an Agent.
+
+    Attributes:
+        system_prompt (str): The system prompt to initialize the agent with.
+        output_type (Optional[Type[Any]]): The output type of the agent's responses.
+        deps_type (Optional[Type[Any]]): The type used for managing dependencies.
+        model_provider (ModelProvider): The provider that supplies the model for the agent.
+        model_name (Union[OpenAIModelName, AnthropicModelName, GeminiModelName,
+            BedrockModelName]): The name of the specific model to be used.
+        instrument (bool): Indicates whether instrumentation is enabled for
+            the agent. This should be set to True for Langfuse traces. Defaults to False.
+    """
     system_prompt: str
     output_type: Optional[Type[Any]]
     deps_type: Optional[Type[Any]]

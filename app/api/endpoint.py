@@ -6,12 +6,12 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import Response
 
+from schemas.langfuse_tracing_schema import LangfuseTracingEventSchema
 from worker.config import celery_app
 from database.event import Event
 from database.repository import GenericRepository
 from database.session import db_session
 
-from schemas.placeholder_schema import PlaceholderEventSchema
 from workflows.workflow_registry import WorkflowRegistry
 
 """
@@ -38,7 +38,7 @@ router = APIRouter()
 
 @router.post("/", dependencies=[])
 def handle_event(
-    data: PlaceholderEventSchema,
+    data: LangfuseTracingEventSchema,
     session: Session = Depends(db_session),
 ) -> Response:
     """Handles incoming event submissions.
@@ -84,4 +84,4 @@ def get_workflow_type(data: Dict) -> str:
     """
     Implement your logic to determine the workflow type based on the event data.
     """
-    return WorkflowRegistry.PLACEHOLDER.name
+    return WorkflowRegistry.LANGFUSE_TRACING.name

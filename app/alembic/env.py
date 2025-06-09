@@ -10,6 +10,7 @@ from database.session import Base
 
 # This import is required for autogenerate support
 from database.event import *
+from database.data_models.provider_crm import *  # Import provider CRM models
 
 """
 Alembic Environment Module

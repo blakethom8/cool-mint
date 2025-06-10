@@ -19,6 +19,8 @@ class DatabaseUtils:
         db_port = os.getenv("DATABASE_PORT", "5432")
         db_name = os.getenv("DATABASE_NAME", "postgres")
         db_user = os.getenv("DATABASE_USER", "postgres")
-        db_password = os.getenv("DATABASE_PASSWORD", "postgres")
+        db_password = os.getenv(
+            "DATABASE_PASSWORD", "your-super-secret-and-long-postgres-password"
+        )
 
         return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"

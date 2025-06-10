@@ -15,7 +15,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from database.session import Base
+from app.database.session import Base
 
 """
 Provider CRM Database Models Module
@@ -61,6 +61,10 @@ class Provider(Base):
     )
     primary_practice_name = Column(
         String(300), doc="Name of the primary practice/organization"
+    )
+    primary_organization = Column(
+        String(300),
+        doc="Parent healthcare organization or system that employs the provider",
     )
     primary_practice_address = Column(
         String(500), doc="Full address of the primary practice location"

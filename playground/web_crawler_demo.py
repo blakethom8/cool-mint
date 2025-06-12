@@ -387,7 +387,22 @@ if __name__ == "__main__":
     print()
 
     try:
-        asyncio.run(main())
+        # Check if we're in IPython/Jupyter
+        try:
+            import IPython
+
+            if IPython.get_ipython() is not None:
+                # We're in IPython/Jupyter - use nest_asyncio
+                import nest_asyncio
+
+                nest_asyncio.apply()
+                asyncio.get_event_loop().run_until_complete(main())
+            else:
+                # Regular Python environment
+                asyncio.run(main())
+        except ImportError:
+            # Not in IPython - use regular asyncio.run()
+            asyncio.run(main())
     except KeyboardInterrupt:
         print("\n👋 Demo interrupted. Goodbye!")
     except Exception as e:

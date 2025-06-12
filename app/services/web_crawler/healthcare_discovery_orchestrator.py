@@ -378,19 +378,60 @@ async def discover_healthcare_providers(
     )
 
 
+# Helper function for notebook use
+def run_discovery(
+    specialty: str,
+    location: str,
+    max_urls_to_discover: int = 10,
+    max_urls_to_crawl: int = 5,
+    firecrawl_api_key: Optional[str] = None,
+) -> Optional[ProviderDiscoveryResult]:
+    """
+    Synchronous wrapper for discover_healthcare_providers that handles the event loop.
+    This is the recommended way to run the discovery in notebooks.
+    """
+    try:
+        # Check if we're in IPython/Jupyter
+        import IPython
+
+        if IPython.get_ipython() is not None:
+            # We're in IPython/Jupyter - use nest_asyncio
+            import nest_asyncio
+
+            nest_asyncio.apply()
+            loop = asyncio.get_event_loop()
+            return loop.run_until_complete(
+                discover_healthcare_providers(
+                    specialty=specialty,
+                    location=location,
+                    max_urls_to_discover=max_urls_to_discover,
+                    max_urls_to_crawl=max_urls_to_crawl,
+                    firecrawl_api_key=firecrawl_api_key,
+                )
+            )
+    except ImportError:
+        # Not in IPython - use regular asyncio.run()
+        return asyncio.run(
+            discover_healthcare_providers(
+                specialty=specialty,
+                location=location,
+                max_urls_to_discover=max_urls_to_discover,
+                max_urls_to_crawl=max_urls_to_crawl,
+                firecrawl_api_key=firecrawl_api_key,
+            )
+        )
+
+
 # Example usage for notebooks
 if __name__ == "__main__":
     # This can be run directly or imported into a notebook
-    async def demo():
-        result = await discover_healthcare_providers(
-            "interventional cardiologist",
-            "Torrance, California",
-            max_urls_to_discover=5,
-            max_urls_to_crawl=3,
-        )
+    result = run_discovery(
+        "gastroenterology",
+        "Santa Monica, California",
+        max_urls_to_discover=5,
+        max_urls_to_crawl=3,
+    )
 
-        if result:
-            orchestrator = HealthcareDiscoveryOrchestrator()
-            print(orchestrator.format_complete_results(result))
-
-    asyncio.run(demo())
+    if result:
+        orchestrator = HealthcareDiscoveryOrchestrator()
+        print(orchestrator.format_complete_results(result))

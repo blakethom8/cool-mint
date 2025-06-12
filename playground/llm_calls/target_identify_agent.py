@@ -14,27 +14,52 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+
+def find_project_root(current_path: str) -> str:
+    """Find the project root directory by looking for specific markers."""
+    path = Path(current_path).resolve()
+
+    # Keep going up until we find the project root or hit the filesystem root
+    while path != path.parent:
+        # Check for common project root markers
+        if (path / "app").exists() or (path / ".git").exists():
+            return str(path)
+        path = path.parent
+
+    # If we didn't find a marker, return the original directory
+    return current_path
+
+
+# Get the absolute path to the script's directory and project root
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = find_project_root(current_dir)
+
+print(f"Current directory: {current_dir}")
+print(f"Project root: {project_root}")
+
 # Try to load environment variables from multiple possible locations
 env_locations = [
-    ".env",  # Current directory
-    "../.env",  # Parent directory
-    "../../.env",  # Root directory
-    "../../app/.env",  # App directory
+    os.path.join(project_root, "app", ".env"),  # App directory
+    os.path.join(project_root, ".env"),  # Root directory
+    os.path.join(current_dir, ".env"),  # Current directory
+    os.path.join(os.path.dirname(current_dir), ".env"),  # Parent directory
 ]
 
 env_loaded = False
 for env_path in env_locations:
-    if Path(env_path).exists():
+    print(f"Checking for .env file at: {env_path}")
+    if os.path.exists(env_path):
         load_dotenv(env_path)
         print(f"✅ Loaded environment variables from {env_path}")
         env_loaded = True
         break
 
 if not env_loaded:
-    print("❌ No .env file found. Please create one with your OPENAI_API_KEY")
+    print("\n❌ No .env file found. Please create one with your OPENAI_API_KEY")
     print("Possible locations to place your .env file:")
     for loc in env_locations:
-        print(f"- {Path(loc).absolute()}")
+        print(f"- {loc}")
+    print("\nRecommended location: {}/app/.env".format(project_root))
     exit(1)
 
 # Verify OpenAI API key is available

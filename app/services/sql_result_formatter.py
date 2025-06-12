@@ -107,6 +107,48 @@ def format_top_organizations_result(df: pd.DataFrame, template_info: Dict) -> st
     return "\n".join(formatted_text)
 
 
+def format_procedure_codes_result(df: pd.DataFrame, template_info: Dict) -> str:
+    """
+    Format procedure codes results into LLM-friendly text for categorization.
+
+    Args:
+        df: DataFrame containing procedure code results
+        template_info: Dictionary containing metadata about the query template
+
+    Returns:
+        Formatted string ready for LLM categorization
+    """
+    if df.empty:
+        return "No procedure code data found."
+
+    # Start with the analysis context
+    formatted_text = [
+        f"Analysis Type: {template_info['name']}",
+        f"Analysis Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        f"Total Procedures Analyzed: {len(df)}",
+        "\nProcedure Summary:",
+        f"- Total Visit Volume: {df['Visits'].sum():,}",
+        f"- Average Visits per Procedure: {df['Visits'].mean():,.1f}",
+        f"- Procedure Types: {df['Procedure Type'].nunique()}",
+        f"- Procedure Sub Types: {df['Procedure Sub Type'].nunique()}",
+        "\nDetailed Procedure Analysis:",
+    ]
+
+    # Add individual procedure details for categorization
+    for idx, row in df.iterrows():
+        procedure_text = (
+            f"\nProcedure {idx + 1}:"
+            f"\n- Code: {row['Procedure Code']}"
+            f"\n- Description: {row['Procedure Code Description']}"
+            f"\n- Type: {row['Procedure Type']}"
+            f"\n- Sub Type: {row['Procedure Sub Type']}"
+            f"\n- Visit Volume: {row['Visits']:,}"
+        )
+        formatted_text.append(procedure_text)
+
+    return "\n".join(formatted_text)
+
+
 def format_sql_result_for_llm(
     df: pd.DataFrame, template_id: str, template_info: Dict[str, Any]
 ) -> str:
@@ -124,6 +166,7 @@ def format_sql_result_for_llm(
     formatters = {
         "top_providers_by_specialty": format_top_providers_result,
         "top_organizations_by_specialty": format_top_organizations_result,
+        "surgical_cardio_procedures": format_procedure_codes_result,
     }
 
     formatter = formatters.get(template_id)

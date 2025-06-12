@@ -15,28 +15,47 @@ Analysis includes:
 
 import sys
 import os
+from dotenv import load_dotenv
 import pandas as pd
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
-# Add the root directory to the Python path
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+# Add the current directory to Python path for local imports
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sql_market_dir = os.path.dirname(current_dir)
+playground_dir = os.path.dirname(sql_market_dir)
+root_dir = os.path.dirname(playground_dir)
+
+# Add both playground directory and root to Python path
+if playground_dir not in sys.path:
+    sys.path.insert(0, playground_dir)
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
+# Load environment variables from app/.env
+env_path = os.path.join(root_dir, "app", ".env")
+load_dotenv(env_path)
+
 # Import SQL templates
 try:
-    from playground.sequel_playground.sql_templates import SQL_TEMPLATES
+    from .sql_templates import SQL_TEMPLATES
     from app.services.sql_result_formatter import format_sql_result_for_llm
 
     print("✅ Successfully imported SQL templates and formatter")
 except ImportError as e:
     print(f"❌ Error importing SQL templates: {e}")
+    print(f"Python path: {sys.path}")
+    print(f"Current directory: {current_dir}")
     exit()
 
 # Database connection setup
 try:
-    DATABASE_URL = "postgresql://supabase_admin:your-super-secret-and-long-postgres-password@localhost:5433/postgres"
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    if not DATABASE_URL:
+        print("❌ DATABASE_URL environment variable not found!")
+        print(f"Please check that {env_path} exists and contains DATABASE_URL")
+        exit()
+
     engine = create_engine(DATABASE_URL)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     print("✅ Successfully set up database connection")
@@ -277,8 +296,6 @@ def display_llm_formatted_results(formatted_results: dict):
         print(formatted_text)
         print("\n")
 
-
-display_llm_formatted_results(format_results_for_llm(results))
 
 if __name__ == "__main__":
     # Configure pandas display settings

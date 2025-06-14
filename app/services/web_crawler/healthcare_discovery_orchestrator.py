@@ -426,8 +426,8 @@ def run_discovery(
 if __name__ == "__main__":
     # This can be run directly or imported into a notebook
     result = run_discovery(
-        "gastroenterology",
-        "Santa Monica, California",
+        "concierge primary care",
+        "Beverly Hills, California",
         max_urls_to_discover=5,
         max_urls_to_crawl=3,
     )

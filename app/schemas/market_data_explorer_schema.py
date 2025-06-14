@@ -1,19 +1,24 @@
 """
-Market Data Explorer Event Schema
+Market Data Explorer Schema
 
-Defines the input schema for market data exploration queries.
+This module defines the schema for market data exploration events.
 """
 
 from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class MarketDataExplorerEvent(BaseModel):
-    """Event schema for market data exploration queries."""
+    """Schema for market data exploration events."""
 
     query: str = Field(
         ...,
         description="The user's natural language query about market data",
         example="What is the market size for electric vehicles in California?",
+    )
+
+    market_data: Optional[str] = Field(
+        description="Market data to analyze for target identification", default=None
     )
 
     user_id: str = Field(

@@ -19,8 +19,8 @@ from pydantic_ai.providers.google_gla import GoogleGLAProvider
 from pydantic_ai.providers.openai import OpenAIProvider
 from typing import Type, Optional, Union, Any
 
-from core.nodes.base import Node
-from core.task import TaskContext
+from app.core.nodes.base import Node
+from app.core.task import TaskContext
 
 load_dotenv()
 
@@ -49,6 +49,7 @@ class AgentConfig:
         instrument (bool): Indicates whether instrumentation is enabled for
             the agent. This should be set to True for Langfuse traces. Defaults to False.
     """
+
     system_prompt: str
     output_type: Optional[Type[Any]]
     deps_type: Optional[Type[Any]]
@@ -68,15 +69,26 @@ class AgentNode(Node, ABC):
 
     def __init__(self):
         self.__async_client = AsyncClient()
-        agent_wrapper = self.get_agent_config()
+        self.agent_config = self.get_agent_config()
         self.agent = Agent(
-            system_prompt=agent_wrapper.system_prompt,
-            output_type=agent_wrapper.output_type,
+            system_prompt=self.agent_config.system_prompt,
+            output_type=self.agent_config.output_type,
             model=self.__get_model_instance(
-                agent_wrapper.model_provider, agent_wrapper.model_name
+                self.agent_config.model_provider, self.agent_config.model_name
             ),
-            instrument=agent_wrapper.instrument,
+            instrument=self.agent_config.instrument,
         )
+
+    def _capture_prompts(self, task_context: TaskContext, user_prompt: str):
+        """Capture prompts and model info in the task context for tracing."""
+        task_context.metadata["llm_details"] = {
+            "system_prompt": self.agent_config.system_prompt,
+            "user_prompt": user_prompt,
+            "model": {
+                "provider": self.agent_config.model_provider.value,
+                "name": self.agent_config.model_name,
+            },
+        }
 
     @abstractmethod
     def get_agent_config(self) -> AgentConfig:

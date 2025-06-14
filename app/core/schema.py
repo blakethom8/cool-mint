@@ -2,7 +2,7 @@ from typing import List, Type, Optional
 
 from pydantic import BaseModel, Field
 
-from core.nodes.base import Node
+from app.core.nodes.base import Node
 
 """
 Workflow Schema Module

@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from core.task import TaskContext
-from core.nodes.base import Node
+from app.core.task import TaskContext
+from app.core.nodes.base import Node
 
 """
 Router Module

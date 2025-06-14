@@ -6,12 +6,12 @@ from typing import Dict, Optional, ClassVar, Type, Any
 from dotenv import load_dotenv
 from opentelemetry.sdk.trace import Span
 
-from core.langfuse_config import LangfuseConfig
-from core.nodes.base import Node
-from core.nodes.router import BaseRouter
-from core.schema import WorkflowSchema, NodeConfig
-from core.task import TaskContext
-from core.validate import WorkflowValidator
+from app.core.langfuse_config import LangfuseConfig
+from app.core.nodes.base import Node
+from app.core.nodes.router import BaseRouter
+from app.core.schema import WorkflowSchema, NodeConfig
+from app.core.task import TaskContext
+from app.core.validate import WorkflowValidator
 
 load_dotenv()
 
@@ -138,8 +138,13 @@ class Workflow(ABC):
 
                     current_node = self.nodes[current_node_class].node
                     with self.node_context(current_node_class.__name__):
+                        # Process the node
                         task_context = current_node().process(task_context)
 
+                        # Capture any prompts or model parameters that were added during processing
+                        self._set_span_output(node_span, task_context)
+
+                    # Set node-specific output
                     node_span.set_attribute(
                         "output",
                         task_context.model_dump_json(
@@ -158,14 +163,30 @@ class Workflow(ABC):
             return task_context
 
     def _set_span_input(self, span: Span, task_context: TaskContext):
+        # Capture the basic input
         span.set_attribute(
             "input", task_context.model_dump_json(exclude={"metadata": {"nodes"}})
         )
 
+        # Add prompt details if available in the task context
+        if hasattr(task_context, "prompts"):
+            span.set_attribute("prompts", str(task_context.prompts))
+        if hasattr(task_context, "system_prompt"):
+            span.set_attribute("system_prompt", str(task_context.system_prompt))
+        if hasattr(task_context, "user_prompt"):
+            span.set_attribute("user_prompt", str(task_context.user_prompt))
+
     def _set_span_output(self, span: Span, task_context: TaskContext):
+        # Capture the basic output
         span.set_attribute(
             "output", task_context.model_dump_json(exclude={"metadata": {"nodes"}})
         )
+
+        # Add model parameters and completion details if available
+        if hasattr(task_context, "model_params"):
+            span.set_attribute("model_params", str(task_context.model_params))
+        if hasattr(task_context, "completion"):
+            span.set_attribute("completion", str(task_context.completion))
 
     def _get_next_node_class(
         self, current_node_class: Type[Node], task_context: TaskContext

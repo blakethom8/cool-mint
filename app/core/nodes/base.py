@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-
 from app.core.task import TaskContext
 
 """

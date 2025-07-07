@@ -5,7 +5,7 @@ This node determines whether a user's query requires a search
 to gather additional information.
 """
 
-from typing import Literal, Optional
+from typing import Dict, Any, Literal, Optional
 from pydantic import BaseModel, Field
 
 from app.core.nodes.agent import AgentNode, AgentConfig, ModelProvider

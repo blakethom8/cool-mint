@@ -1,12 +1,20 @@
+"""
+Agent Node Implementation
+
+This module provides the AgentNode class which integrates with LLM providers
+to process tasks using conversational AI agents.
+"""
+
 import boto3
 import os
+import json
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
 from dotenv import load_dotenv
 from enum import Enum
 from httpx import AsyncClient
-from openai import AsyncAzureOpenAI
-from pydantic import BaseModel
+from openai import AsyncAzureOpenAI, OpenAI
+from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.models import Model
 from pydantic_ai.models.anthropic import AnthropicModel, AnthropicModelName
@@ -17,7 +25,9 @@ from pydantic_ai.providers.anthropic import AnthropicProvider
 from pydantic_ai.providers.bedrock import BedrockProvider
 from pydantic_ai.providers.google_gla import GoogleGLAProvider
 from pydantic_ai.providers.openai import OpenAIProvider
-from typing import Type, Optional, Union, Any
+from typing import Type, Optional, Union, Any, Dict, List
+from langfuse import Langfuse
+from langfuse.decorators import observe
 
 from app.core.nodes.base import Node
 from app.core.task import TaskContext

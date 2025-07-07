@@ -131,8 +131,10 @@ search_event = {
 workflow = MarketDataExplorerWorkflow()
 search_result = workflow.run(search_event)
 print("\nSearch Classification Result:")
-print(f"Needs Search: {search_result.data.get('needs_search')}")
-print(f"Reason: {search_result.data.get('reason')}")
+# Access results from the SearchClassifierNode
+classifier_results = search_result.nodes.get("SearchClassifierNode", {})
+print(f"Needs Search: {classifier_results.get('needs_search')}")
+print(f"Reason: {classifier_results.get('reason')}")
 
 # Test 2: Target Identification
 print("\n=== Testing Target Identification ===")
@@ -145,7 +147,10 @@ target_event = {
 
 target_result = workflow.run(target_event)
 print("\nTarget Identification Result:")
-target_data = target_result.data.get("target_identification", {})
+# Access results from the TargetIdentifyNode
+target_data = target_result.nodes.get("TargetIdentifyNode", {}).get(
+    "target_identification", {}
+)
 if target_data:
     print("\nPriority Targets:")
     for target in target_data.get("priority_targets", []):

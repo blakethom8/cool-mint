@@ -1,9 +1,9 @@
 import logging
 
-from core.nodes.base import Node
-from core.task import TaskContext
-from schemas.langfuse_tracing_schema import LangfuseTracingEventSchema
-from workflows.langfuse_tracing_workflow_nodes.violation_detection_node import (
+from app.core.nodes.base import Node
+from app.core.task import TaskContext
+from app.schemas.langfuse_tracing_schema import LangfuseTracingEventSchema
+from app.workflows.langfuse_tracing_workflow_nodes.violation_detection_node import (
     ViolationDetectionNode,
 )
 

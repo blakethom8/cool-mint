@@ -1,3 +1,5 @@
+import sys
+import os
 from logging.config import fileConfig
 
 from alembic import context
@@ -5,12 +7,20 @@ from dotenv import load_dotenv
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from database.database_utils import DatabaseUtils
-from database.session import Base
+# Add the project root to Python path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+from app.database.database_utils import DatabaseUtils
+from app.database.session import Base
 
 # This import is required for autogenerate support
-from database.event import *
-from database.data_models.provider_crm import *  # Import provider CRM models
+from app.database.event import *
+from app.database.data_models.provider_crm import *  # Import provider CRM models
+from app.database.data_models.salesforce_data import *  # Import Salesforce models
+from app.database.data_models.proc_dx_tables import *  # Import procedure/diagnosis models
 
 """
 Alembic Environment Module

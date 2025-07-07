@@ -71,12 +71,14 @@ class ReadOnlySalesforceService:
         if not query_lower.startswith("select "):
             raise ValueError("Only SELECT queries are allowed")
 
-        # Check for any modification keywords
-        forbidden_keywords = ["update", "delete", "insert", "upsert", "merge"]
-        if any(keyword in query_lower for keyword in forbidden_keywords):
-            raise ValueError(
-                f"Query contains forbidden operations: {', '.join(forbidden_keywords)}"
-            )
+        # Check for any modification operations at the start of the query
+        # This avoids false positives from field names or related objects
+        query_parts = query_lower.split()
+        if any(
+            query_parts[0] == keyword
+            for keyword in ["update", "delete", "insert", "upsert", "merge"]
+        ):
+            raise ValueError("Only SELECT queries are allowed")
 
         try:
             # Log the API call

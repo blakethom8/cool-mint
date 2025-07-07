@@ -1,8 +1,8 @@
 """
 Target Identification Node
 
-This node analyzes healthcare provider data to identify high-potential targets
-for referral network development.
+This node analyzes market data to identify potential targets and opportunities
+based on the search results and user requirements.
 """
 
 from typing import Dict, List, Optional

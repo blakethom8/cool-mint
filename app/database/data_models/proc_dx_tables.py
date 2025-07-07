@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, BigInteger, Text
-from app.database.session import Base
+from database.session import Base
 
 """
 Procedure and Diagnosis Codes Database Models Module

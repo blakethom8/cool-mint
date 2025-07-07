@@ -1,8 +1,8 @@
 from pydantic_ai import RunContext
 
-from core.nodes.agent import AgentNode, AgentConfig, ModelProvider
-from core.task import TaskContext
-from schemas.langfuse_tracing_schema import LangfuseTracingEventSchema
+from app.core.nodes.agent import AgentNode, AgentConfig, ModelProvider
+from app.core.task import TaskContext
+from app.schemas.langfuse_tracing_schema import LangfuseTracingEventSchema
 
 
 class ContextSummaryResult(AgentNode):

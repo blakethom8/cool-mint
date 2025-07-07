@@ -128,7 +128,7 @@ def main():
     explorer = SchemaExplorer()
 
     # List of objects to explore
-    objects_to_explore = ["Contact", "Task", "User"]
+    objects_to_explore = ["TaskWhoRelation"]  # ["Contact", "Task", "User"]
 
     for object_name in objects_to_explore:
         try:

@@ -132,17 +132,36 @@ class BulkSalesforceService:
             Job ID if successful, None otherwise
         """
         try:
+            # Format query for Bulk API
+            query = query.replace("'", "\\'")  # Escape single quotes
+
             job_data = {
                 "operation": "query",
                 "query": query,
                 "contentType": "CSV",
+                "columnDelimiter": "COMMA",
                 "lineEnding": "LF",
             }
 
             url = f"{self.instance_url}/services/data/{self.api_version}/jobs/query"
             response = requests.post(url, headers=self.headers, json=job_data)
-            response.raise_for_status()
 
+            if response.status_code != 200:
+                error_detail = response.json()
+                print(f"❌ Bulk API error: {error_detail}")
+                self.monitoring.log_api_call(
+                    "bulk_create_job",
+                    {
+                        "success": False,
+                        "error": error_detail,
+                        "status_code": response.status_code,
+                        "query": query,
+                        "object": object_name,
+                    },
+                )
+                return None
+
+            response.raise_for_status()
             job_info = response.json()
             job_id = job_info["id"]
 
@@ -155,7 +174,13 @@ class BulkSalesforceService:
         except Exception as e:
             print(f"❌ Failed to create bulk query job: {str(e)}")
             self.monitoring.log_api_call(
-                "bulk_create_job", {"success": False, "error": str(e)}
+                "bulk_create_job",
+                {
+                    "success": False,
+                    "error": str(e),
+                    "query": query,
+                    "object": object_name,
+                },
             )
             return None
 

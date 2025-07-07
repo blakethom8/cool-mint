@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Dict, Any, List, Optional
 
 from app.core.task import TaskContext
 from app.core.nodes.base import Node

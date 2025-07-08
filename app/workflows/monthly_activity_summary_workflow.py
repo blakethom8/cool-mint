@@ -25,6 +25,8 @@ from app.schemas.monthly_activity_summary_schema import MonthlyActivitySummaryEv
 class MonthlyActivitySummaryWorkflow(Workflow):
     """Workflow for generating monthly activity summaries."""
 
+    pass
+
     workflow_schema = WorkflowSchema(
         description="Generates comprehensive monthly activity summaries from Salesforce data",
         event_schema=MonthlyActivitySummaryEvent,

@@ -1,0 +1,1177 @@
+{
+  "summary_period": {
+    "start_date": "2025-06-07",
+    "end_date": "2025-07-07",
+    "user_id": "005UJ000002LyknYAC",
+    "total_activities": 40,
+    "total_days": 31
+  },
+  "basic_metrics": {
+    "total_activities": 40,
+    "unique_contacts": 15,
+    "unique_organizations": 15,
+    "date_range": "2025-06-07 to 2025-07-07"
+  },
+  "activities": [
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "GI in Torrance; was at SBS happy hour but unsure if he formally met with Koller. Reached out with bio card and asked about stopping in",
+        "subject": "BD Outreach - Cold Call",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "GI in Torrance; was at SBS happy hour but unsure if he formally met with Koller. Reached out with bio card and asked about stopping in"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.",
+        "subject": "BD Outreach - Cold Call",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.",
+        "subject": "BD Outreach - Cold Call",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Emailing with office mngr, Alysha. Said they are well aware of Dr. Madorin, but would be nice to meet in-person as well. Physicians in this office all have different schedules so will get back about possible dates that may work best",
+        "subject": "BD Outreach - Office Mngr",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Emailing with office mngr, Alysha. Said they are well aware of Dr. Madorin, but would be nice to meet in-person as well. Physicians in this office all have different schedules so will get back about possible dates that may work best"
+      },
+      "contact_info": {
+        "name": "Irram Rao",
+        "mailing_city": "Torrance",
+        "specialty": "Internal Medicine",
+        "contact_account_name": "Irram Rao | Endocrine Care Specialists Inc.",
+        "employment_status": "Out of Network",
+        "mn_mgma_specialty": "Endocrinology",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Endocrinology",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": "3103757666"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "MD_to_MD_Visits",
+        "mno_subtype": "MD_to_MD_w_Cedars",
+        "description": "Q&A on Inspire with PHI team. Recorded lecture and circulated to anyone who couldn't make it. Good questions asked about contraindications, device toleration, maintenance, etc.",
+        "subject": "Inspire Q&A with Pacific Heart Institute",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Q&A on Inspire with PHI team. Recorded lecture and circulated to anyone who couldn't make it. Good questions asked about contraindications, device toleration, maintenance, etc."
+      },
+      "contact_info": {
+        "name": "Kathryn Kreicher",
+        "mailing_city": "MARINA DEL REY",
+        "specialty": null,
+        "contact_account_name": "Kathryn Kreicher |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Otolaryngology/ENT",
+        "mn_primary_geography": "South Coastal",
+        "mn_specialty_group": "ENT",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": "310-423-1220"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-25",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke with office manager, Alysha. Said they do refer out for advanced referral needs, wasn't sure about if they'd met Madorin. Gave me her card to follow up in an email and ask about coordinating a lunch. Just sent email to follow up and ask for best date for lunch/physician intro.",
+        "subject": "BD Outreach - Community Office Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke with office manager, Alysha. Said they do refer out for advanced referral needs, wasn't sure about if they'd met Madorin. Gave me her card to follow up in an email and ask about coordinating a lunch. Just sent email to follow up and ask for best dat"
+      },
+      "contact_info": {
+        "name": "Catherine Madorin",
+        "mailing_city": "Torrance",
+        "specialty": "General Surgery",
+        "contact_account_name": "Catherine Madorin | South Coast Surgical",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "General Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "General Surgery",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": "3103736864"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-25",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke to Bri, referral coordinator. Very nice office located in Palos Verdes Shopping Center. Took my card for lunch coordination and said she would pass along bio cards as well. Bhayani said they see some from this office but not a lot",
+        "subject": "BD Outreach - Community Office Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke to Bri, referral coordinator. Very nice office located in Palos Verdes Shopping Center. Took my card for lunch coordination and said she would pass along bio cards as well. Bhayani said they see some from this office but not a lot"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-25",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke to Juanita (office manager), gave the calendar for coordinating lunches. Said I would check with physician calendars and give her a call, she was very nice. Small medical office in a large shopping plaza in Carson. Seems to be a busy center, they are Optum providers",
+        "subject": "BD Outreach - Community Office Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke to Juanita (office manager), gave the calendar for coordinating lunches. Said I would check with physician calendars and give her a call, she was very nice. Small medical office in a large shopping plaza in Carson. Seems to be a busy center, they ar"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-24",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Provider Call/Email/Text",
+        "description": "Spoke on phone with the office, asked if they accept Optum MG. Provided provider email address, followed up with bio cards and info, asked to host lunch.",
+        "subject": "BD Outreach - Cold Call, Padre FC",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke on phone with the office, asked if they accept Optum MG. Provided provider email address, followed up with bio cards and info, asked to host lunch."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-24",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Provider Call/Email/Text",
+        "description": "Followed up on LaGreulius's email, initial interest in meeting SBS physicians but no movement since. Share the same building in Torrance as SBS, don't think they've met the newer folks just yet.",
+        "subject": "BD Outreach - Email Follow Up",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Followed up on LaGreulius's email, initial interest in meeting SBS physicians but no movement since. Share the same building in Torrance as SBS, don't think they've met the newer folks just yet."
+      },
+      "contact_info": {
+        "name": "Thomas Lagrelius",
+        "mailing_city": "Torrance",
+        "specialty": "General & Family Practice",
+        "contact_account_name": "Thomas Lagrelius | Market Physicians",
+        "employment_status": "Out of Network",
+        "mn_mgma_specialty": "Internal Medicine",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Internal & Family Medicine",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": "3103786208"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-20",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Spoke with Anna (operator/front desk), and followed up with Michelle the office manager. Sent info on new physicians, Bhayani says this office in San Pedro are longtime colleagues and have great relationship",
+        "subject": "BD Outreach - Cold Call",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke with Anna (operator/front desk), and followed up with Michelle the office manager. Sent info on new physicians, Bhayani says this office in San Pedro are longtime colleagues and have great relationship"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-20",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Provider Call/Email/Text",
+        "description": "Worked with Dr. Berkman and TACRI coordination (Mari mainly) on getting patient reports back to Berkman and Saperstein. Were happy for the follow up and attention to the matter",
+        "subject": "Referral Report Coordination",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Worked with Dr. Berkman and TACRI coordination (Mari mainly) on getting patient reports back to Berkman and Saperstein. Were happy for the follow up and attention to the matter"
+      },
+      "contact_info": {
+        "name": "Suzanne Berkman",
+        "mailing_city": "Beverly Hills",
+        "specialty": "Dermatology",
+        "contact_account_name": "Suzanne Berkman | Suzanne L. Berkman M.D. Inc.",
+        "employment_status": "Out of Network",
+        "mn_mgma_specialty": "Dermatology \u00e2\u0080\u0093 Mohs",
+        "mn_primary_geography": "Core",
+        "mn_specialty_group": "Dermatology",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke to Zida, doctor was not in today. She wasn't sure whether her and Dr. Madorin had met yet, but asked me to leave a note for Dr. with bio cards",
+        "subject": "BD Outreach - Community Office Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke to Zida, doctor was not in today. She wasn't sure whether her and Dr. Madorin had met yet, but asked me to leave a note for Dr. with bio cards"
+      },
+      "contact_info": {
+        "name": "Catherine Madorin",
+        "mailing_city": "Torrance",
+        "specialty": "General Surgery",
+        "contact_account_name": "Catherine Madorin | South Coast Surgical",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "General Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "General Surgery",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": "3103736864"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Dropped bio cards for Dr. Koller off for Janet McElroy at Hunt Cancer Center",
+        "subject": "Bio Cards to TMPN Hunt Cancer",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Dropped bio cards for Dr. Koller off for Janet McElroy at Hunt Cancer Center"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke to Aleshia. Bhayani had previously stated that while these physicians have sent to SBS for a long time, they may not be a preferred partner because they haven't always \"felt the love.\" Bhayani asked to share the scheduling backline to Melinda with these two - this is what I did, along with bio cards, my card, etc. Aleshia was very happy with this, felt it very helpful and that the physicians would love it",
+        "subject": "BD Outreach - Community Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke to Aleshia. Bhayani had previously stated that while these physicians have sent to SBS for a long time, they may not be a preferred partner because they haven't always \"felt the love.\" Bhayani asked to share the scheduling backline to Melinda with t"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Very nice office, bustling and busy when I went in. All front desk staff were slammed, quickly gave cards and had a small chat, but they didn't seem to know why I would be in there since they already send a lot to SBS. Strong partners already. Still gave cards + my card for any urgent referral needs, said thanks",
+        "subject": "BD Outreach - Community Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Very nice office, bustling and busy when I went in. All front desk staff were slammed, quickly gave cards and had a small chat, but they didn't seem to know why I would be in there since they already send a lot to SBS. Strong partners already. Still gave"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke to Carla, provided cards and my bus card. Follow up with LaGreulius or Bhayani. Curious about if they will be more responsive to the Cedars name as Bhayani seems to think they want to use \"brand names\"",
+        "subject": "BD Outreach - Community Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke to Carla, provided cards and my bus card. Follow up with LaGreulius or Bhayani. Curious about if they will be more responsive to the Cedars name as Bhayani seems to think they want to use \"brand names\""
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Previously emailed with Trysten Nguyen (office manager) about SBS specialty lines and provided her with a list of everyone's specialty. She was not in when I dropped by, but spoke to Michelle and provided cards",
+        "subject": "BD Outreach - Community Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Previously emailed with Trysten Nguyen (office manager) about SBS specialty lines and provided her with a list of everyone's specialty. She was not in when I dropped by, but spoke to Michelle and provided cards"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke to Daniella, she knew they were colleagues with SBS. She liked the bio cards, found them helpful for pts and was going to give my bus card to referral coordinator.",
+        "subject": "BD Outreach - Community Office Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke to Daniella, she knew they were colleagues with SBS. She liked the bio cards, found them helpful for pts and was going to give my bus card to referral coordinator."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-19",
+        "mno_type": "MD_to_MD_Visits",
+        "mno_subtype": "MD_to_MD_w_Community",
+        "description": "Lunch with West LA Dermatologists, Heather Roberts and Choi Kim. Was a great meeting, both physicians sat and chatted for about 30 minutes. Choi Kim sees about 25% pediatric patients; rest are adults for this practice.",
+        "subject": "MD-MD Intro w/ Dr. Heather Roberts and Dr. Choi Kim (West LA Dermatologists)",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Lunch with West LA Dermatologists, Heather Roberts and Choi Kim. Was a great meeting, both physicians sat and chatted for about 30 minutes. Choi Kim sees about 25% pediatric patients; rest are adults for this practice."
+      },
+      "contact_info": {
+        "name": "Trevan Fischer",
+        "mailing_city": "Santa Monica",
+        "specialty": "General Surgery",
+        "contact_account_name": "Trevan Fischer | Market Physicians",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Oncology \u00e2\u0080\u0093 Surgical",
+        "mn_primary_geography": "North Coastal",
+        "mn_specialty_group": "Oncology \u00e2\u0080\u0093 Surgical",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-18",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Provider Call/Email/Text",
+        "description": "Emailed the CSMG Coastal PCPS (MDR/PV/CC) Koller's bio card, per Koven's suggestion",
+        "subject": "Coastal PCPs Intro",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Emailed the CSMG Coastal PCPS (MDR/PV/CC) Koller's bio card, per Koven's suggestion"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-17",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke with Cathy, office manager. Very friendly and said it was nice to get my card for urgent referral needs. Likes SBS, has used in the past.",
+        "subject": "BD Outreach - Community Office Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke with Cathy, office manager. Very friendly and said it was nice to get my card for urgent referral needs. Likes SBS, has used in the past."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-17",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Spoke to Julie, referral coordinator. She was familiar with South Bay Surgeons, said they send stuff regularly. Provided bio cards for new physicians as well as my card for urgent referral needs. Said it was helpful for referrals; she makes them all.",
+        "subject": "BD Outreach - Community Office Visit",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Spoke to Julie, referral coordinator. She was familiar with South Bay Surgeons, said they send stuff regularly. Provided bio cards for new physicians as well as my card for urgent referral needs. Said it was helpful for referrals; she makes them all."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-17",
+        "mno_type": "MD_to_MD_Visits",
+        "mno_subtype": "MD_to_MD_w_Community",
+        "description": "Great intro, got to meet all 4 MDs at this practice. The 3 newer MDs (Shaffran, Berkman and Natsis) stayed to chat for about 40 minutes. Great conversation + helpful for both sides. Did give feedback that they have trouble getting reports back from TACRI (when they've sent to Faries in the past) - even getting pushback when calling to request it. Fischer & I both following up on it.",
+        "subject": "MD-MD Intro w/ Dermatology Specialists of Beverly Hills",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Great intro, got to meet all 4 MDs at this practice. The 3 newer MDs (Shaffran, Berkman and Natsis) stayed to chat for about 40 minutes. Great conversation + helpful for both sides. Did give feedback that they have trouble getting reports back from TACRI"
+      },
+      "contact_info": {
+        "name": "Trevan Fischer",
+        "mailing_city": "Santa Monica",
+        "specialty": "General Surgery",
+        "contact_account_name": "Trevan Fischer | Market Physicians",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Oncology \u00e2\u0080\u0093 Surgical",
+        "mn_primary_geography": "North Coastal",
+        "mn_specialty_group": "Oncology \u00e2\u0080\u0093 Surgical",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-17",
+        "mno_type": "MD_to_MD_Visits",
+        "mno_subtype": "MD_to_MD_w_Community",
+        "description": "Dr. Feuille reached out about coordinating another happy hour with rhinologists so they can meet the new allergist, Dr. Lee. Helped them coordinate dates and details; they have asked to just meet up after work and grab a drink together, said they don't need our team to cover it but thank you kindly. Documenting here so we know they've connected.",
+        "subject": "Happy Hour w/ Century City Allergy",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Dr. Feuille reached out about coordinating another happy hour with rhinologists so they can meet the new allergist, Dr. Lee. Helped them coordinate dates and details; they have asked to just meet up after work and grab a drink together, said they don't ne"
+      },
+      "contact_info": {
+        "name": "Elizabeth Feuille",
+        "mailing_city": "Los Angeles",
+        "specialty": "Allergy & Immunology",
+        "contact_account_name": "Elizabeth Feuille | Market Physicians",
+        "employment_status": "Contracted",
+        "mn_mgma_specialty": "Allergy/Immunology",
+        "mn_primary_geography": "Core",
+        "mn_specialty_group": "Allergy/Immunology",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Provider Call/Email/Text",
+        "description": "Dr. LaGreulius emailed me (after getting initial touchpoint forwarded) and said would be good to meet newer SBS physicians. Followed up with full list of SBS subspecialty lines, asked about best day/time and format for intro with some of the newer SBS folks",
+        "subject": "MD Email about SBS Intro",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Dr. LaGreulius emailed me (after getting initial touchpoint forwarded) and said would be good to meet newer SBS physicians. Followed up with full list of SBS subspecialty lines, asked about best day/time and format for intro with some of the newer SBS fol"
+      },
+      "contact_info": {
+        "name": "Thomas Lagrelius",
+        "mailing_city": "Torrance",
+        "specialty": "General & Family Practice",
+        "contact_account_name": "Thomas Lagrelius | Market Physicians",
+        "employment_status": "Out of Network",
+        "mn_mgma_specialty": "Internal Medicine",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Internal & Family Medicine",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": "3103786208"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Office Manager, Trysten Nguyen - got back after initial touchpoint w/ bio cards. Appreciated reaching out and asked for full list of SBS subspecialty areas, as well as contact for referrals and consultant report after referring patients. Sent information and offered my info for referral needs.",
+        "subject": "Spoke w/ Office Manager on SBS Referrals",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Office Manager, Trysten Nguyen - got back after initial touchpoint w/ bio cards. Appreciated reaching out and asked for full list of SBS subspecialty areas, as well as contact for referrals and consultant report after referring patients. Sent information"
+      },
+      "contact_info": {
+        "name": "Aaron Tran",
+        "mailing_city": "Gardena",
+        "specialty": "Internal Medicine",
+        "contact_account_name": "Aaron Tran | Market Physicians",
+        "employment_status": "Out of Network",
+        "mn_mgma_specialty": "Internal Medicine",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Internal & Family Medicine",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": "3102949444"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Bhayani says they likely want more name brands, but may not know full scope of what SBS offers. Drop in with Cedars bio cards",
+        "subject": "SBS Outreach - New Physician Cards",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Bhayani says they likely want more name brands, but may not know full scope of what SBS offers. Drop in with Cedars bio cards"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Does not have much of an existing relationship here. Initial outreach touchpoint with range of bio cards. Will touch base when have day/time to go to PV",
+        "subject": "SBS Outreach - New Physician Cards",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Does not have much of an existing relationship here. Initial outreach touchpoint with range of bio cards. Will touch base when have day/time to go to PV"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.",
+        "subject": "SBS Outreach - New Physician Cards",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Provider Call/Email/Text",
+        "description": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.",
+        "subject": "SBS Outreach - New Physician Cards",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.",
+        "subject": "SBS Outreach - New Physician Cards",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-16",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.",
+        "subject": "SBS Outreach - New Physician Cards",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties."
+      },
+      "contact_info": {
+        "name": "Timothy Norcross",
+        "mailing_city": "Rolling Hills Estates",
+        "specialty": "General & Family Practice",
+        "contact_account_name": "Timothy Norcross | Market Physicians",
+        "employment_status": "Out of Network",
+        "mn_mgma_specialty": "Internal Medicine",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Internal & Family Medicine",
+        "title": "DO",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": "3105418919"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-13",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Other",
+        "description": "Asked about ordering home sleep studies ahead of OSA Q&A on 6/26. Sent info from Kreicher on this note",
+        "subject": "Home Sleep Study Referrals",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Asked about ordering home sleep studies ahead of OSA Q&A on 6/26. Sent info from Kreicher on this note"
+      },
+      "contact_info": {
+        "name": "Shephal Doshi",
+        "mailing_city": "Santa Monica",
+        "specialty": "Cardiology",
+        "contact_account_name": "Shephal Doshi | Pacific Heart Institute",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Cardiology \u00e2\u0080\u0093 EP",
+        "mn_primary_geography": "North Coastal",
+        "mn_specialty_group": "Cardiology",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": "3108297678"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-12",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "BD_Community_Visit_w_Staff",
+        "description": "Left another message for Rita (office mngr). Having trouble getting back in touch with them; bummer because they seemed initially interested in meeting as they work with Faries a lot. May pop back in in next few weeks when I'm in the area. Don't want to be too pushy",
+        "subject": "Follow Up to Tower Derm",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Left another message for Rita (office mngr). Having trouble getting back in touch with them; bummer because they seemed initially interested in meeting as they work with Faries a lot. May pop back in in next few weeks when I'm in the area. Don't want to b"
+      },
+      "contact_info": {
+        "name": "Trevan Fischer",
+        "mailing_city": "Santa Monica",
+        "specialty": "General Surgery",
+        "contact_account_name": "Trevan Fischer | Market Physicians",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Oncology \u00e2\u0080\u0093 Surgical",
+        "mn_primary_geography": "North Coastal",
+        "mn_specialty_group": "Oncology \u00e2\u0080\u0093 Surgical",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-12",
+        "mno_type": "MD_to_MD_Visits",
+        "mno_subtype": "Cedars Department Intro",
+        "description": "Q&A at COM - requested from Koven/Gray for a Parkinson's and Movement Disorders Q&A with these faculty.",
+        "subject": "Movement Disorders Q&A to COM",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Q&A at COM - requested from Koven/Gray for a Parkinson's and Movement Disorders Q&A with these faculty."
+      },
+      "contact_info": {
+        "name": "Chirag Patil",
+        "mailing_city": "Los Angeles",
+        "specialty": "Neurosurgery",
+        "contact_account_name": "Chirag Patil | Market Physicians",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Neurological Surgery",
+        "mn_primary_geography": "Core",
+        "mn_specialty_group": "Neurological Surgery",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": "310-423-7900"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-12",
+        "mno_type": "MD_to_MD_Visits",
+        "mno_subtype": "MD_to_MD_w_Cedars",
+        "description": "Dr. Monali Misra talk to CSMG OBGYN (MDR Bariatric Surgery) - Surgical/NonSurgical Weight Loss Update\r\n\r\nOBGYNs were very engaged with her, lots of questions. Really enjoyed her passion for the topic",
+        "subject": "CSMG OBGYN Q&A",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Dr. Monali Misra talk to CSMG OBGYN (MDR Bariatric Surgery) - Surgical/NonSurgical Weight Loss Update\r\n\r\nOBGYNs were very engaged with her, lots of questions. Really enjoyed her passion for the topic"
+      },
+      "contact_info": {
+        "name": "Monali Misra",
+        "mailing_city": "Los Angeles",
+        "specialty": "General Surgery",
+        "contact_account_name": "Monali Misra | Market Physicians",
+        "employment_status": "Contracted",
+        "mn_mgma_specialty": "General Surgery",
+        "mn_primary_geography": "South Coastal",
+        "mn_specialty_group": "General Surgery",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": "424-999-5677"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-10",
+        "mno_type": "Events",
+        "mno_subtype": "Community Event",
+        "description": "Sponsored community event with Playa Vista Elementary School (summer kick-off), hosted booth with pediatric ortho theme and Dr. Uquillas hosting activity for parents and kids. \r\nDr. Uquillas was invited but didn't attend; marketing for his practice completed.",
+        "subject": "Playa Vista Elementary School Summer Kick Off",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Sponsored community event with Playa Vista Elementary School (summer kick-off), hosted booth with pediatric ortho theme and Dr. Uquillas hosting activity for parents and kids. \r\nDr. Uquillas was invited but didn't attend; marketing for his practice comple"
+      },
+      "contact_info": {
+        "name": "Carlos Uquillas",
+        "mailing_city": "Los Angeles",
+        "specialty": "Orthopedic Surgery",
+        "contact_account_name": "Carlos Uquillas | Market Physicians",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Orthopedic Surgery",
+        "mn_primary_geography": "South Coastal",
+        "mn_specialty_group": "Orthopedic",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": "310-665-7200"
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-10",
+        "mno_type": "MD_to_MD_Visits",
+        "mno_subtype": "MD_to_Ancillary_Staff_Other",
+        "description": "Tia Virtual Seminar - Managing GI Complaints in Primary Care Setting, Breadth of Care and When to Refer. Great engagement and a lot of questions from Tia providers.",
+        "subject": "Tia Virtual Seminar",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Tia Virtual Seminar - Managing GI Complaints in Primary Care Setting, Breadth of Care and When to Refer. Great engagement and a lot of questions from Tia providers."
+      },
+      "contact_info": {
+        "name": "Uzoamaka Kimberly Dike",
+        "mailing_city": null,
+        "specialty": null,
+        "contact_account_name": "Uzoamaka Kimberly Dike |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Gastroenterology",
+        "mn_primary_geography": "North Coastal",
+        "mn_specialty_group": "Gastroenterology",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-09",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Called Azin (ops manager) back again. Initial interest in coordinating intro, can't seem to pin a date down and haven't heard back in about 2 weeks.",
+        "subject": "BD Outreach, Callback to Adhout",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Called Azin (ops manager) back again. Initial interest in coordinating intro, can't seem to pin a date down and haven't heard back in about 2 weeks."
+      },
+      "contact_info": {
+        "name": "Trevan Fischer",
+        "mailing_city": "Santa Monica",
+        "specialty": "General Surgery",
+        "contact_account_name": "Trevan Fischer | Market Physicians",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Oncology \u00e2\u0080\u0093 Surgical",
+        "mn_primary_geography": "North Coastal",
+        "mn_specialty_group": "Oncology \u00e2\u0080\u0093 Surgical",
+        "title": "MD",
+        "is_physician": true,
+        "provider_type": null,
+        "email": null,
+        "phone": null
+      }
+    }
+  ]
+}

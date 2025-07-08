@@ -5,10 +5,12 @@ This node takes raw SQL data and structures it for optimal LLM consumption,
 creating organized summaries and groupings that facilitate analysis.
 """
 
+import json
 import logging
 from datetime import datetime, date
 from typing import Dict, List, Any, Optional
 from collections import defaultdict
+from pathlib import Path
 
 from app.core.nodes.base import Node
 from app.core.task import TaskContext
@@ -17,8 +19,10 @@ from app.core.task import TaskContext
 class DataStructureNode(Node):
     """Node that structures raw SQL data for LLM analysis."""
 
-    def __init__(self):
+    def __init__(self, debug_mode: bool = False, export_structured_data: bool = False):
         self.logger = logging.getLogger(__name__)
+        self.debug_mode = debug_mode
+        self.export_structured_data = export_structured_data
 
     def process(self, task_context: TaskContext) -> TaskContext:
         """
@@ -40,6 +44,13 @@ class DataStructureNode(Node):
 
             # Structure the data
             structured_data = self._create_structured_data(sql_data)
+
+            # Debug logging and export
+            if self.debug_mode:
+                self._log_structured_data_summary(structured_data)
+
+            if self.export_structured_data:
+                self._export_structured_data(structured_data, task_context)
 
             # Store structured data in task context
             task_context.update_node(node_name=self.node_name, result=structured_data)
@@ -73,6 +84,132 @@ class DataStructureNode(Node):
             task_context.metadata["data_structured"] = False
             task_context.metadata["error"] = str(e)
             return task_context
+
+    def _log_structured_data_summary(self, structured_data: Dict[str, Any]) -> None:
+        """Log a summary of the structured data for debugging."""
+        summary_period = structured_data.get("summary_period", {})
+        basic_metrics = structured_data.get("basic_metrics", {})
+        activities = structured_data.get("activities", [])
+
+        self.logger.info("=== STRUCTURED DATA SUMMARY ===")
+        self.logger.info(
+            f"Period: {summary_period.get('start_date')} to {summary_period.get('end_date')}"
+        )
+        self.logger.info(
+            f"Total Activities: {basic_metrics.get('total_activities', 0)}"
+        )
+        self.logger.info(f"Unique Contacts: {basic_metrics.get('unique_contacts', 0)}")
+        self.logger.info(
+            f"Unique Organizations: {basic_metrics.get('unique_organizations', 0)}"
+        )
+        self.logger.info(f"Individual Activities Formatted: {len(activities)}")
+
+        # Log sample activities
+        if activities:
+            self.logger.info(f"=== SAMPLE ACTIVITIES (first 3) ===")
+            for i, activity in enumerate(activities[:3], 1):
+                activity_info = activity.get("activity_info", {})
+                contact_info = activity.get("contact_info", {})
+                self.logger.info(f"Activity {i}:")
+                self.logger.info(f"  Date: {activity_info.get('activity_date')}")
+                self.logger.info(
+                    f"  Type: {activity_info.get('mno_type')} - {activity_info.get('mno_subtype')}"
+                )
+                self.logger.info(
+                    f"  Contact: {contact_info.get('name')} ({contact_info.get('specialty')})"
+                )
+                self.logger.info(
+                    f"  Organization: {contact_info.get('contact_account_name')}"
+                )
+                self.logger.info(f"  Subject: {activity_info.get('subject')}")
+                self.logger.info(
+                    f"  Description Length: {len(activity_info.get('description', ''))}"
+                )
+
+        # Log specialty distribution
+        specialty_counts = {}
+        for activity in activities:
+            specialty = activity.get("contact_info", {}).get("specialty", "Unknown")
+            specialty_counts[specialty] = specialty_counts.get(specialty, 0) + 1
+
+        self.logger.info(f"=== SPECIALTY DISTRIBUTION ===")
+        for specialty, count in sorted(
+            specialty_counts.items(), key=lambda x: x[1], reverse=True
+        ):
+            self.logger.info(f"  {specialty}: {count} activities")
+
+    def _export_structured_data(
+        self, structured_data: Dict[str, Any], task_context: TaskContext
+    ) -> None:
+        """Export structured data to a JSON file for analysis."""
+        try:
+            # Create exports directory if it doesn't exist
+            export_dir = Path("exports/structured_data")
+            export_dir.mkdir(parents=True, exist_ok=True)
+
+            # Create filename with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            user_id = task_context.event.user_id
+            filename = f"structured_data_{user_id}_{timestamp}.json"
+            filepath = export_dir / filename
+
+            # Export data
+            with open(filepath, "w") as f:
+                json.dump(structured_data, f, indent=2, default=str)
+
+            self.logger.info(f"Structured data exported to: {filepath}")
+
+            # Also export a summary for quick analysis
+            summary_filename = f"structured_summary_{user_id}_{timestamp}.json"
+            summary_filepath = export_dir / summary_filename
+
+            summary = {
+                "metadata": {
+                    "export_timestamp": timestamp,
+                    "user_id": user_id,
+                    "period": f"{structured_data.get('summary_period', {}).get('start_date')} to {structured_data.get('summary_period', {}).get('end_date')}",
+                },
+                "metrics": structured_data.get("basic_metrics", {}),
+                "summary_period": structured_data.get("summary_period", {}),
+                "activity_count": len(structured_data.get("activities", [])),
+                "sample_activities": structured_data.get("activities", [])[
+                    :5
+                ],  # First 5 for quick review
+                "specialty_distribution": self._get_specialty_distribution(
+                    structured_data.get("activities", [])
+                ),
+                "contact_distribution": self._get_contact_distribution(
+                    structured_data.get("activities", [])
+                ),
+            }
+
+            with open(summary_filepath, "w") as f:
+                json.dump(summary, f, indent=2, default=str)
+
+            self.logger.info(f"Structured data summary exported to: {summary_filepath}")
+
+        except Exception as e:
+            self.logger.error(f"Error exporting structured data: {str(e)}")
+
+    def _get_specialty_distribution(
+        self, activities: List[Dict[str, Any]]
+    ) -> Dict[str, int]:
+        """Get distribution of activities by specialty."""
+        distribution = {}
+        for activity in activities:
+            specialty = activity.get("contact_info", {}).get("specialty", "Unknown")
+            distribution[specialty] = distribution.get(specialty, 0) + 1
+        return dict(sorted(distribution.items(), key=lambda x: x[1], reverse=True))
+
+    def _get_contact_distribution(
+        self, activities: List[Dict[str, Any]]
+    ) -> Dict[str, int]:
+        """Get distribution of activities by contact."""
+        distribution = {}
+        for activity in activities:
+            contact = activity.get("contact_info", {}).get("name", "Unknown")
+            distribution[contact] = distribution.get(contact, 0) + 1
+        return dict(sorted(distribution.items(), key=lambda x: x[1], reverse=True))
 
     def _create_structured_data(self, sql_data: Dict[str, Any]) -> Dict[str, Any]:
         """

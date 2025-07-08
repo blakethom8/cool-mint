@@ -1,0 +1,122 @@
+=== RECONSTRUCTED LLM PROMPT ===
+(This is what was likely sent to the LLM)
+
+
+Please analyze the following monthly activity data and provide a comprehensive summary:
+
+## SUMMARY PERIOD
+- Period: 2025-06-07 to 2025-07-07
+- Total Days: 31
+- User ID: 005UJ000002LyknYAC
+
+## BASIC METRICS
+- Total Activities: 40
+- Unique Contacts: 15
+- Unique Organizations: 15
+- Date Range: 2025-06-07 to 2025-07-07
+
+## INDIVIDUAL ACTIVITIES ANALYSIS
+
+
+### Activity 1 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Cold Call
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Specialty**: None
+
+**Activity Details**:
+GI in Torrance; was at SBS happy hour but unsure if he formally met with Koller. Reached out with bio card and asked about stopping in
+
+---
+
+
+### Activity 2 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Cold Call
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Specialty**: None
+
+**Activity Details**:
+Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.
+
+---
+
+
+### Activity 3 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Cold Call
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Specialty**: None
+
+**Activity Details**:
+Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.
+
+---
+
+
+### Activity 4 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Office Mngr
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Irram Rao
+- **Title**: MD
+- **Organization**: Irram Rao | Endocrine Care Specialists Inc.
+- **Specialty**: Internal Medicine
+
+**Activity Details**:
+Emailing with office mngr, Alysha. Said they are well aware of Dr. Madorin, but would be nice to meet in-person as well. Physicians in this office all have different schedules so will get back about possible dates that may work best
+
+---
+
+
+### Activity 5 - 2025-06-26
+**Activity Type**: MD_to_MD_Visits - MD_to_MD_w_Cedars
+**Subject**: Inspire Q&A with Pacific Heart Institute
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Kathryn Kreicher
+- **Title**: None
+- **Organization**: Kathryn Kreicher |
+- **Specialty**: None
+
+**Activity Details**:
+Q&A on Inspire with PHI team. Recorded lecture and circulated to anyone who couldn't make it. Good questions asked about contraindications, device toleration, maintenance, etc.
+
+---
+
+
+... and 35 more activities
+
+## ANALYSIS REQUEST
+Based on this detailed activity information, please provide:
+
+1. **Executive Summary**: A comprehensive overview of the month's outreach activities
+2. **Key Highlights by Specialty**: Organize insights by medical specialty
+3. **Important Provider Relationships**: Identify significant relationships
+4. **Discussion Themes**: Extract major themes from activities
+5. **Strategic Recommendations**: Provide actionable recommendations
+
+Please focus on actionable insights that will help improve outreach effectiveness.

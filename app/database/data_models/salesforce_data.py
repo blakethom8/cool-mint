@@ -13,6 +13,7 @@ from sqlalchemy import (
     Float,
     Integer,
     UniqueConstraint,
+    ARRAY,
 )
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import relationship
@@ -318,3 +319,132 @@ class SfTaskWhoRelation(Base):
     task = relationship("SfActivity", foreign_keys=[task_id])
     created_by = relationship("SfUser", foreign_keys=[created_by_id])
     last_modified_by = relationship("SfUser", foreign_keys=[last_modified_by_id])
+
+
+class SfActivityStructured(Base):
+    """
+    Pre-structured activity data optimized for LLM consumption and agent workflows.
+
+    This table contains activities with all related contact information pre-aggregated
+    and structured for fast querying and LLM context generation.
+    """
+
+    __tablename__ = "sf_activities_structured"
+
+    # Primary Keys & References
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    source_activity_id = Column(
+        UUID(as_uuid=True), ForeignKey("sf_activities.id"), nullable=False, index=True
+    )
+    salesforce_activity_id = Column(
+        String(18), nullable=False, index=True
+    )  # Original SF ID for reference
+
+    # Core Activity Fields (for filtering and display)
+    activity_date = Column(Date, nullable=False, index=True)
+    subject = Column(String(255), index=True)
+    description = Column(Text)
+    status = Column(String(255), index=True)
+    priority = Column(String(20), index=True)
+
+    # Activity Classification (high-value filters)
+    mno_type = Column(String(255), index=True)  # BD_Outreach, MD_to_MD_Visits, etc.
+    mno_subtype = Column(String(255), index=True)  # Cold_Call, MD_to_MD_w_Cedars, etc.
+    mno_setting = Column(String(255), index=True)  # Virtual, In-Person, etc.
+    type = Column(String(50), index=True)  # Task, Event
+
+    # User Information (for filtering by rep)
+    owner_id = Column(String(18), nullable=False, index=True)  # SF User ID
+    user_name = Column(String(121), index=True)  # Blake Thomson
+
+    # Pre-Aggregated Contact Metrics (for quick filtering)
+    contact_count = Column(Integer, nullable=False, default=0, index=True)
+    physician_count = Column(Integer, default=0, index=True)
+
+    # Contact Information Arrays (for filtering and display)
+    contact_names = Column(ARRAY(String), index=True)  # ["Dr. Smith", "Dr. Johnson"]
+    contact_specialties = Column(
+        ARRAY(String), index=True
+    )  # ["Cardiology", "Internal Medicine"]
+    contact_account_names = Column(
+        ARRAY(String), index=True
+    )  # ["Hospital A", "Clinic B"]
+    contact_mailing_cities = Column(
+        ARRAY(String), index=True
+    )  # ["Boston", "Cambridge"]
+    mn_primary_geographies = Column(ARRAY(String), index=True)  # ["Core", "Coastal"]
+
+    # Boolean Flags for Fast Filtering
+    activity_has_community = Column(
+        Boolean, default=False, index=True
+    )  # Any contact has Community sub_network
+    activity_has_physicians = Column(
+        Boolean, default=False, index=True
+    )  # Any contact is_physician
+    activity_has_high_priority = Column(
+        Boolean, default=False, index=True
+    )  # Activity priority = High
+    activity_is_completed = Column(
+        Boolean, default=False, index=True
+    )  # Status = Completed
+
+    # Specialty Aggregations (for common queries)
+    primary_specialty = Column(
+        String(255), index=True
+    )  # Most common specialty in the activity
+    specialty_mix = Column(String(100), index=True)  # "single", "multi", "unknown"
+
+    # Geographic Aggregations
+    primary_geography = Column(String(255), index=True)  # Most common geography
+    geographic_mix = Column(String(100), index=True)  # "single", "multi", "unknown"
+
+    # Time-based Aggregations
+    activity_month = Column(String(7), index=True)  # "2024-12" for monthly grouping
+    activity_quarter = Column(String(7), index=True)  # "2024-Q4" for quarterly grouping
+    activity_year = Column(Integer, index=True)  # 2024
+
+    # The Gold: Complete LLM Context
+    llm_context_json = Column(JSONB, nullable=False)  # Complete structured data for LLM
+
+    # Data Versioning & Metadata
+    data_version = Column(String(50), default="1.0", index=True)  # Track schema changes
+    structured_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    source_last_modified = Column(DateTime)  # From original SF activity
+
+    # Performance & Maintenance
+    is_current = Column(Boolean, default=True, index=True)  # For soft updates
+    processing_notes = Column(Text)  # Any issues during structuring
+
+    # Relationships
+    source_activity = relationship("SfActivity", foreign_keys=[source_activity_id])
+
+    # Comprehensive Indexing Strategy
+    __table_args__ = (
+        # Primary lookup indexes
+        Index("idx_sf_activity_structured_activity_date", "activity_date"),
+        Index("idx_sf_activity_structured_owner_id", "owner_id"),
+        Index("idx_sf_activity_structured_mno_type", "mno_type"),
+        # Composite indexes for common query patterns
+        Index("idx_sf_activity_structured_date_user", "activity_date", "owner_id"),
+        Index("idx_sf_activity_structured_date_type", "activity_date", "mno_type"),
+        Index("idx_sf_activity_structured_user_type", "owner_id", "mno_type"),
+        Index(
+            "idx_sf_activity_structured_specialty_date",
+            "primary_specialty",
+            "activity_date",
+        ),
+        # Boolean flag indexes for filtering
+        Index("idx_sf_activity_structured_community", "activity_has_community"),
+        Index("idx_sf_activity_structured_physicians", "activity_has_physicians"),
+        Index("idx_sf_activity_structured_completed", "activity_is_completed"),
+        # Time-based indexes
+        Index("idx_sf_activity_structured_month", "activity_month"),
+        Index("idx_sf_activity_structured_quarter", "activity_quarter"),
+        # Data management indexes
+        Index("idx_sf_activity_structured_current", "is_current"),
+        Index("idx_sf_activity_structured_version", "data_version"),
+        # Ensure one current record per source activity
+        UniqueConstraint(
+            "source_activity_id", "is_current", name="uq_current_structured_activity"
+        ),
+    )

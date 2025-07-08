@@ -29,7 +29,7 @@ def test_workflow_with_sample_data():
 
     # Create test event data
     # Note: You'll need to replace this with a real Salesforce user ID from your database
-    test_user_id = "0051234567890123"  # Replace with actual Salesforce user ID
+    test_user_id = "005UJ000002LyknYAC"  # Replace with actual Salesforce user ID
 
     # Test event with date range (past 30 days)
     end_date = date.today()

@@ -1,0 +1,117 @@
+{
+  "export_info": {
+    "timestamp": "20250707_183210",
+    "user_id": "005UJ000002LyknYAC",
+    "file_path": "exports/manual_export/structured_data_005UJ000002LyknYAC_20250707_183210.json"
+  },
+  "data_summary": {
+    "total_activities": 40,
+    "period": "2025-06-07 to 2025-07-07",
+    "basic_metrics": {
+      "total_activities": 40,
+      "unique_contacts": 15,
+      "unique_organizations": 15,
+      "date_range": "2025-06-07 to 2025-07-07"
+    }
+  },
+  "sample_activities": [
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "GI in Torrance; was at SBS happy hour but unsure if he formally met with Koller. Reached out with bio card and asked about stopping in",
+        "subject": "BD Outreach - Cold Call",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "GI in Torrance; was at SBS happy hour but unsure if he formally met with Koller. Reached out with bio card and asked about stopping in"
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.",
+        "subject": "BD Outreach - Cold Call",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    },
+    {
+      "activity_info": {
+        "activity_date": "2025-06-26",
+        "mno_type": "BD_Outreach",
+        "mno_subtype": "Staff Call/Email/Text",
+        "description": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.",
+        "subject": "BD Outreach - Cold Call",
+        "status": "Completed",
+        "priority": "Normal",
+        "activity_type": "Task",
+        "mn_tags": null,
+        "comments_short": "Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border."
+      },
+      "contact_info": {
+        "name": "David BOTTECELLI Koller",
+        "mailing_city": "TORRANCE",
+        "specialty": null,
+        "contact_account_name": "David Koller |",
+        "employment_status": "Employed",
+        "mn_mgma_specialty": "Colon and Rectal Surgery",
+        "mn_primary_geography": "South Bay",
+        "mn_specialty_group": "Colon and Rectal Surgery",
+        "title": null,
+        "is_physician": true,
+        "provider_type": "MD",
+        "email": null,
+        "phone": null
+      }
+    }
+  ],
+  "specialty_distribution": {
+    "null": 23,
+    "General Surgery": 7,
+    "General & Family Practice": 3,
+    "Internal Medicine": 2,
+    "Dermatology": 1,
+    "Allergy & Immunology": 1,
+    "Cardiology": 1,
+    "Neurosurgery": 1,
+    "Orthopedic Surgery": 1
+  }
+}

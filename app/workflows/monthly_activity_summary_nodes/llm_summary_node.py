@@ -7,7 +7,9 @@ based on structured activity data from the previous nodes.
 
 import json
 import logging
+from datetime import datetime
 from typing import Dict, List, Any, Optional
+from pathlib import Path
 from pydantic import BaseModel, Field
 
 from app.core.nodes.agent import AgentNode, AgentConfig, ModelProvider
@@ -72,7 +74,7 @@ class ActivitySummaryOutput(BaseModel):
 class LLMSummaryNode(AgentNode):
     """Node that generates comprehensive activity summaries using OpenAI."""
 
-    def __init__(self):
+    def __init__(self, debug_mode: bool = False, export_prompts: bool = False):
         self.prompt_loader = PromptManager()
         # Load the prompt data before initializing parent
         self.prompt_data = self.prompt_loader.get_prompt(
@@ -80,6 +82,8 @@ class LLMSummaryNode(AgentNode):
         )
         super().__init__()
         self.logger = logging.getLogger(__name__)
+        self.debug_mode = debug_mode
+        self.export_prompts = export_prompts
 
     def get_agent_config(self) -> AgentConfig:
         """Configure the agent for activity summary generation."""
@@ -115,6 +119,13 @@ class LLMSummaryNode(AgentNode):
             # Prepare the user prompt with structured data
             user_prompt = self._create_user_prompt(structured_data, task_context)
 
+            # Debug logging and export
+            if self.debug_mode:
+                self._log_prompt_summary(user_prompt)
+
+            if self.export_prompts:
+                self._export_prompts(user_prompt, task_context)
+
             # Capture prompts for tracing
             self._capture_prompts(task_context, user_prompt)
 
@@ -148,6 +159,132 @@ class LLMSummaryNode(AgentNode):
             task_context.metadata["llm_summary_generated"] = False
             task_context.metadata["error"] = str(e)
             return task_context
+
+    def _log_prompt_summary(self, user_prompt: str) -> None:
+        """Log a summary of the prompt being sent to the LLM."""
+        self.logger.info("=== LLM PROMPT SUMMARY ===")
+        self.logger.info(f"Total prompt length: {len(user_prompt)} characters")
+        self.logger.info(f"Estimated tokens: ~{len(user_prompt.split()) * 1.3:.0f}")
+
+        # Log first few lines of prompt
+        lines = user_prompt.split("\n")
+        self.logger.info(f"Prompt structure ({len(lines)} lines):")
+        for i, line in enumerate(lines[:10]):
+            if line.strip():
+                self.logger.info(f"  Line {i + 1}: {line.strip()[:100]}...")
+
+        if len(lines) > 10:
+            self.logger.info(f"  ... and {len(lines) - 10} more lines")
+
+    def _export_prompts(self, user_prompt: str, task_context: TaskContext) -> None:
+        """Export the complete prompt to files for analysis."""
+        try:
+            # Create exports directory if it doesn't exist
+            export_dir = Path("exports/llm_prompts")
+            export_dir.mkdir(parents=True, exist_ok=True)
+
+            # Create filename with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            user_id = task_context.event.user_id
+
+            # Export the complete prompt
+            prompt_filename = f"llm_prompt_{user_id}_{timestamp}.txt"
+            prompt_filepath = export_dir / prompt_filename
+
+            with open(prompt_filepath, "w", encoding="utf-8") as f:
+                f.write("=== SYSTEM PROMPT ===\n")
+                f.write(self.prompt_data.system_prompt)
+                f.write("\n\n=== USER PROMPT ===\n")
+                f.write(user_prompt)
+
+            self.logger.info(f"Complete LLM prompt exported to: {prompt_filepath}")
+
+            # Export prompt analysis
+            analysis_filename = f"prompt_analysis_{user_id}_{timestamp}.json"
+            analysis_filepath = export_dir / analysis_filename
+
+            lines = user_prompt.split("\n")
+            prompt_analysis = {
+                "metadata": {
+                    "export_timestamp": timestamp,
+                    "user_id": user_id,
+                    "system_prompt_length": len(self.prompt_data.system_prompt),
+                    "user_prompt_length": len(user_prompt),
+                    "total_length": len(self.prompt_data.system_prompt)
+                    + len(user_prompt),
+                    "estimated_tokens": len(user_prompt.split()) * 1.3,
+                    "line_count": len(lines),
+                },
+                "prompt_structure": {
+                    "sections": self._analyze_prompt_sections(user_prompt),
+                    "activity_count": user_prompt.count("### Activity"),
+                    "specialty_mentions": self._count_specialty_mentions(user_prompt),
+                },
+                "content_analysis": {
+                    "avg_description_length": self._calculate_avg_description_length(
+                        user_prompt
+                    ),
+                    "unique_contacts": self._count_unique_contacts(user_prompt),
+                    "unique_organizations": self._count_unique_organizations(
+                        user_prompt
+                    ),
+                },
+            }
+
+            with open(analysis_filepath, "w") as f:
+                json.dump(prompt_analysis, f, indent=2, default=str)
+
+            self.logger.info(f"Prompt analysis exported to: {analysis_filepath}")
+
+        except Exception as e:
+            self.logger.error(f"Error exporting prompts: {str(e)}")
+
+    def _analyze_prompt_sections(self, prompt: str) -> List[str]:
+        """Analyze the structure of the prompt."""
+        sections = []
+        lines = prompt.split("\n")
+        for line in lines:
+            if line.startswith("##"):
+                sections.append(line.strip())
+        return sections
+
+    def _count_specialty_mentions(self, prompt: str) -> Dict[str, int]:
+        """Count mentions of different specialties in the prompt."""
+        import re
+
+        specialty_pattern = r"\*\*Specialty\*\*:\s*([^\n]+)"
+        matches = re.findall(specialty_pattern, prompt)
+        specialty_counts = {}
+        for match in matches:
+            specialty = match.strip()
+            specialty_counts[specialty] = specialty_counts.get(specialty, 0) + 1
+        return dict(sorted(specialty_counts.items(), key=lambda x: x[1], reverse=True))
+
+    def _calculate_avg_description_length(self, prompt: str) -> float:
+        """Calculate average description length."""
+        import re
+
+        description_pattern = r"\*\*Activity Details\*\*:\s*([^\n]+)"
+        matches = re.findall(description_pattern, prompt)
+        if matches:
+            return sum(len(match.strip()) for match in matches) / len(matches)
+        return 0.0
+
+    def _count_unique_contacts(self, prompt: str) -> int:
+        """Count unique contacts mentioned in the prompt."""
+        import re
+
+        contact_pattern = r"\*\*Name\*\*:\s*([^\n]+)"
+        matches = re.findall(contact_pattern, prompt)
+        return len(set(match.strip() for match in matches))
+
+    def _count_unique_organizations(self, prompt: str) -> int:
+        """Count unique organizations mentioned in the prompt."""
+        import re
+
+        org_pattern = r"\*\*Organization\*\*:\s*([^\n]+)"
+        matches = re.findall(org_pattern, prompt)
+        return len(set(match.strip() for match in matches))
 
     def _create_user_prompt(
         self, structured_data: Dict[str, Any], task_context: TaskContext

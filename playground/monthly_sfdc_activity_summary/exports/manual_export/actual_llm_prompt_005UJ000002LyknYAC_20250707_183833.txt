@@ -1,0 +1,1196 @@
+=== ACTUAL LLM PROMPT ===
+(This is the EXACT prompt that was sent to the LLM)
+
+=== MODEL INFORMATION ===
+Provider: openai
+Model: gpt-4o
+
+=== SYSTEM PROMPT ===
+You are a skilled business intelligence analyst specializing in healthcare outreach and provider relationship management. Your task is to analyze monthly activity data from a healthcare professional's outreach efforts and create comprehensive, actionable summaries.
+
+You will receive structured data about activities, contacts, and interactions from the past month. Your analysis should focus on:
+
+1. **Key Discussion Themes**: Identify the most important topics, concerns, and opportunities discussed during outreach activities
+2. **Specialty Focus Areas**: Analyze which medical specialties received the most attention and why
+3. **Provider Relationship Insights**: Highlight significant provider interactions and relationship developments
+4. **Outreach Patterns**: Identify trends in activity types, frequency, and outcomes
+5. **Strategic Recommendations**: Provide actionable insights for improving future outreach efforts
+
+**Analysis Guidelines:**
+- Focus on the content in activity descriptions, as these contain the most valuable insights
+- Consider the specialty of each provider when analyzing discussions
+- Look for patterns in provider engagement and response levels
+- Identify high-value opportunities and potential referral sources
+- Note any gaps or areas needing more attention
+
+**Output Format:**
+Provide a well-structured summary that includes:
+- Executive summary (2-3 sentences)
+- Key highlights by specialty
+- Important provider relationships and discussions
+- Patterns and trends observed
+- Strategic recommendations for next month
+
+Be concise but comprehensive, focusing on actionable insights that will help improve outreach effectiveness and provider relationships.
+
+
+=== USER PROMPT ===
+
+Please analyze the following monthly activity data and provide a comprehensive summary:
+
+## SUMMARY PERIOD
+- Period: 2025-06-07 to 2025-07-07
+- Total Days: 31
+- User ID: 005UJ000002LyknYAC
+
+## BASIC METRICS
+- Total Activities: 40
+- Unique Contacts: 15
+- Unique Organizations: 15
+- Date Range: 2025-06-07 to 2025-07-07
+
+## INDIVIDUAL ACTIVITIES ANALYSIS
+
+
+### Activity 1 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Cold Call
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+GI in Torrance; was at SBS happy hour but unsure if he formally met with Koller. Reached out with bio card and asked about stopping in
+
+**Additional Notes**: GI in Torrance; was at SBS happy hour but unsure if he formally met with Koller. Reached out with bio card and asked about stopping in
+**Tags**: None
+
+---
+
+
+### Activity 2 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Cold Call
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.
+
+**Additional Notes**: Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.
+**Tags**: None
+
+---
+
+
+### Activity 3 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Cold Call
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.
+
+**Additional Notes**: Called and got office contact, followed up via email w/ bio card and asked to intro w/ community GI in Torrance/Lomita border.
+**Tags**: None
+
+---
+
+
+### Activity 4 - 2025-06-26
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Office Mngr
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Irram Rao
+- **Title**: MD
+- **Organization**: Irram Rao | Endocrine Care Specialists Inc.
+- **Location**: Torrance
+- **Geography**: South Bay
+- **Specialty**: Internal Medicine
+- **MGMA Specialty**: Endocrinology
+- **Specialty Group**: Endocrinology
+- **Employment Status**: Out of Network
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Emailing with office mngr, Alysha. Said they are well aware of Dr. Madorin, but would be nice to meet in-person as well. Physicians in this office all have different schedules so will get back about possible dates that may work best
+
+**Additional Notes**: Emailing with office mngr, Alysha. Said they are well aware of Dr. Madorin, but would be nice to meet in-person as well. Physicians in this office all have different schedules so will get back about possible dates that may work best
+**Tags**: None
+
+---
+
+
+### Activity 5 - 2025-06-26
+**Activity Type**: MD_to_MD_Visits - MD_to_MD_w_Cedars
+**Subject**: Inspire Q&A with Pacific Heart Institute
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Kathryn Kreicher
+- **Title**: None
+- **Organization**: Kathryn Kreicher |
+- **Location**: MARINA DEL REY
+- **Geography**: South Coastal
+- **Specialty**: None
+- **MGMA Specialty**: Otolaryngology/ENT
+- **Specialty Group**: ENT
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Q&A on Inspire with PHI team. Recorded lecture and circulated to anyone who couldn't make it. Good questions asked about contraindications, device toleration, maintenance, etc.
+
+**Additional Notes**: Q&A on Inspire with PHI team. Recorded lecture and circulated to anyone who couldn't make it. Good questions asked about contraindications, device toleration, maintenance, etc.
+**Tags**: None
+
+---
+
+
+### Activity 6 - 2025-06-25
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Office Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Catherine Madorin
+- **Title**: MD
+- **Organization**: Catherine Madorin | South Coast Surgical
+- **Location**: Torrance
+- **Geography**: South Bay
+- **Specialty**: General Surgery
+- **MGMA Specialty**: General Surgery
+- **Specialty Group**: General Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke with office manager, Alysha. Said they do refer out for advanced referral needs, wasn't sure about if they'd met Madorin. Gave me her card to follow up in an email and ask about coordinating a lunch. Just sent email to follow up and ask for best date for lunch/physician intro.
+
+**Additional Notes**: Spoke with office manager, Alysha. Said they do refer out for advanced referral needs, wasn't sure about if they'd met Madorin. Gave me her card to follow up in an email and ask about coordinating a lunch. Just sent email to follow up and ask for best dat
+**Tags**: None
+
+---
+
+
+### Activity 7 - 2025-06-25
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Office Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke to Bri, referral coordinator. Very nice office located in Palos Verdes Shopping Center. Took my card for lunch coordination and said she would pass along bio cards as well. Bhayani said they see some from this office but not a lot
+
+**Additional Notes**: Spoke to Bri, referral coordinator. Very nice office located in Palos Verdes Shopping Center. Took my card for lunch coordination and said she would pass along bio cards as well. Bhayani said they see some from this office but not a lot
+**Tags**: None
+
+---
+
+
+### Activity 8 - 2025-06-25
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Office Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke to Juanita (office manager), gave the calendar for coordinating lunches. Said I would check with physician calendars and give her a call, she was very nice. Small medical office in a large shopping plaza in Carson. Seems to be a busy center, they are Optum providers
+
+**Additional Notes**: Spoke to Juanita (office manager), gave the calendar for coordinating lunches. Said I would check with physician calendars and give her a call, she was very nice. Small medical office in a large shopping plaza in Carson. Seems to be a busy center, they ar
+**Tags**: None
+
+---
+
+
+### Activity 9 - 2025-06-24
+**Activity Type**: BD_Outreach - Provider Call/Email/Text
+**Subject**: BD Outreach - Cold Call, Padre FC
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke on phone with the office, asked if they accept Optum MG. Provided provider email address, followed up with bio cards and info, asked to host lunch.
+
+**Additional Notes**: Spoke on phone with the office, asked if they accept Optum MG. Provided provider email address, followed up with bio cards and info, asked to host lunch.
+**Tags**: None
+
+---
+
+
+### Activity 10 - 2025-06-24
+**Activity Type**: BD_Outreach - Provider Call/Email/Text
+**Subject**: BD Outreach - Email Follow Up
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Thomas Lagrelius
+- **Title**: MD
+- **Organization**: Thomas Lagrelius | Market Physicians
+- **Location**: Torrance
+- **Geography**: South Bay
+- **Specialty**: General & Family Practice
+- **MGMA Specialty**: Internal Medicine
+- **Specialty Group**: Internal & Family Medicine
+- **Employment Status**: Out of Network
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Followed up on LaGreulius's email, initial interest in meeting SBS physicians but no movement since. Share the same building in Torrance as SBS, don't think they've met the newer folks just yet.
+
+**Additional Notes**: Followed up on LaGreulius's email, initial interest in meeting SBS physicians but no movement since. Share the same building in Torrance as SBS, don't think they've met the newer folks just yet.
+**Tags**: None
+
+---
+
+
+### Activity 11 - 2025-06-20
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach - Cold Call
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke with Anna (operator/front desk), and followed up with Michelle the office manager. Sent info on new physicians, Bhayani says this office in San Pedro are longtime colleagues and have great relationship
+
+**Additional Notes**: Spoke with Anna (operator/front desk), and followed up with Michelle the office manager. Sent info on new physicians, Bhayani says this office in San Pedro are longtime colleagues and have great relationship
+**Tags**: None
+
+---
+
+
+### Activity 12 - 2025-06-20
+**Activity Type**: BD_Outreach - Provider Call/Email/Text
+**Subject**: Referral Report Coordination
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Suzanne Berkman
+- **Title**: MD
+- **Organization**: Suzanne Berkman | Suzanne L. Berkman M.D. Inc.
+- **Location**: Beverly Hills
+- **Geography**: Core
+- **Specialty**: Dermatology
+- **MGMA Specialty**: Dermatology â Mohs
+- **Specialty Group**: Dermatology
+- **Employment Status**: Out of Network
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Worked with Dr. Berkman and TACRI coordination (Mari mainly) on getting patient reports back to Berkman and Saperstein. Were happy for the follow up and attention to the matter
+
+**Additional Notes**: Worked with Dr. Berkman and TACRI coordination (Mari mainly) on getting patient reports back to Berkman and Saperstein. Were happy for the follow up and attention to the matter
+**Tags**: None
+
+---
+
+
+### Activity 13 - 2025-06-19
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Office Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Catherine Madorin
+- **Title**: MD
+- **Organization**: Catherine Madorin | South Coast Surgical
+- **Location**: Torrance
+- **Geography**: South Bay
+- **Specialty**: General Surgery
+- **MGMA Specialty**: General Surgery
+- **Specialty Group**: General Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke to Zida, doctor was not in today. She wasn't sure whether her and Dr. Madorin had met yet, but asked me to leave a note for Dr. with bio cards
+
+**Additional Notes**: Spoke to Zida, doctor was not in today. She wasn't sure whether her and Dr. Madorin had met yet, but asked me to leave a note for Dr. with bio cards
+**Tags**: None
+
+---
+
+
+### Activity 14 - 2025-06-19
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: Bio Cards to TMPN Hunt Cancer
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Dropped bio cards for Dr. Koller off for Janet McElroy at Hunt Cancer Center
+
+**Additional Notes**: Dropped bio cards for Dr. Koller off for Janet McElroy at Hunt Cancer Center
+**Tags**: None
+
+---
+
+
+### Activity 15 - 2025-06-19
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke to Aleshia. Bhayani had previously stated that while these physicians have sent to SBS for a long time, they may not be a preferred partner because they haven't always "felt the love." Bhayani asked to share the scheduling backline to Melinda with these two - this is what I did, along with bio cards, my card, etc. Aleshia was very happy with this, felt it very helpful and that the physicians would love it
+
+**Additional Notes**: Spoke to Aleshia. Bhayani had previously stated that while these physicians have sent to SBS for a long time, they may not be a preferred partner because they haven't always "felt the love." Bhayani asked to share the scheduling backline to Melinda with t
+**Tags**: None
+
+---
+
+
+### Activity 16 - 2025-06-19
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Very nice office, bustling and busy when I went in. All front desk staff were slammed, quickly gave cards and had a small chat, but they didn't seem to know why I would be in there since they already send a lot to SBS. Strong partners already. Still gave cards + my card for any urgent referral needs, said thanks
+
+**Additional Notes**: Very nice office, bustling and busy when I went in. All front desk staff were slammed, quickly gave cards and had a small chat, but they didn't seem to know why I would be in there since they already send a lot to SBS. Strong partners already. Still gave
+**Tags**: None
+
+---
+
+
+### Activity 17 - 2025-06-19
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke to Carla, provided cards and my bus card. Follow up with LaGreulius or Bhayani. Curious about if they will be more responsive to the Cedars name as Bhayani seems to think they want to use "brand names"
+
+**Additional Notes**: Spoke to Carla, provided cards and my bus card. Follow up with LaGreulius or Bhayani. Curious about if they will be more responsive to the Cedars name as Bhayani seems to think they want to use "brand names"
+**Tags**: None
+
+---
+
+
+### Activity 18 - 2025-06-19
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Previously emailed with Trysten Nguyen (office manager) about SBS specialty lines and provided her with a list of everyone's specialty. She was not in when I dropped by, but spoke to Michelle and provided cards
+
+**Additional Notes**: Previously emailed with Trysten Nguyen (office manager) about SBS specialty lines and provided her with a list of everyone's specialty. She was not in when I dropped by, but spoke to Michelle and provided cards
+**Tags**: None
+
+---
+
+
+### Activity 19 - 2025-06-19
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Office Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke to Daniella, she knew they were colleagues with SBS. She liked the bio cards, found them helpful for pts and was going to give my bus card to referral coordinator.
+
+**Additional Notes**: Spoke to Daniella, she knew they were colleagues with SBS. She liked the bio cards, found them helpful for pts and was going to give my bus card to referral coordinator.
+**Tags**: None
+
+---
+
+
+### Activity 20 - 2025-06-19
+**Activity Type**: MD_to_MD_Visits - MD_to_MD_w_Community
+**Subject**: MD-MD Intro w/ Dr. Heather Roberts and Dr. Choi Kim (West LA Dermatologists)
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Trevan Fischer
+- **Title**: MD
+- **Organization**: Trevan Fischer | Market Physicians
+- **Location**: Santa Monica
+- **Geography**: North Coastal
+- **Specialty**: General Surgery
+- **MGMA Specialty**: Oncology â Surgical
+- **Specialty Group**: Oncology â Surgical
+- **Employment Status**: Employed
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Lunch with West LA Dermatologists, Heather Roberts and Choi Kim. Was a great meeting, both physicians sat and chatted for about 30 minutes. Choi Kim sees about 25% pediatric patients; rest are adults for this practice.
+
+**Additional Notes**: Lunch with West LA Dermatologists, Heather Roberts and Choi Kim. Was a great meeting, both physicians sat and chatted for about 30 minutes. Choi Kim sees about 25% pediatric patients; rest are adults for this practice.
+**Tags**: None
+
+---
+
+
+### Activity 21 - 2025-06-18
+**Activity Type**: BD_Outreach - Provider Call/Email/Text
+**Subject**: Coastal PCPs Intro
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Emailed the CSMG Coastal PCPS (MDR/PV/CC) Koller's bio card, per Koven's suggestion
+
+**Additional Notes**: Emailed the CSMG Coastal PCPS (MDR/PV/CC) Koller's bio card, per Koven's suggestion
+**Tags**: None
+
+---
+
+
+### Activity 22 - 2025-06-17
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Office Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke with Cathy, office manager. Very friendly and said it was nice to get my card for urgent referral needs. Likes SBS, has used in the past.
+
+**Additional Notes**: Spoke with Cathy, office manager. Very friendly and said it was nice to get my card for urgent referral needs. Likes SBS, has used in the past.
+**Tags**: None
+
+---
+
+
+### Activity 23 - 2025-06-17
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: BD Outreach - Community Office Visit
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Spoke to Julie, referral coordinator. She was familiar with South Bay Surgeons, said they send stuff regularly. Provided bio cards for new physicians as well as my card for urgent referral needs. Said it was helpful for referrals; she makes them all.
+
+**Additional Notes**: Spoke to Julie, referral coordinator. She was familiar with South Bay Surgeons, said they send stuff regularly. Provided bio cards for new physicians as well as my card for urgent referral needs. Said it was helpful for referrals; she makes them all.
+**Tags**: None
+
+---
+
+
+### Activity 24 - 2025-06-17
+**Activity Type**: MD_to_MD_Visits - MD_to_MD_w_Community
+**Subject**: MD-MD Intro w/ Dermatology Specialists of Beverly Hills
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Trevan Fischer
+- **Title**: MD
+- **Organization**: Trevan Fischer | Market Physicians
+- **Location**: Santa Monica
+- **Geography**: North Coastal
+- **Specialty**: General Surgery
+- **MGMA Specialty**: Oncology â Surgical
+- **Specialty Group**: Oncology â Surgical
+- **Employment Status**: Employed
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Great intro, got to meet all 4 MDs at this practice. The 3 newer MDs (Shaffran, Berkman and Natsis) stayed to chat for about 40 minutes. Great conversation + helpful for both sides. Did give feedback that they have trouble getting reports back from TACRI (when they've sent to Faries in the past) - even getting pushback when calling to request it. Fischer & I both following up on it.
+
+**Additional Notes**: Great intro, got to meet all 4 MDs at this practice. The 3 newer MDs (Shaffran, Berkman and Natsis) stayed to chat for about 40 minutes. Great conversation + helpful for both sides. Did give feedback that they have trouble getting reports back from TACRI
+**Tags**: None
+
+---
+
+
+### Activity 25 - 2025-06-17
+**Activity Type**: MD_to_MD_Visits - MD_to_MD_w_Community
+**Subject**: Happy Hour w/ Century City Allergy
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Elizabeth Feuille
+- **Title**: None
+- **Organization**: Elizabeth Feuille | Market Physicians
+- **Location**: Los Angeles
+- **Geography**: Core
+- **Specialty**: Allergy & Immunology
+- **MGMA Specialty**: Allergy/Immunology
+- **Specialty Group**: Allergy/Immunology
+- **Employment Status**: Contracted
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Dr. Feuille reached out about coordinating another happy hour with rhinologists so they can meet the new allergist, Dr. Lee. Helped them coordinate dates and details; they have asked to just meet up after work and grab a drink together, said they don't need our team to cover it but thank you kindly. Documenting here so we know they've connected.
+
+**Additional Notes**: Dr. Feuille reached out about coordinating another happy hour with rhinologists so they can meet the new allergist, Dr. Lee. Helped them coordinate dates and details; they have asked to just meet up after work and grab a drink together, said they don't ne
+**Tags**: None
+
+---
+
+
+### Activity 26 - 2025-06-16
+**Activity Type**: BD_Outreach - Provider Call/Email/Text
+**Subject**: MD Email about SBS Intro
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Thomas Lagrelius
+- **Title**: MD
+- **Organization**: Thomas Lagrelius | Market Physicians
+- **Location**: Torrance
+- **Geography**: South Bay
+- **Specialty**: General & Family Practice
+- **MGMA Specialty**: Internal Medicine
+- **Specialty Group**: Internal & Family Medicine
+- **Employment Status**: Out of Network
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Dr. LaGreulius emailed me (after getting initial touchpoint forwarded) and said would be good to meet newer SBS physicians. Followed up with full list of SBS subspecialty lines, asked about best day/time and format for intro with some of the newer SBS folks
+
+**Additional Notes**: Dr. LaGreulius emailed me (after getting initial touchpoint forwarded) and said would be good to meet newer SBS physicians. Followed up with full list of SBS subspecialty lines, asked about best day/time and format for intro with some of the newer SBS fol
+**Tags**: None
+
+---
+
+
+### Activity 27 - 2025-06-16
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: Spoke w/ Office Manager on SBS Referrals
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Aaron Tran
+- **Title**: MD
+- **Organization**: Aaron Tran | Market Physicians
+- **Location**: Gardena
+- **Geography**: South Bay
+- **Specialty**: Internal Medicine
+- **MGMA Specialty**: Internal Medicine
+- **Specialty Group**: Internal & Family Medicine
+- **Employment Status**: Out of Network
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Office Manager, Trysten Nguyen - got back after initial touchpoint w/ bio cards. Appreciated reaching out and asked for full list of SBS subspecialty areas, as well as contact for referrals and consultant report after referring patients. Sent information and offered my info for referral needs.
+
+**Additional Notes**: Office Manager, Trysten Nguyen - got back after initial touchpoint w/ bio cards. Appreciated reaching out and asked for full list of SBS subspecialty areas, as well as contact for referrals and consultant report after referring patients. Sent information
+**Tags**: None
+
+---
+
+
+### Activity 28 - 2025-06-16
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: SBS Outreach - New Physician Cards
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Bhayani says they likely want more name brands, but may not know full scope of what SBS offers. Drop in with Cedars bio cards
+
+**Additional Notes**: Bhayani says they likely want more name brands, but may not know full scope of what SBS offers. Drop in with Cedars bio cards
+**Tags**: None
+
+---
+
+
+### Activity 29 - 2025-06-16
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: SBS Outreach - New Physician Cards
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Does not have much of an existing relationship here. Initial outreach touchpoint with range of bio cards. Will touch base when have day/time to go to PV
+
+**Additional Notes**: Does not have much of an existing relationship here. Initial outreach touchpoint with range of bio cards. Will touch base when have day/time to go to PV
+**Tags**: None
+
+---
+
+
+### Activity 30 - 2025-06-16
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: SBS Outreach - New Physician Cards
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+
+**Additional Notes**: Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+**Tags**: None
+
+---
+
+
+### Activity 31 - 2025-06-16
+**Activity Type**: BD_Outreach - Provider Call/Email/Text
+**Subject**: SBS Outreach - New Physician Cards
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+
+**Additional Notes**: Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+**Tags**: None
+
+---
+
+
+### Activity 32 - 2025-06-16
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: SBS Outreach - New Physician Cards
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: David BOTTECELLI Koller
+- **Title**: None
+- **Organization**: David Koller |
+- **Location**: TORRANCE
+- **Geography**: South Bay
+- **Specialty**: None
+- **MGMA Specialty**: Colon and Rectal Surgery
+- **Specialty Group**: Colon and Rectal Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+
+**Additional Notes**: Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+**Tags**: None
+
+---
+
+
+### Activity 33 - 2025-06-16
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: SBS Outreach - New Physician Cards
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Timothy Norcross
+- **Title**: DO
+- **Organization**: Timothy Norcross | Market Physicians
+- **Location**: Rolling Hills Estates
+- **Geography**: South Bay
+- **Specialty**: General & Family Practice
+- **MGMA Specialty**: Internal Medicine
+- **Specialty Group**: Internal & Family Medicine
+- **Employment Status**: Out of Network
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+
+**Additional Notes**: Emailed bio cards on SBS newer physicians, asked about lunch or in person intros. Previous referrers to SBS but re-engaging to strengthen ties.
+**Tags**: None
+
+---
+
+
+### Activity 34 - 2025-06-13
+**Activity Type**: BD_Outreach - Other
+**Subject**: Home Sleep Study Referrals
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Shephal Doshi
+- **Title**: MD
+- **Organization**: Shephal Doshi | Pacific Heart Institute
+- **Location**: Santa Monica
+- **Geography**: North Coastal
+- **Specialty**: Cardiology
+- **MGMA Specialty**: Cardiology â EP
+- **Specialty Group**: Cardiology
+- **Employment Status**: Employed
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Asked about ordering home sleep studies ahead of OSA Q&A on 6/26. Sent info from Kreicher on this note
+
+**Additional Notes**: Asked about ordering home sleep studies ahead of OSA Q&A on 6/26. Sent info from Kreicher on this note
+**Tags**: None
+
+---
+
+
+### Activity 35 - 2025-06-12
+**Activity Type**: BD_Outreach - BD_Community_Visit_w_Staff
+**Subject**: Follow Up to Tower Derm
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Trevan Fischer
+- **Title**: MD
+- **Organization**: Trevan Fischer | Market Physicians
+- **Location**: Santa Monica
+- **Geography**: North Coastal
+- **Specialty**: General Surgery
+- **MGMA Specialty**: Oncology â Surgical
+- **Specialty Group**: Oncology â Surgical
+- **Employment Status**: Employed
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Left another message for Rita (office mngr). Having trouble getting back in touch with them; bummer because they seemed initially interested in meeting as they work with Faries a lot. May pop back in in next few weeks when I'm in the area. Don't want to be too pushy
+
+**Additional Notes**: Left another message for Rita (office mngr). Having trouble getting back in touch with them; bummer because they seemed initially interested in meeting as they work with Faries a lot. May pop back in in next few weeks when I'm in the area. Don't want to b
+**Tags**: None
+
+---
+
+
+### Activity 36 - 2025-06-12
+**Activity Type**: MD_to_MD_Visits - Cedars Department Intro
+**Subject**: Movement Disorders Q&A to COM
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Chirag Patil
+- **Title**: MD
+- **Organization**: Chirag Patil | Market Physicians
+- **Location**: Los Angeles
+- **Geography**: Core
+- **Specialty**: Neurosurgery
+- **MGMA Specialty**: Neurological Surgery
+- **Specialty Group**: Neurological Surgery
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Q&A at COM - requested from Koven/Gray for a Parkinson's and Movement Disorders Q&A with these faculty.
+
+**Additional Notes**: Q&A at COM - requested from Koven/Gray for a Parkinson's and Movement Disorders Q&A with these faculty.
+**Tags**: None
+
+---
+
+
+### Activity 37 - 2025-06-12
+**Activity Type**: MD_to_MD_Visits - MD_to_MD_w_Cedars
+**Subject**: CSMG OBGYN Q&A
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Monali Misra
+- **Title**: MD
+- **Organization**: Monali Misra | Market Physicians
+- **Location**: Los Angeles
+- **Geography**: South Coastal
+- **Specialty**: General Surgery
+- **MGMA Specialty**: General Surgery
+- **Specialty Group**: General Surgery
+- **Employment Status**: Contracted
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Dr. Monali Misra talk to CSMG OBGYN (MDR Bariatric Surgery) - Surgical/NonSurgical Weight Loss Update
+
+OBGYNs were very engaged with her, lots of questions. Really enjoyed her passion for the topic
+
+**Additional Notes**: Dr. Monali Misra talk to CSMG OBGYN (MDR Bariatric Surgery) - Surgical/NonSurgical Weight Loss Update
+
+OBGYNs were very engaged with her, lots of questions. Really enjoyed her passion for the topic
+**Tags**: None
+
+---
+
+
+### Activity 38 - 2025-06-10
+**Activity Type**: Events - Community Event
+**Subject**: Playa Vista Elementary School Summer Kick Off
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Carlos Uquillas
+- **Title**: MD
+- **Organization**: Carlos Uquillas | Market Physicians
+- **Location**: Los Angeles
+- **Geography**: South Coastal
+- **Specialty**: Orthopedic Surgery
+- **MGMA Specialty**: Orthopedic Surgery
+- **Specialty Group**: Orthopedic
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Sponsored community event with Playa Vista Elementary School (summer kick-off), hosted booth with pediatric ortho theme and Dr. Uquillas hosting activity for parents and kids. 
+Dr. Uquillas was invited but didn't attend; marketing for his practice completed.
+
+**Additional Notes**: Sponsored community event with Playa Vista Elementary School (summer kick-off), hosted booth with pediatric ortho theme and Dr. Uquillas hosting activity for parents and kids. 
+Dr. Uquillas was invited but didn't attend; marketing for his practice comple
+**Tags**: None
+
+---
+
+
+### Activity 39 - 2025-06-10
+**Activity Type**: MD_to_MD_Visits - MD_to_Ancillary_Staff_Other
+**Subject**: Tia Virtual Seminar
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Uzoamaka Kimberly Dike
+- **Title**: None
+- **Organization**: Uzoamaka Kimberly Dike |
+- **Location**: None
+- **Geography**: North Coastal
+- **Specialty**: None
+- **MGMA Specialty**: Gastroenterology
+- **Specialty Group**: Gastroenterology
+- **Employment Status**: Employed
+- **Provider Type**: MD
+- **Is Physician**: True
+
+**Activity Details**:
+Tia Virtual Seminar - Managing GI Complaints in Primary Care Setting, Breadth of Care and When to Refer. Great engagement and a lot of questions from Tia providers.
+
+**Additional Notes**: Tia Virtual Seminar - Managing GI Complaints in Primary Care Setting, Breadth of Care and When to Refer. Great engagement and a lot of questions from Tia providers.
+**Tags**: None
+
+---
+
+
+### Activity 40 - 2025-06-09
+**Activity Type**: BD_Outreach - Staff Call/Email/Text
+**Subject**: BD Outreach, Callback to Adhout
+**Priority**: Normal
+**Status**: Completed
+
+**Provider Information**:
+- **Name**: Trevan Fischer
+- **Title**: MD
+- **Organization**: Trevan Fischer | Market Physicians
+- **Location**: Santa Monica
+- **Geography**: North Coastal
+- **Specialty**: General Surgery
+- **MGMA Specialty**: Oncology â Surgical
+- **Specialty Group**: Oncology â Surgical
+- **Employment Status**: Employed
+- **Provider Type**: None
+- **Is Physician**: True
+
+**Activity Details**:
+Called Azin (ops manager) back again. Initial interest in coordinating intro, can't seem to pin a date down and haven't heard back in about 2 weeks.
+
+**Additional Notes**: Called Azin (ops manager) back again. Initial interest in coordinating intro, can't seem to pin a date down and haven't heard back in about 2 weeks.
+**Tags**: None
+
+---
+
+
+## ANALYSIS REQUEST
+Based on this detailed activity information, please provide:
+
+1. **Executive Summary**: A comprehensive overview of the month's outreach activities
+2. **Key Highlights by Specialty**: Organize insights by medical specialty, highlighting key interactions and outcomes
+3. **Important Provider Relationships**: Identify significant relationships and interactions with providers
+4. **Discussion Themes**: Extract major themes and topics from the activity descriptions
+5. **Outreach Patterns**: Identify patterns in outreach activities, geographic focus, and engagement strategies
+6. **Strategic Recommendations**: Provide actionable recommendations for improving future outreach efforts
+7. **Performance Metrics**: Summarize key performance indicators and engagement metrics
+8. **Areas Needing Attention**: Identify specialties, regions, or provider types that may need more focus
+9. **Success Stories**: Highlight notable successes or breakthrough moments from the activities
+10. **Next Month Priorities**: Recommend priorities and focus areas for the upcoming month
+
+Please focus on actionable insights that will help improve outreach effectiveness and strengthen provider relationships. Consider the specific provider context, geographic distribution, and activity details in your analysis.
+

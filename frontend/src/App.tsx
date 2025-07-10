@@ -15,6 +15,7 @@ function App() {
   const [pageSize, setPageSize] = useState(50);
   const [filters, setFilters] = useState<IActivityFilters>({});
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // Fetch filter options on mount
   useEffect(() => {
@@ -111,9 +112,18 @@ function App() {
       </header>
 
       <div className="app-content">
-        <aside className="filters-sidebar">
-          <h2>Filters</h2>
-          {filterOptions && (
+        <aside className={`filters-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
+          <div className="sidebar-header">
+            <h2>Filters</h2>
+            <button 
+              className="collapse-button"
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              aria-label={sidebarCollapsed ? 'Expand filters' : 'Collapse filters'}
+            >
+              {sidebarCollapsed ? '▶' : '◀'}
+            </button>
+          </div>
+          {!sidebarCollapsed && filterOptions && (
             <ActivityFilters
               filters={filters}
               filterOptions={filterOptions}
@@ -121,6 +131,18 @@ function App() {
             />
           )}
         </aside>
+        
+        {sidebarCollapsed && (
+          <div className="collapsed-sidebar-indicator">
+            <button 
+              className="expand-button"
+              onClick={() => setSidebarCollapsed(false)}
+              aria-label="Expand filters"
+            >
+              ⚙️
+            </button>
+          </div>
+        )}
 
         <main className="main-content">
           <div className="actions-bar">

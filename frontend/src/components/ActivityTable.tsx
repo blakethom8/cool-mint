@@ -50,9 +50,8 @@ export const ActivityTable: React.FC<ActivityTableProps> = ({
             <th>Subject</th>
             <th>Owner</th>
             <th>Type</th>
-            <th>Status</th>
             <th>Contacts</th>
-            <th>Specialties</th>
+            <th>Description</th>
           </tr>
         </thead>
         <tbody>
@@ -68,12 +67,15 @@ export const ActivityTable: React.FC<ActivityTableProps> = ({
               <td>{formatDate(activity.activity_date)}</td>
               <td className="subject-cell">
                 <div className="subject">{activity.subject}</div>
-                {activity.description && (
-                  <div className="description">{activity.description}</div>
+                {activity.contact_specialties.length > 0 && (
+                  <div className="specialties">
+                    {activity.contact_specialties.slice(0, 2).join(', ')}
+                    {activity.contact_specialties.length > 2 && ' ...'}
+                  </div>
                 )}
               </td>
-              <td>{activity.owner_name || '-'}</td>
-              <td>
+              <td className="owner-cell">{activity.owner_name || '-'}</td>
+              <td className="type-cell">
                 <div className="type-info">
                   {activity.mno_type || activity.type || '-'}
                   {activity.mno_subtype && (
@@ -81,12 +83,7 @@ export const ActivityTable: React.FC<ActivityTableProps> = ({
                   )}
                 </div>
               </td>
-              <td>
-                <span className={`status ${activity.status?.toLowerCase()}`}>
-                  {activity.status || '-'}
-                </span>
-              </td>
-              <td>
+              <td className="contacts-cell">
                 <div className="contact-info">
                   {activity.contact_count > 0 ? (
                     <>
@@ -103,14 +100,9 @@ export const ActivityTable: React.FC<ActivityTableProps> = ({
                   )}
                 </div>
               </td>
-              <td>
-                {activity.contact_specialties.length > 0 ? (
-                  <div className="specialties">
-                    {activity.contact_specialties.slice(0, 2).join(', ')}
-                    {activity.contact_specialties.length > 2 && ' ...'}
-                  </div>
-                ) : (
-                  '-'
+              <td className="description-cell">
+                {activity.description && (
+                  <div className="description">{activity.description}</div>
                 )}
               </td>
             </tr>

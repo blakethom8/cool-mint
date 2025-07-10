@@ -26,12 +26,13 @@
 }
 
 .activity-table th {
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 0.5rem;
   text-align: left;
   font-weight: 600;
   color: #333;
   white-space: nowrap;
   background-color: #f8f9fa;
+  font-size: 0.875rem;
 }
 
 .activity-table tbody {
@@ -48,10 +49,48 @@
   table-layout: fixed;
 }
 
+/* Specific column widths to optimize space usage */
+.activity-table th:nth-child(1),
+.activity-table td:nth-child(1) {
+  width: 40px; /* Checkbox column */
+}
+
+.activity-table th:nth-child(2),
+.activity-table td:nth-child(2) {
+  width: 100px; /* Date column */
+}
+
+.activity-table th:nth-child(3),
+.activity-table td:nth-child(3) {
+  width: 200px; /* Subject column */
+}
+
+.activity-table th:nth-child(4),
+.activity-table td:nth-child(4) {
+  width: 120px; /* Owner column */
+}
+
+.activity-table th:nth-child(5),
+.activity-table td:nth-child(5) {
+  width: 150px; /* Type column */
+}
+
+.activity-table th:nth-child(6),
+.activity-table td:nth-child(6) {
+  width: 120px; /* Contacts column */
+}
+
+.activity-table th:nth-child(7),
+.activity-table td:nth-child(7) {
+  width: calc(100% - 730px); /* Description column - takes remaining space */
+  min-width: 300px;
+}
+
 .activity-table td {
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 0.5rem;
   border-bottom: 1px solid #f0f0f0;
   vertical-align: top;
+  font-size: 0.875rem;
 }
 
 .activity-table tbody tr:hover {
@@ -68,7 +107,26 @@
 }
 
 .subject-cell {
-  min-width: 300px;
+  /* Width controlled by nth-child selector above */
+}
+
+.description-cell {
+  /* Width controlled by nth-child selector above */
+  padding-right: 1.5rem; /* Extra padding for readability */
+}
+
+.owner-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.type-cell {
+  /* Compact type display */
+}
+
+.contacts-cell {
+  /* Compact contacts display */
 }
 
 .subject {
@@ -78,23 +136,36 @@
 }
 
 .description {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #666;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+  line-height: 1.4;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.subject-cell .specialties {
+  font-size: 0.7rem;
+  color: #888;
+  margin-top: 0.25rem;
+  font-style: italic;
 }
 
 .type-info {
-  white-space: nowrap;
+  /* Allow wrapping for better space usage */
 }
 
 .subtype {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #666;
   margin-top: 0.125rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .status {
@@ -121,7 +192,7 @@
 }
 
 .contact-info {
-  min-width: 150px;
+  /* Width controlled by nth-child selector */
 }
 
 .contact-count {

@@ -1,6 +1,6 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import select, func, and_, or_
+from sqlalchemy import select, func, and_, or_, any_
 from sqlalchemy.orm import Session
 
 from database.session import db_session
@@ -73,7 +73,7 @@ async def list_activities(
             or_(
                 SfActivityStructured.subject.ilike(search_pattern),
                 SfActivityStructured.description.ilike(search_pattern),
-                SfActivityStructured.contact_names.contains([search_text]),
+                any_(SfActivityStructured.contact_names).ilike(search_pattern),
             )
         )
 

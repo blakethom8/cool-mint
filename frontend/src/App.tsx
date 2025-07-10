@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ActivityTable } from './components/ActivityTable';
 import { ActivityFilters } from './components/ActivityFilters';
+import { BundleCreationModal } from './components/BundleCreationModal';
+import { BundleManagement } from './pages/BundleManagement';
 import { activityService } from './services/activityService';
 import { ActivityListItem, ActivityFilters as IActivityFilters, FilterOptions } from './types/activity';
 import './App.css';
 
-function App() {
+function ActivitySelector() {
   const [activities, setActivities] = useState<ActivityListItem[]>([]);
   const [selectedActivityIds, setSelectedActivityIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
@@ -16,6 +19,7 @@ function App() {
   const [filters, setFilters] = useState<IActivityFilters>({});
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [showBundleModal, setShowBundleModal] = useState(false);
 
   // Fetch filter options on mount
   useEffect(() => {
@@ -94,14 +98,14 @@ function App() {
       return;
     }
 
-    try {
-      const result = await activityService.processSelection(Array.from(selectedActivityIds));
-      alert(`Successfully processed ${selectedActivityIds.size} activities`);
-      console.log('Process result:', result);
-    } catch (err) {
-      console.error('Failed to process selection:', err);
-      alert('Failed to process selection');
-    }
+    setShowBundleModal(true);
+  };
+
+  const handleBundleSuccess = (bundleId: string) => {
+    setShowBundleModal(false);
+    setSelectedActivityIds(new Set());
+    // Navigate to bundle management page
+    window.location.href = `/bundles`;
   };
 
   return (
@@ -154,7 +158,7 @@ function App() {
               onClick={handleProcessSelection}
               disabled={selectedActivityIds.size === 0}
             >
-              Process Selected Activities
+              Create Bundle
             </button>
           </div>
 
@@ -175,7 +179,26 @@ function App() {
           )}
         </main>
       </div>
+
+      <BundleCreationModal
+        isOpen={showBundleModal}
+        selectedActivityIds={Array.from(selectedActivityIds)}
+        onClose={() => setShowBundleModal(false)}
+        onSuccess={handleBundleSuccess}
+      />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<ActivitySelector />} />
+        <Route path="/bundles" element={<BundleManagement />} />
+        <Route path="/bundles/:bundleId" element={<BundleManagement />} />
+      </Routes>
+    </Router>
   );
 }
 

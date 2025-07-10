@@ -10,6 +10,14 @@ export default defineConfig({
         target: 'http://localhost:8080',  // Direct to FastAPI (bypasses Kong auth)
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/activities/, '/api/activities'),
+      },
+      '/api/bundles': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+      '/api/llm': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       }
     }
   }

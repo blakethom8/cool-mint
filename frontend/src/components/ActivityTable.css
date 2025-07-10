@@ -238,6 +238,12 @@
   font-weight: 500;
 }
 
+.selection-summary {
+  margin-left: 0.5rem;
+  color: #4CAF50;
+  font-weight: 600;
+}
+
 .pagination-controls {
   display: flex;
   align-items: center;

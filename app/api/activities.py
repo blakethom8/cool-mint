@@ -2,9 +2,12 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select, func, and_, or_, any_
 from sqlalchemy.orm import Session
+import tiktoken
+import json
 
 from database.session import db_session
 from database.data_models.salesforce_data import SfActivityStructured
+from database.data_models.activity_bundles import ActivityBundle
 from schemas.activity_api_schema import (
     ActivityListItem,
     ActivityDetail,
@@ -13,6 +16,7 @@ from schemas.activity_api_schema import (
     ActivitySelectionRequest,
     ActivityContactInfo,
 )
+from schemas.bundle_schema import BundleStatsResponse
 
 router = APIRouter()
 
@@ -301,11 +305,10 @@ async def process_activity_selection(
     request: ActivitySelectionRequest, session: Session = Depends(db_session)
 ):
     """
-    Process selected activities for LLM analysis.
+    Process selected activities and create a bundle for LLM analysis.
 
     This endpoint receives a list of activity IDs that the user has selected
-    and prepares them for LLM processing. For now, it returns the selected
-    activities' data. In the future, this will trigger LLM processing.
+    and creates a bundle for LLM processing.
     """
     # Validate that all activity IDs exist
     activities = session.scalars(
@@ -321,8 +324,66 @@ async def process_activity_selection(
             status_code=400, detail=f"Some activity IDs not found: {list(missing_ids)}"
         )
 
-    # For now, return the LLM context for the selected activities
-    # In the future, this would trigger actual LLM processing
+    # Calculate token count estimation using structured context
+    total_tokens = 0
+    try:
+        encoding = tiktoken.encoding_for_model("gpt-4")
+        for activity in activities:
+            # Count tokens from structured activity data
+            if activity.llm_context_json:
+                # Use structured format like in LLM endpoint
+                structured_activity = {
+                    "basic_info": {
+                        "activity_id": activity.salesforce_activity_id,
+                        "date": str(activity.activity_date) if activity.activity_date else None,
+                        "subject": activity.subject,
+                        "description": activity.description,
+                        "owner": activity.user_name,
+                        "type": activity.mno_type or activity.type,
+                        "subtype": activity.mno_subtype
+                    },
+                    "structured_context": activity.llm_context_json
+                }
+                text_content = json.dumps(structured_activity)
+            else:
+                # Fallback for activities without structured context
+                text_content = f"{activity.subject or ''} {activity.description or ''}"
+            total_tokens += len(encoding.encode(text_content))
+    except Exception:
+        # Fallback to character-based estimation (1 token ≈ 4 characters)
+        total_chars = 0
+        for activity in activities:
+            if activity.llm_context_json:
+                total_chars += len(json.dumps({
+                    "basic_info": {
+                        "subject": activity.subject or '',
+                        "description": activity.description or ''
+                    },
+                    "structured_context": activity.llm_context_json
+                }))
+            else:
+                total_chars += len(f"{activity.subject or ''} {activity.description or ''}")
+        total_tokens = total_chars // 4
+
+    # Create activity bundle if name is provided
+    if request.bundle_name:
+        bundle = ActivityBundle(
+            name=request.bundle_name,
+            description=request.bundle_description,
+            activity_ids=request.activity_ids,
+            activity_count=len(activities),
+            token_count=total_tokens,
+            created_by=None,  # TODO: Add user tracking when auth is implemented
+        )
+        session.add(bundle)
+        session.commit()
+        session.refresh(bundle)
+        
+        bundle_id = str(bundle.id)
+    else:
+        bundle_id = None
+
+    # Collect LLM contexts
     llm_contexts = []
     for activity in activities:
         if activity.llm_context_json:
@@ -337,5 +398,94 @@ async def process_activity_selection(
         "selected_count": len(activities),
         "activity_ids": request.activity_ids,
         "llm_contexts": llm_contexts,
+        "estimated_tokens": total_tokens,
+        "bundle_id": bundle_id,
         "message": "Activities selected successfully. Ready for LLM processing.",
     }
+
+
+@router.post("/selection/stats", response_model=BundleStatsResponse)
+async def get_bundle_stats(
+    request: ActivitySelectionRequest, session: Session = Depends(db_session)
+):
+    """
+    Get statistics for selected activities before creating a bundle.
+    
+    This endpoint provides statistics about the selected activities
+    to show in the bundle creation modal.
+    """
+    # Validate that all activity IDs exist
+    activities = session.scalars(
+        select(SfActivityStructured).where(
+            SfActivityStructured.salesforce_activity_id.in_(request.activity_ids)
+        )
+    ).all()
+
+    if len(activities) != len(request.activity_ids):
+        found_ids = {a.salesforce_activity_id for a in activities}
+        missing_ids = set(request.activity_ids) - found_ids
+        raise HTTPException(
+            status_code=400, detail=f"Some activity IDs not found: {list(missing_ids)}"
+        )
+
+    # Calculate statistics
+    total_chars = 0
+    unique_owners = set()
+    activity_types = {}
+    min_date = None
+    max_date = None
+
+    for activity in activities:
+        # Character count using structured data format
+        if activity.llm_context_json:
+            # Count characters from structured format
+            structured_activity = {
+                "basic_info": {
+                    "subject": activity.subject or '',
+                    "description": activity.description or ''
+                },
+                "structured_context": activity.llm_context_json
+            }
+            total_chars += len(json.dumps(structured_activity))
+        else:
+            # Fallback to basic fields
+            total_chars += len(activity.subject or "")
+            total_chars += len(activity.description or "")
+        
+        # Unique owners
+        if activity.user_name:
+            unique_owners.add(activity.user_name)
+        
+        # Activity types
+        activity_type = activity.type or "Unknown"
+        activity_types[activity_type] = activity_types.get(activity_type, 0) + 1
+        
+        # Date range
+        if activity.activity_date:
+            if min_date is None or activity.activity_date < min_date:
+                min_date = activity.activity_date
+            if max_date is None or activity.activity_date > max_date:
+                max_date = activity.activity_date
+
+    # Estimate tokens
+    try:
+        encoding = tiktoken.encoding_for_model("gpt-4")
+        estimated_tokens = len(encoding.encode(" ".join(
+            f"{a.subject or ''} {a.description or ''}"
+            for a in activities
+        )))
+    except Exception:
+        # Fallback estimation
+        estimated_tokens = total_chars // 4
+
+    return BundleStatsResponse(
+        activity_count=len(activities),
+        total_characters=total_chars,
+        estimated_tokens=estimated_tokens,
+        unique_owners=list(unique_owners),
+        date_range={
+            "start": str(min_date) if min_date else None,
+            "end": str(max_date) if max_date else None,
+        },
+        activity_types=activity_types,
+    )

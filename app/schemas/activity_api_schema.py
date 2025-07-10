@@ -89,6 +89,8 @@ class ActivityListResponse(BaseModel):
 class ActivitySelectionRequest(BaseModel):
     activity_ids: List[str] = Field(description="List of activity IDs to process")
     prompt: Optional[str] = Field(None, description="Custom prompt for LLM processing")
+    bundle_name: Optional[str] = Field(None, description="Name for the activity bundle")
+    bundle_description: Optional[str] = Field(None, description="Description of the bundle")
 
 
 class FilterOptionsResponse(BaseModel):

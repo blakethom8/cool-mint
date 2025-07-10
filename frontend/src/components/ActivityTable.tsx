@@ -117,6 +117,11 @@ export const ActivityTable: React.FC<ActivityTableProps> = ({
       <div className="pagination">
         <div className="pagination-info">
           Showing {activities.length} of {totalCount.toLocaleString()} activities
+          {selectedActivityIds.size > 0 && (
+            <span className="selection-summary">
+              ({selectedActivityIds.size} selected)
+            </span>
+          )}
           {totalPages > 1 && (
             <span className="page-details">
               (Page {currentPage} of {totalPages})

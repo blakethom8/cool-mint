@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { bundleService, BundleStatsResponse } from '../services/bundleService';
+import { bundleService } from '../services/bundleService';
+import { BundleStatsResponse } from '../types/bundle';
 import './BundleCreationModal.css';
 
 interface BundleCreationModalProps {
@@ -118,7 +119,7 @@ export const BundleCreationModal: React.FC<BundleCreationModalProps> = ({
                     <div className="type-list">
                       {Object.entries(stats.activity_types).map(([type, count]) => (
                         <span key={type} className="type-badge">
-                          {type}: {count}
+                          {type}: {count as number}
                         </span>
                       ))}
                     </div>

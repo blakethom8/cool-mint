@@ -1,14 +1,11 @@
 import axios from 'axios';
 import { 
-  Bundle, 
   BundleListResponse, 
   BundleDetailResponse, 
   BundleStatsResponse, 
   ActivitySelectionResponse,
   BundleDeleteResponse 
 } from '../types/bundle';
-
-const API_BASE_URL = '';
 
 export const bundleService = {
   // Get bundle statistics before creation

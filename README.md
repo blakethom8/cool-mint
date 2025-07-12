@@ -1,8 +1,8 @@
-# Cool Mint - Sales Activity Selector System
+# Cool Mint - AI-Enabled CRM for Physician Liaisons
 
 ## Overview
 
-Cool Mint is a comprehensive sales activity selection system built on the GenAI Launchpad framework. It provides a sophisticated interface for sales teams to browse, filter, and select call logs and activity data for sharing with Large Language Models (LLMs). The system is designed to facilitate efficient data sharing for AI-powered sales insights and analysis.
+Cool Mint is a comprehensive CRM system designed specifically for physician liaisons, built on the GenAI Launchpad framework. It provides powerful tools for managing sales activities, organizing physician contacts, and exploring market territories through an intuitive interface. The system leverages AI capabilities to enhance productivity and provide intelligent insights for healthcare sales teams.
 
 ## System Architecture
 
@@ -41,6 +41,7 @@ Activity Selection → API Processing → SfActivityStructured Table
 
 ## Key Features
 
+### Activity Selector
 - **Advanced Filtering**: Filter activities by date range, owner, contact types, specialties, and more
 - **Multi-Select Interface**: Select individual activities or bulk operations
 - **Real-time Search**: Search across activity subjects and descriptions
@@ -48,8 +49,23 @@ Activity Selection → API Processing → SfActivityStructured Table
 - **Pagination**: Efficient handling of large datasets
 - **Type Safety**: Full TypeScript implementation for reliability
 
+### Bundle Manager
+- **Activity Bundling**: Group related activities into manageable bundles
+- **AI-Powered Descriptions**: Generate bundle descriptions using Claude AI
+- **Bundle Statistics**: View activity counts and date ranges
+- **Quick Actions**: Edit, delete, and manage bundles efficiently
+
+### Market Explorer (New)
+- **Interactive Map Interface**: Explore physician contacts on a geographic map
+- **Smart Markers**: Marker size indicates contact density at each location
+- **Comprehensive Filtering**: Filter by specialty, organization, location, and more
+- **Split-View Design**: Map view synchronized with scrollable contact list
+- **Performance Optimized**: Viewport-based loading for 3000+ contacts
+- **Clean Aesthetics**: CARTO Light map theme for professional appearance
+
 ## Database Schema
 
+### Activity Data
 The system uses the `SfActivityStructured` table which contains:
 - Activity metadata (ID, date, subject, description)
 - Contact information (names, counts, specialties)
@@ -57,12 +73,33 @@ The system uses the `SfActivityStructured` table which contains:
 - Activity types and statuses
 - Structured data for efficient querying
 
+### Contact Data
+The `SfContacts` table provides:
+- Contact identification (Salesforce ID, name, NPI)
+- Geographic data (mailing address, latitude/longitude)
+- Professional info (specialty, organization, physician status)
+- Activity tracking (last activity date, days since visit)
+- Custom fields (geography, panel status, network info)
+
 ## API Endpoints
 
 ### Activities API (`/api/activities/`)
 - `GET /` - List activities with filtering and pagination
 - `GET /filter-options` - Get available filter options
 - `POST /selection` - Process selected activities
+
+### Bundles API (`/api/bundles/`)
+- `GET /` - List all bundles
+- `POST /` - Create new bundle
+- `PUT /{id}` - Update bundle
+- `DELETE /{id}` - Delete bundle
+- `POST /generate-description` - AI-powered description generation
+
+### Contacts API (`/api/contacts/`)
+- `GET /map-data` - Optimized contact data for map markers
+- `GET /` - List contacts with filtering and pagination
+- `GET /{id}` - Get detailed contact information
+- `GET /filter-options` - Get available filter values
 
 ### Authentication
 Currently bypassing Kong authentication for development. The system connects directly to FastAPI backend running on port 8080.
@@ -183,6 +220,8 @@ Detailed documentation for individual services can be found in:
 - `frontend/readme/` - Frontend service documentation
 - `app/api/README.md` - Backend API documentation
 - `app/services/README.md` - Business logic documentation
+- `MARKET_EXPLORER_TODO.md` - Market Explorer planning document
+- `MARKET_EXPLORER_IMPLEMENTATION.md` - Detailed implementation guide
 
 ## Technology Stack
 
@@ -199,6 +238,8 @@ Detailed documentation for individual services can be found in:
 - **TypeScript**: Type safety
 - **Vite**: Build tool and development server
 - **Axios**: HTTP client
+- **React Leaflet**: Interactive mapping
+- **Leaflet**: Map rendering engine
 - **CSS3**: Styling
 
 ### Infrastructure

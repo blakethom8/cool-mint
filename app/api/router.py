@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from api import endpoint, activities, bundles, llm
+from api import endpoint, activities, bundles, llm, contacts
 
 """
 API Router Module
@@ -15,3 +15,4 @@ router.include_router(endpoint.router, prefix="/events", tags=["events"])
 router.include_router(activities.router, prefix="/activities", tags=["activities"])
 router.include_router(bundles.router, prefix="/bundles", tags=["bundles"])
 router.include_router(llm.router, prefix="/llm", tags=["llm"])
+router.include_router(contacts.router, prefix="/contacts", tags=["contacts"])

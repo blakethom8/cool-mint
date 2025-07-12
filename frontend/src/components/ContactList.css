@@ -1,0 +1,124 @@
+.contact-list {
+  height: 100%;
+  overflow-y: auto;
+  background: #f8f9fa;
+}
+
+.contact-list.loading,
+.contact-list.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.contact-list-loader {
+  color: #6c757d;
+  font-size: 1.1em;
+}
+
+.empty-state {
+  text-align: center;
+  color: #6c757d;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+}
+
+.empty-hint {
+  font-size: 0.9em;
+  color: #adb5bd;
+}
+
+.contact-list-item {
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.contact-list-item:hover {
+  background: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.contact-list-item.selected {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding-left: calc(1rem - 4px);
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.contact-name {
+  margin: 0;
+  font-size: 1.1em;
+  color: #212529;
+  font-weight: 500;
+}
+
+.physician-badge {
+  background: #28a745;
+  color: white;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
+.contact-specialty {
+  color: #6c757d;
+  font-size: 0.9em;
+  margin-bottom: 0.25rem;
+}
+
+.contact-organization {
+  color: #495057;
+  font-size: 0.85em;
+  font-style: italic;
+  margin-bottom: 0.25rem;
+}
+
+.contact-location {
+  color: #6c757d;
+  font-size: 0.85em;
+  margin-bottom: 0.75rem;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.contact-action-button {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #dee2e6;
+  background: white;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.contact-action-button:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.contact-action-button.details {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.contact-action-button.details:hover {
+  background: #0056b3;
+  border-color: #0056b3;
+}

@@ -45,15 +45,18 @@ export const Navigation: React.FC = () => {
               <span className="nav-icon">📦</span>
               Bundle Manager
             </Link>
+            
+            <Link 
+              to="/contacts" 
+              className={`nav-link ${isActive('/contacts') ? 'active' : ''}`}
+            >
+              <span className="nav-icon">🗺️</span>
+              Market Explorer
+            </Link>
           </div>
           
           <div className="nav-section nav-section-future">
             <span className="nav-section-title">Coming Soon</span>
-            <div className="nav-link disabled">
-              <span className="nav-icon">🔍</span>
-              Market Explorer
-              <span className="coming-soon-badge">Soon</span>
-            </div>
             
             <div className="nav-link disabled">
               <span className="nav-icon">📈</span>

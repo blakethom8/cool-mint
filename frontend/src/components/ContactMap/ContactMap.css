@@ -1,0 +1,170 @@
+.contact-map-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.contact-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom marker styles */
+.custom-contact-marker {
+  background: transparent;
+  border: none;
+}
+
+.marker-pin {
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.marker-pin.selected {
+  animation: pulse 1.5s infinite;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.marker-count {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Tooltip styles */
+.marker-tooltip {
+  padding: 4px;
+  min-width: 150px;
+}
+
+.tooltip-specialty {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 2px;
+}
+
+.tooltip-org {
+  font-size: 0.85em;
+  color: #666;
+  font-style: italic;
+}
+
+.tooltip-count {
+  font-size: 0.85em;
+  color: #3498db;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Popup styles */
+.contact-popup {
+  min-width: 250px;
+  max-width: 350px;
+}
+
+.contact-popup h3 {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-size: 1.2em;
+  border-bottom: 1px solid #ecf0f1;
+  padding-bottom: 8px;
+}
+
+.popup-field {
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+.popup-field strong {
+  color: #34495e;
+  margin-right: 4px;
+}
+
+.popup-address {
+  margin-top: 4px;
+  color: #7f8c8d;
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+.popup-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.popup-button {
+  flex: 1;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.popup-button.view-details {
+  background-color: #3498db;
+  color: white;
+}
+
+.popup-button.view-details:hover {
+  background-color: #2980b9;
+}
+
+.popup-button.directions {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.popup-button.directions:hover {
+  background-color: #27ae60;
+}
+
+/* Custom reset button */
+.map-reset-button {
+  background: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.map-reset-button:hover {
+  background-color: #f4f4f4;
+}
+
+/* Fix Leaflet control positioning */
+.leaflet-top.leaflet-right {
+  top: 10px;
+  right: 10px;
+}
+
+.leaflet-bottom.leaflet-left {
+  bottom: 10px;
+  left: 10px;
+}

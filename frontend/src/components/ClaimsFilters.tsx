@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ClaimsFilters, FilterOptions, ViewMode } from '../types/claims';
 import claimsService from '../services/claimsService';
+import DropdownMultiSelect from './DropdownMultiSelect';
 import './ClaimsFilters.css';
 
 interface ClaimsFiltersProps {
   filters: ClaimsFilters;
   onFiltersChange: (filters: ClaimsFilters) => void;
-  viewMode: ViewMode;
+  viewMode?: ViewMode;
 }
 
 const ClaimsFiltersComponent: React.FC<ClaimsFiltersProps> = ({
   filters,
   onFiltersChange,
-  viewMode,
 }) => {
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
   const [localFilters, setLocalFilters] = useState<ClaimsFilters>(filters);
@@ -43,14 +43,9 @@ const ClaimsFiltersComponent: React.FC<ClaimsFiltersProps> = ({
     onFiltersChange(newFilters);
   }, [localFilters, onFiltersChange]);
 
-  const handleMultiSelectChange = useCallback((key: keyof ClaimsFilters, value: string, checked: boolean) => {
-    const currentValues = (localFilters[key] as string[]) || [];
-    const newValues = checked
-      ? [...currentValues, value]
-      : currentValues.filter(v => v !== value);
-    
-    handleFilterChange(key, newValues.length > 0 ? newValues : undefined);
-  }, [localFilters, handleFilterChange]);
+  const handleMultiSelectChange = useCallback((key: keyof ClaimsFilters, values: string[]) => {
+    handleFilterChange(key, values.length > 0 ? values : undefined);
+  }, [handleFilterChange]);
 
   const clearFilters = useCallback(() => {
     const clearedFilters: ClaimsFilters = {};
@@ -117,125 +112,132 @@ const ClaimsFiltersComponent: React.FC<ClaimsFiltersProps> = ({
           <div className="filter-section">
             <h4 className="section-title">Geographic</h4>
             
-            <div className="filter-group">
-              <label className="filter-label">Geomarket</label>
-              <div className="checkbox-list">
-                {filterOptions.geomarkets.slice(0, 10).map(geomarket => (
-                  <label key={geomarket} className="checkbox-item">
-                    <input
-                      type="checkbox"
-                      checked={(localFilters.geomarket || []).includes(geomarket)}
-                      onChange={(e) => handleMultiSelectChange('geomarket', geomarket, e.target.checked)}
-                    />
-                    <span className="checkbox-label">{geomarket}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+            <DropdownMultiSelect
+              label="Geomarket"
+              options={filterOptions.geomarkets}
+              selectedValues={localFilters.geomarket || []}
+              onChange={(values) => handleMultiSelectChange('geomarket', values)}
+              placeholder="Select geomarkets..."
+            />
 
-            <div className="filter-group">
-              <label className="filter-label">City</label>
-              <div className="checkbox-list">
-                {filterOptions.cities.slice(0, 15).map(city => (
-                  <label key={city} className="checkbox-item">
-                    <input
-                      type="checkbox"
-                      checked={(localFilters.city || []).includes(city)}
-                      onChange={(e) => handleMultiSelectChange('city', city, e.target.checked)}
-                    />
-                    <span className="checkbox-label">{city}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+            <DropdownMultiSelect
+              label="City"
+              options={filterOptions.cities}
+              selectedValues={localFilters.city || []}
+              onChange={(values) => handleMultiSelectChange('city', values)}
+              placeholder="Select cities..."
+            />
           </div>
 
-          {/* Provider Filters */}
-          <div className="filter-section">
-            <h4 className="section-title">Providers</h4>
-              
-              <div className="filter-group">
-                <label className="filter-label">Specialty</label>
-                <div className="checkbox-list">
-                  {filterOptions.specialties.slice(0, 12).map(specialty => (
-                    <label key={specialty} className="checkbox-item">
-                      <input
-                        type="checkbox"
-                        checked={(localFilters.specialty || []).includes(specialty)}
-                        onChange={(e) => handleMultiSelectChange('specialty', specialty, e.target.checked)}
-                      />
-                      <span className="checkbox-label">{specialty}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="filter-group">
-                <label className="filter-label">Provider Group</label>
-                <div className="checkbox-list">
-                  {filterOptions.provider_groups.slice(0, 10).map(group => (
-                    <label key={group} className="checkbox-item">
-                      <input
-                        type="checkbox"
-                        checked={(localFilters.provider_group || []).includes(group)}
-                        onChange={(e) => handleMultiSelectChange('provider_group', group, e.target.checked)}
-                      />
-                      <span className="checkbox-label">{group}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-          {/* Site Filters */}
+          {/* Site Filters - First */}
           <div className="filter-section">
             <h4 className="section-title">Sites</h4>
               
+              <DropdownMultiSelect
+                label="Site Type"
+                options={filterOptions.site_types}
+                selectedValues={localFilters.site_type || []}
+                onChange={(values) => handleMultiSelectChange('site_type', values)}
+                placeholder="Select site types..."
+              />
+
               <div className="filter-group">
-                <label className="filter-label">Site Type</label>
-                <div className="checkbox-list">
-                  {filterOptions.site_types.map(type => (
-                    <label key={type} className="checkbox-item">
-                      <input
-                        type="checkbox"
-                        checked={(localFilters.site_type || []).includes(type)}
-                        onChange={(e) => handleMultiSelectChange('site_type', type, e.target.checked)}
-                      />
-                      <span className="checkbox-label">{type}</span>
-                    </label>
-                  ))}
-                </div>
+                <label className="filter-label">Minimum Site Visits</label>
+                <input
+                  type="number"
+                  className="filter-input"
+                  placeholder="0"
+                  min="0"
+                  value={localFilters.min_site_visits || ''}
+                  onChange={(e) => handleFilterChange('min_site_visits', e.target.value ? parseInt(e.target.value) : undefined)}
+                />
+              </div>
+
+              <div className="filter-group">
+                <label className="filter-label">Minimum Providers</label>
+                <input
+                  type="number"
+                  className="filter-input"
+                  placeholder="0"
+                  min="0"
+                  value={localFilters.min_providers || ''}
+                  onChange={(e) => handleFilterChange('min_providers', e.target.value ? parseInt(e.target.value) : undefined)}
+                />
               </div>
             </div>
 
-          {/* Visit Volume Filters */}
+          {/* Provider Filters - Second */}
           <div className="filter-section">
-            <h4 className="section-title">Visit Volume</h4>
-            
-            <div className="filter-group">
-              <label className="filter-label">Minimum Visits</label>
-              <input
-                type="number"
-                className="filter-input"
-                placeholder="0"
-                min="0"
-                value={localFilters.min_visits || ''}
-                onChange={(e) => handleFilterChange('min_visits', e.target.value ? parseInt(e.target.value) : undefined)}
+            <h4 className="section-title">Providers</h4>
+              
+              <DropdownMultiSelect
+                label="Specialty"
+                options={filterOptions.specialties}
+                selectedValues={localFilters.specialty || []}
+                onChange={(values) => handleMultiSelectChange('specialty', values)}
+                placeholder="Select specialties..."
               />
+
+              <DropdownMultiSelect
+                label="Service Line"
+                options={filterOptions.service_lines}
+                selectedValues={localFilters.service_line || []}
+                onChange={(values) => handleMultiSelectChange('service_line', values)}
+                placeholder="Select service lines..."
+              />
+
+              <div className="filter-group">
+                <label className="filter-label">Minimum Provider Visits</label>
+                <input
+                  type="number"
+                  className="filter-input"
+                  placeholder="0"
+                  min="0"
+                  value={localFilters.min_provider_visits || ''}
+                  onChange={(e) => handleFilterChange('min_provider_visits', e.target.value ? parseInt(e.target.value) : undefined)}
+                />
+              </div>
             </div>
 
-            <div className="filter-group">
-              <label className="filter-label">Maximum Visits</label>
-              <input
-                type="number"
-                className="filter-input"
-                placeholder="No limit"
-                min="0"
-                value={localFilters.max_visits || ''}
-                onChange={(e) => handleFilterChange('max_visits', e.target.value ? parseInt(e.target.value) : undefined)}
+          {/* Provider Group Filters - Third */}
+          <div className="filter-section">
+            <h4 className="section-title">Provider Groups</h4>
+
+              <DropdownMultiSelect
+                label="Provider Group"
+                options={filterOptions.provider_groups}
+                selectedValues={localFilters.provider_group || []}
+                onChange={(values) => handleMultiSelectChange('provider_group', values)}
+                placeholder="Select provider groups..."
+                searchable={true}
               />
+
+              <div className="filter-group">
+                <label className="filter-label">Minimum Group Visits</label>
+                <input
+                  type="number"
+                  className="filter-input"
+                  placeholder="0"
+                  min="0"
+                  value={localFilters.min_group_visits || ''}
+                  onChange={(e) => handleFilterChange('min_group_visits', e.target.value ? parseInt(e.target.value) : undefined)}
+                />
+              </div>
+
+              <div className="filter-group">
+                <label className="filter-label">Minimum Sites per Group</label>
+                <input
+                  type="number"
+                  className="filter-input"
+                  placeholder="0"
+                  min="0"
+                  value={localFilters.min_group_sites || ''}
+                  onChange={(e) => handleFilterChange('min_group_sites', e.target.value ? parseInt(e.target.value) : undefined)}
+                />
+              </div>
             </div>
-          </div>
+
+
 
           {/* Service Type Filters */}
           <div className="filter-section">

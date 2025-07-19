@@ -64,6 +64,9 @@ def apply_filters(query, filters: ClaimsFilters, model_class):
     if hasattr(model_class, 'specialty') and filters.specialty:
         query = query.filter(model_class.specialty.in_(filters.specialty))
     
+    if hasattr(model_class, 'service_line') and filters.service_line:
+        query = query.filter(model_class.service_line.in_(filters.service_line))
+    
     if hasattr(model_class, 'provider_group') and filters.provider_group:
         query = query.filter(model_class.provider_group.in_(filters.provider_group))
     
@@ -93,10 +96,16 @@ async def get_providers(
     page: int = Query(1, ge=1, description="Page number"),
     per_page: int = Query(50, ge=1, le=200, description="Items per page"),
     geomarket: Optional[List[str]] = Query(None, description="Filter by geomarket"),
+    city: Optional[List[str]] = Query(None, description="Filter by city"),
+    county: Optional[List[str]] = Query(None, description="Filter by county"),
+    site_type: Optional[List[str]] = Query(None, description="Filter by site type"),
     specialty: Optional[List[str]] = Query(None, description="Filter by specialty"),
+    service_line: Optional[List[str]] = Query(None, description="Filter by service line"),
     provider_group: Optional[List[str]] = Query(None, description="Filter by provider group"),
-    min_visits: Optional[int] = Query(None, ge=0, description="Minimum visit count"),
-    max_visits: Optional[int] = Query(None, ge=0, description="Maximum visit count"),
+    min_provider_visits: Optional[int] = Query(None, ge=0, description="Minimum provider visit count"),
+    has_oncology: Optional[bool] = Query(None, description="Has oncology services"),
+    has_surgery: Optional[bool] = Query(None, description="Has surgical services"),
+    has_inpatient: Optional[bool] = Query(None, description="Has inpatient services"),
     search: Optional[str] = Query(None, description="Search by provider name"),
     session: Session = Depends(db_session)
 ):
@@ -105,25 +114,57 @@ async def get_providers(
     # Create filters object
     filters = ClaimsFilters(
         geomarket=geomarket,
+        city=city,
+        county=county,
+        site_type=site_type,
         specialty=specialty,
+        service_line=service_line,
         provider_group=provider_group,
-        min_visits=min_visits,
-        max_visits=max_visits,
+        min_provider_visits=min_provider_visits,
+        has_oncology=has_oncology,
+        has_surgery=has_surgery,
+        has_inpatient=has_inpatient,
         search=search
     )
     
     # Base query
-    query = session.query(ClaimsProvider)
+    query = session.query(ClaimsProvider).distinct()
+    
+    # Join with sites if site filters are specified
+    if (filters.city or filters.county or filters.site_type or 
+        filters.has_oncology is not None or filters.has_surgery is not None or 
+        filters.has_inpatient is not None):
+        query = query.join(
+            ClaimsVisit,
+            ClaimsProvider.id == ClaimsVisit.provider_id
+        ).join(
+            SiteOfService,
+            ClaimsVisit.site_id == SiteOfService.id
+        )
     
     # Apply filters
     query = apply_filters(query, filters, ClaimsProvider)
     
-    # Visit count filters
-    if filters.min_visits is not None:
-        query = query.filter(ClaimsProvider.total_visits >= filters.min_visits)
+    # Apply site filters if site join was added
+    if filters.city or filters.county or filters.site_type:
+        if filters.city:
+            query = query.filter(SiteOfService.city.in_(filters.city))
+        if filters.county:
+            query = query.filter(SiteOfService.county.in_(filters.county))
+        if filters.site_type:
+            query = query.filter(SiteOfService.site_type.in_(filters.site_type))
     
-    if filters.max_visits is not None:
-        query = query.filter(ClaimsProvider.total_visits <= filters.max_visits)
+    # Apply service filters if needed
+    if filters.has_oncology is not None:
+        query = query.filter(ClaimsVisit.has_oncology == filters.has_oncology)
+    if filters.has_surgery is not None:
+        query = query.filter(ClaimsVisit.has_surgery == filters.has_surgery)
+    if filters.has_inpatient is not None:
+        query = query.filter(ClaimsVisit.has_inpatient == filters.has_inpatient)
+    
+    # Provider visit count filter
+    if filters.min_provider_visits is not None:
+        query = query.filter(ClaimsProvider.total_visits >= filters.min_provider_visits)
     
     # Get total count
     total_count = query.count()
@@ -141,7 +182,13 @@ async def get_providers(
             specialty=p.specialty,
             provider_group=p.provider_group,
             geomarket=p.geomarket,
-            total_visits=p.total_visits
+            total_visits=p.total_visits,
+            # Additional detail fields from provider table
+            top_site_name=p.top_sos_name,
+            top_site_id=None,  # TODO: Add top_sos_id to database if needed
+            top_payer=p.top_payer,
+            top_payer_percent=p.top_payer_percent,
+            top_referring_org=p.top_referring_org
         )
         for p in providers
     ]
@@ -199,6 +246,14 @@ async def get_sites(
     city: Optional[List[str]] = Query(None, description="Filter by city"),
     county: Optional[List[str]] = Query(None, description="Filter by county"),
     site_type: Optional[List[str]] = Query(None, description="Filter by site type"),
+    min_site_visits: Optional[int] = Query(None, ge=0, description="Minimum site visit count"),
+    specialty: Optional[List[str]] = Query(None, description="Filter by provider specialty"),
+    service_line: Optional[List[str]] = Query(None, description="Filter by service line"),
+    provider_group: Optional[List[str]] = Query(None, description="Filter by provider group"),
+    min_providers: Optional[int] = Query(None, ge=1, description="Minimum number of providers at site"),
+    has_oncology: Optional[bool] = Query(None, description="Has oncology services"),
+    has_surgery: Optional[bool] = Query(None, description="Has surgical services"),
+    has_inpatient: Optional[bool] = Query(None, description="Has inpatient services"),
     has_coordinates: Optional[bool] = Query(None, description="Only sites with coordinates"),
     north: Optional[float] = Query(None, description="Northern boundary"),
     south: Optional[float] = Query(None, description="Southern boundary"),
@@ -215,6 +270,14 @@ async def get_sites(
         city=city,
         county=county,
         site_type=site_type,
+        min_site_visits=min_site_visits,
+        min_providers=min_providers,
+        specialty=specialty,
+        service_line=service_line,
+        provider_group=provider_group,
+        has_oncology=has_oncology,
+        has_surgery=has_surgery,
+        has_inpatient=has_inpatient,
         has_coordinates=has_coordinates,
         north=north,
         south=south,
@@ -230,11 +293,43 @@ async def get_sites(
         func.count(distinct(ClaimsVisit.provider_id)).label('provider_count')
     ).outerjoin(ClaimsVisit)
     
+    # Join with provider table if provider filters are specified
+    if filters.specialty or filters.service_line or filters.provider_group:
+        query = query.join(
+            ClaimsProvider,
+            ClaimsVisit.provider_id == ClaimsProvider.id
+        )
+    
     # Apply filters
     query = apply_filters(query, filters, SiteOfService)
     
+    # Apply provider filters if provider join was added
+    if filters.specialty or filters.service_line or filters.provider_group:
+        if filters.specialty:
+            query = query.filter(ClaimsProvider.specialty.in_(filters.specialty))
+        if filters.service_line:
+            query = query.filter(ClaimsProvider.service_line.in_(filters.service_line))
+        if filters.provider_group:
+            query = query.filter(ClaimsProvider.provider_group.in_(filters.provider_group))
+    
     # Group by site
     query = query.group_by(SiteOfService.id)
+    
+    # Apply site visit count filter
+    if filters.min_site_visits is not None:
+        query = query.having(func.coalesce(func.sum(ClaimsVisit.visits), 0) >= filters.min_site_visits)
+    
+    # Apply service filters
+    if filters.has_oncology:
+        query = query.having(func.bool_or(ClaimsVisit.has_oncology) == True)
+    if filters.has_surgery:
+        query = query.having(func.bool_or(ClaimsVisit.has_surgery) == True)
+    if filters.has_inpatient:
+        query = query.having(func.bool_or(ClaimsVisit.has_inpatient) == True)
+    
+    # Apply minimum providers filter
+    if filters.min_providers:
+        query = query.having(func.count(distinct(ClaimsVisit.provider_id)) >= filters.min_providers)
     
     # Get total count
     total_count = query.count()
@@ -314,7 +409,12 @@ async def get_map_markers(
     south: Optional[float] = Query(None, description="Southern boundary"),
     east: Optional[float] = Query(None, description="Eastern boundary"),
     west: Optional[float] = Query(None, description="Western boundary"),
-    min_visits: Optional[int] = Query(None, ge=0, description="Minimum visit count"),
+    min_site_visits: Optional[int] = Query(None, ge=0, description="Minimum site visit count"),
+    specialty: Optional[List[str]] = Query(None, description="Filter by provider specialty"),
+    service_line: Optional[List[str]] = Query(None, description="Filter by service line"),
+    provider_group: Optional[List[str]] = Query(None, description="Filter by provider group"),
+    min_provider_visits: Optional[int] = Query(None, ge=0, description="Minimum provider visit count"),
+    min_providers: Optional[int] = Query(None, ge=1, description="Minimum number of providers at site"),
     has_oncology: Optional[bool] = Query(None, description="Has oncology services"),
     has_surgery: Optional[bool] = Query(None, description="Has surgical services"),
     has_inpatient: Optional[bool] = Query(None, description="Has inpatient services"),
@@ -331,7 +431,12 @@ async def get_map_markers(
         south=south,
         east=east,
         west=west,
-        min_visits=min_visits,
+        min_site_visits=min_site_visits,
+        min_providers=min_providers,
+        specialty=specialty,
+        service_line=service_line,
+        provider_group=provider_group,
+        min_provider_visits=min_provider_visits,
         has_oncology=has_oncology,
         has_surgery=has_surgery,
         has_inpatient=has_inpatient,
@@ -354,8 +459,27 @@ async def get_map_markers(
         func.bool_or(ClaimsVisit.has_inpatient).label('site_has_inpatient')
     ).outerjoin(ClaimsVisit)
     
+    # Join with provider table if provider filters are specified
+    if filters.specialty or filters.service_line or filters.provider_group or filters.min_provider_visits is not None:
+        query = query.join(
+            ClaimsProvider,
+            ClaimsVisit.provider_id == ClaimsProvider.id
+        )
+    
     # Apply basic filters
     query = apply_filters(query, filters, SiteOfService)
+    
+    # Apply provider filters if provider join was added
+    if filters.specialty or filters.service_line or filters.provider_group or filters.min_provider_visits is not None:
+        # Apply provider-specific filters
+        if filters.specialty:
+            query = query.filter(ClaimsProvider.specialty.in_(filters.specialty))
+        if filters.service_line:
+            query = query.filter(ClaimsProvider.service_line.in_(filters.service_line))
+        if filters.provider_group:
+            query = query.filter(ClaimsProvider.provider_group.in_(filters.provider_group))
+        if filters.min_provider_visits is not None:
+            query = query.filter(ClaimsProvider.total_visits >= filters.min_provider_visits)
     
     # Group by site
     query = query.group_by(
@@ -378,9 +502,13 @@ async def get_map_markers(
     if filters.has_inpatient:
         query = query.having(func.bool_or(ClaimsVisit.has_inpatient) == True)
     
-    # Apply visit count filter
-    if filters.min_visits:
-        query = query.having(func.sum(ClaimsVisit.visits) >= filters.min_visits)
+    # Apply visit count filter (using min_site_visits for map markers)
+    if filters.min_site_visits:
+        query = query.having(func.sum(ClaimsVisit.visits) >= filters.min_site_visits)
+    
+    # Apply minimum providers filter
+    if filters.min_providers:
+        query = query.having(func.count(distinct(ClaimsVisit.provider_id)) >= filters.min_providers)
     
     # Execute query
     results = query.all()
@@ -427,22 +555,43 @@ async def get_provider_groups(
     page: int = Query(1, ge=1, description="Page number"),
     per_page: int = Query(50, ge=1, le=200, description="Items per page"),
     geomarket: Optional[List[str]] = Query(None, description="Filter by geomarket"),
+    city: Optional[List[str]] = Query(None, description="Filter by city"),
+    county: Optional[List[str]] = Query(None, description="Filter by county"),
+    site_type: Optional[List[str]] = Query(None, description="Filter by site type"),
     specialty: Optional[List[str]] = Query(None, description="Filter by specialty"),
+    service_line: Optional[List[str]] = Query(None, description="Filter by service line"),
     min_providers: Optional[int] = Query(None, ge=1, description="Minimum provider count"),
-    min_visits: Optional[int] = Query(None, ge=0, description="Minimum total visits"),
+    min_group_visits: Optional[int] = Query(None, ge=0, description="Minimum total visits"),
+    min_group_sites: Optional[int] = Query(None, ge=1, description="Minimum sites per group"),
+    has_oncology: Optional[bool] = Query(None, description="Has oncology services"),
+    has_surgery: Optional[bool] = Query(None, description="Has surgical services"),
+    has_inpatient: Optional[bool] = Query(None, description="Has inpatient services"),
     search: Optional[str] = Query(None, description="Search by group name"),
     session: Session = Depends(db_session)
 ):
     """Get aggregated provider group data"""
     
-    # Base query
+    # Base query with site count aggregation
     query = session.query(
         ClaimsProvider.provider_group,
-        func.count(ClaimsProvider.id).label('provider_count'),
+        func.count(distinct(ClaimsProvider.id)).label('provider_count'),
         func.sum(ClaimsProvider.total_visits).label('total_visits'),
         func.array_agg(distinct(ClaimsProvider.specialty)).label('specialties'),
-        func.array_agg(distinct(ClaimsProvider.geomarket)).label('geomarkets')
-    ).filter(ClaimsProvider.provider_group.isnot(None))
+        func.array_agg(distinct(ClaimsProvider.geomarket)).label('geomarkets'),
+        func.count(distinct(ClaimsVisit.site_id)).label('site_count')
+    ).outerjoin(
+        ClaimsVisit,
+        ClaimsVisit.provider_id == ClaimsProvider.id
+    )
+    
+    # Join with sites if site filters are specified
+    if city or county or site_type or has_oncology is not None or has_surgery is not None or has_inpatient is not None:
+        query = query.join(
+            SiteOfService,
+            ClaimsVisit.site_id == SiteOfService.id
+        )
+    
+    query = query.filter(ClaimsProvider.provider_group.isnot(None))
     
     # Apply filters
     if geomarket:
@@ -451,18 +600,40 @@ async def get_provider_groups(
     if specialty:
         query = query.filter(ClaimsProvider.specialty.in_(specialty))
     
+    if service_line:
+        query = query.filter(ClaimsProvider.service_line.in_(service_line))
+    
     if search:
         query = query.filter(ClaimsProvider.provider_group.ilike(f"%{search}%"))
+    
+    # Apply site filters if site join was added
+    if city:
+        query = query.filter(SiteOfService.city.in_(city))
+    if county:
+        query = query.filter(SiteOfService.county.in_(county))
+    if site_type:
+        query = query.filter(SiteOfService.site_type.in_(site_type))
+    
+    # Apply service filters if needed
+    if has_oncology is not None:
+        query = query.filter(ClaimsVisit.has_oncology == has_oncology)
+    if has_surgery is not None:
+        query = query.filter(ClaimsVisit.has_surgery == has_surgery)
+    if has_inpatient is not None:
+        query = query.filter(ClaimsVisit.has_inpatient == has_inpatient)
     
     # Group by provider group
     query = query.group_by(ClaimsProvider.provider_group)
     
     # Apply aggregation filters
     if min_providers:
-        query = query.having(func.count(ClaimsProvider.id) >= min_providers)
+        query = query.having(func.count(distinct(ClaimsProvider.id)) >= min_providers)
     
-    if min_visits:
-        query = query.having(func.sum(ClaimsProvider.total_visits) >= min_visits)
+    if min_group_visits:
+        query = query.having(func.sum(ClaimsProvider.total_visits) >= min_group_visits)
+    
+    if min_group_sites:
+        query = query.having(func.count(distinct(ClaimsVisit.site_id)) >= min_group_sites)
     
     # Order by total visits
     query = query.order_by(func.sum(ClaimsProvider.total_visits).desc())
@@ -482,9 +653,10 @@ async def get_provider_groups(
             total_visits=int(total_visits or 0),
             specialties=[s for s in (specialties or []) if s],
             geomarkets=[g for g in (geomarkets or []) if g],
-            top_sites=[]  # TODO: Add top sites query
+            top_sites=[],  # TODO: Add top sites query
+            site_count=int(site_count)
         )
-        for (group_name, provider_count, total_visits, specialties, geomarkets) in results
+        for (group_name, provider_count, total_visits, specialties, geomarkets, site_count) in results
     ]
     
     meta = PaginationMeta(
@@ -727,7 +899,13 @@ async def get_site_providers(
             provider_group=provider.provider_group,
             geomarket=provider.geomarket,
             city=site.city,  # Use site's city
-            total_visits=visit_count
+            total_visits=visit_count,
+            # Additional detail fields
+            top_site_name=site.name,  # This is the current site for quick view
+            top_site_id=site.id,
+            top_payer=provider.top_payer,
+            top_payer_percent=provider.top_payer_percent,
+            top_referring_org=provider.top_referring_org
         ))
     
     meta = PaginationMeta(
@@ -874,3 +1052,44 @@ async def get_site_quick_view(
     )
     
     return SitesOfServiceResponse(items=[item], meta=meta, statistics=statistics)
+
+
+@router.get("/providers/{provider_id}/sites", response_model=List[Dict[str, str]])
+async def get_provider_sites(
+    provider_id: UUID,
+    session: Session = Depends(db_session)
+):
+    """Get all sites where a specific provider operates"""
+    sites = session.query(
+        SiteOfService.id,
+        SiteOfService.name
+    ).join(
+        ClaimsVisit,
+        SiteOfService.id == ClaimsVisit.site_id
+    ).filter(
+        ClaimsVisit.provider_id == provider_id
+    ).distinct().all()
+    
+    return [{"id": str(site.id), "name": site.name} for site in sites]
+
+
+@router.get("/provider-groups/{group_name}/sites", response_model=List[Dict[str, str]])
+async def get_provider_group_sites(
+    group_name: str,
+    session: Session = Depends(db_session)
+):
+    """Get all sites where providers from a specific group operate"""
+    sites = session.query(
+        SiteOfService.id,
+        SiteOfService.name
+    ).join(
+        ClaimsVisit,
+        SiteOfService.id == ClaimsVisit.site_id
+    ).join(
+        ClaimsProvider,
+        ClaimsVisit.provider_id == ClaimsProvider.id
+    ).filter(
+        ClaimsProvider.provider_group == group_name
+    ).distinct().all()
+    
+    return [{"id": str(site.id), "name": site.name} for site in sites]

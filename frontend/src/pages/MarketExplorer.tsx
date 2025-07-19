@@ -25,6 +25,8 @@ const MarketExplorer: React.FC = () => {
   const [providerGroups, setProviderGroups] = useState<ProviderGroup[]>([]);
   const [statistics, setStatistics] = useState<ClaimsStatistics | null>(null);
   const [selectedId, setSelectedId] = useState<string | undefined>();
+  const [highlightedSiteIds, setHighlightedSiteIds] = useState<string[]>([]);
+  const [highlightMode, setHighlightMode] = useState<'single' | 'multiple' | 'none'>('none');
   const [filters, setFilters] = useState<ClaimsFilters>({});
   const [viewMode, setViewMode] = useState<ViewMode>('sites');
   const [showFilters, setShowFilters] = useState(true);
@@ -131,22 +133,75 @@ const MarketExplorer: React.FC = () => {
   const handleFiltersChange = useCallback((newFilters: ClaimsFilters) => {
     setFilters(newFilters);
     setSelectedId(undefined);
+    setHighlightedSiteIds([]);
+    setHighlightMode('none');
   }, []);
 
   const handleViewModeChange = useCallback((newViewMode: ViewMode) => {
     setViewMode(newViewMode);
     setSelectedId(undefined);
+    setHighlightedSiteIds([]);
+    setHighlightMode('none');
   }, []);
 
-  const handleItemSelect = useCallback((itemId: string) => {
+  const handleItemSelect = useCallback(async (itemId: string) => {
+    // Handle deselection
+    if (!itemId || itemId === '') {
+      setSelectedId(undefined);
+      setHighlightedSiteIds([]);
+      setHighlightMode('none');
+      return;
+    }
+    
     setSelectedId(itemId);
     
-    // Find the marker for this item and center the map on it
-    const marker = mapMarkers.find(m => m.id === itemId);
-    if (marker) {
-      // Map centering is handled in the ClaimsMap component
+    // Don't update highlighting if we're in Quick View mode
+    // Quick View takes precedence over item selection
+    if (quickViewSiteId) {
+      console.log('In Quick View mode, maintaining Quick View highlighting');
+      return;
     }
-  }, [mapMarkers]);
+    
+    // Update highlighting based on view mode
+    try {
+      switch (viewMode) {
+        case 'sites':
+          // For sites mode, highlight only the selected site
+          setHighlightedSiteIds([itemId]);
+          setHighlightMode('single');
+          break;
+          
+        case 'providers':
+          // For providers mode, fetch all sites where this provider operates
+          const providerSites = await claimsService.getProviderSites(itemId);
+          const siteIds = providerSites.map(site => site.id);
+          setHighlightedSiteIds(siteIds);
+          setHighlightMode(siteIds.length > 1 ? 'multiple' : 'single');
+          break;
+          
+        case 'groups':
+          // For groups mode, fetch all sites where this group operates
+          const groupSites = await claimsService.getProviderGroupSites(itemId);
+          const groupSiteIds = groupSites.map(site => site.id);
+          setHighlightedSiteIds(groupSiteIds);
+          setHighlightMode('multiple');
+          break;
+      }
+    } catch (error) {
+      console.error('Error fetching sites for highlighting:', error);
+      // Fall back to no highlighting on error
+      setHighlightedSiteIds([]);
+      setHighlightMode('none');
+    }
+    
+    // Find the marker for this item and center the map on it (for sites mode)
+    if (viewMode === 'sites') {
+      const marker = mapMarkers.find(m => m.id === itemId);
+      if (marker) {
+        // Map centering is handled in the ClaimsMap component
+      }
+    }
+  }, [mapMarkers, viewMode, quickViewSiteId]);
 
   const handleItemDoubleClick = useCallback((itemId: string) => {
     // TODO: Open detail window for the selected item
@@ -163,6 +218,9 @@ const MarketExplorer: React.FC = () => {
     setQuickViewSiteId(marker.id);
     setQuickViewSiteName(marker.name);
     // Quick view acts as a filter, not a view mode change
+    // In quick view mode, highlight only the quick view site
+    setHighlightedSiteIds([marker.id]);
+    setHighlightMode('single');
   };
   
   const handleFullDetails = (marker: MapMarker) => {
@@ -174,6 +232,9 @@ const MarketExplorer: React.FC = () => {
   const clearQuickView = () => {
     setQuickViewSiteId(null);
     setQuickViewSiteName(null);
+    // Clear highlighting when exiting quick view
+    setHighlightedSiteIds([]);
+    setHighlightMode('none');
   };
 
   const refreshData = useCallback(() => {
@@ -238,6 +299,8 @@ const MarketExplorer: React.FC = () => {
           <ClaimsMapSimple
             markers={mapMarkers}
             selectedSiteId={selectedId}
+            highlightedSiteIds={highlightedSiteIds}
+            highlightMode={highlightMode}
             onMarkerClick={handleMarkerClick}
             onQuickView={handleQuickView}
             onFullDetails={handleFullDetails}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import './ClaimsMapSimple.css';
 import L from 'leaflet';
 import { MapMarker } from '../types/claims';
 
@@ -15,6 +16,8 @@ L.Icon.Default.mergeOptions({
 interface ClaimsMapSimpleProps {
   markers: MapMarker[];
   selectedSiteId?: string;
+  highlightedSiteIds?: string[];
+  highlightMode?: 'single' | 'multiple' | 'none';
   onMarkerClick: (marker: MapMarker) => void;
   onQuickView?: (marker: MapMarker) => void;
   onFullDetails?: (marker: MapMarker) => void;
@@ -24,12 +27,23 @@ interface ClaimsMapSimpleProps {
 const ClaimsMapSimple: React.FC<ClaimsMapSimpleProps> = ({
   markers,
   selectedSiteId,
+  highlightedSiteIds = [],
+  highlightMode = 'none',
   onMarkerClick,
   onQuickView,
   onFullDetails,
   loading = false,
 }) => {
-  console.log('ClaimsMapSimple rendering with', markers.length, 'markers');
+  // Debug logging (commented out for production)
+  // console.log('ClaimsMapSimple rendering with', markers.length, 'markers');
+  // console.log('Highlighted sites:', highlightedSiteIds);
+  // console.log('Highlight mode:', highlightMode);
+  
+  // Count how many markers will be highlighted vs inactive
+  // if (highlightMode !== 'none' && highlightedSiteIds.length > 0) {
+  //   const highlightedCount = markers.filter(m => highlightedSiteIds.includes(m.id)).length;
+  //   console.log(`Highlighting ${highlightedCount} markers, graying out ${markers.length - highlightedCount} markers`);
+  // }
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -61,8 +75,15 @@ const ClaimsMapSimple: React.FC<ClaimsMapSimpleProps> = ({
             return 4;
           };
           
+          // Check if marker should be highlighted
+          const isHighlighted = highlightMode !== 'none' && highlightedSiteIds.includes(marker.id);
+          const isInactive = highlightMode !== 'none' && highlightedSiteIds.length > 0 && !isHighlighted;
+          
           // Get color based on site type
           const getColor = (siteType?: string) => {
+            // If inactive (not highlighted when others are), return grey
+            if (isInactive) return '#cccccc';  // Lighter grey for better contrast
+            
             if (!siteType) return '#2ecc71'; // Default green
             const type = siteType.toLowerCase();
             if (type.includes('hospital')) return '#e74c3c'; // Red
@@ -73,16 +94,25 @@ const ClaimsMapSimple: React.FC<ClaimsMapSimpleProps> = ({
             return '#2ecc71'; // Default green
           };
           
+          // Debug logging (commented out)
+          // if (highlightedSiteIds.length > 0 && marker.id === highlightedSiteIds[0]) {
+          //   console.log('First highlighted marker:', marker.name, marker.id);
+          //   console.log('isHighlighted:', isHighlighted, 'isInactive:', isInactive);
+          //   console.log('Color will be:', getColor(marker.site_type));
+          // }
+          
           return (
             <CircleMarker
               key={marker.id}
               center={[marker.latitude, marker.longitude]}
-              radius={getRadius(marker.total_visits)}
-              fillColor={getColor(marker.site_type)}
-              color='#fff'
-              weight={2}
-              opacity={1}
-              fillOpacity={0.8}
+              pathOptions={{
+                radius: getRadius(marker.total_visits),
+                fillColor: getColor(marker.site_type),
+                color: isHighlighted ? '#fff' : (isInactive ? '#999' : '#fff'),
+                weight: isHighlighted ? 3 : 2,
+                opacity: isHighlighted ? 1 : (isInactive ? 0.3 : 1),
+                fillOpacity: isHighlighted ? 0.9 : (isInactive ? 0.2 : 0.8)
+              }}
               eventHandlers={{
                 click: () => {
                   console.log('Marker clicked:', marker);

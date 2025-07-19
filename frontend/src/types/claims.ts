@@ -34,6 +34,12 @@ export interface ClaimsProviderListItem {
   geomarket?: string;
   city?: string;
   total_visits: number;
+  // Additional detail fields for expandable card
+  top_site_name?: string;
+  top_site_id?: string;
+  top_payer?: string;
+  top_payer_percent?: number;
+  top_referring_org?: string;
 }
 
 export interface SiteOfService {
@@ -82,6 +88,7 @@ export interface ProviderGroup {
   specialties: string[];
   geomarkets: string[];
   top_sites: string[];
+  site_count?: number;
 }
 
 // Map-related types
@@ -123,12 +130,18 @@ export interface ClaimsFilters {
   
   // Provider filters
   specialty?: string[];
+  service_line?: string[];
   provider_group?: string[];
-  min_visits?: number;
-  max_visits?: number;
+  min_provider_visits?: number;
+  
+  // Provider group filters
+  min_group_visits?: number;
+  min_group_sites?: number;
   
   // Site filters
   site_type?: string[];
+  min_site_visits?: number;
+  min_providers?: number;
   has_coordinates?: boolean;
   
   // Service filters
@@ -138,6 +151,10 @@ export interface ClaimsFilters {
   
   // Search
   search?: string;
+  
+  // Legacy (for backwards compatibility)
+  min_visits?: number;
+  max_visits?: number;
 }
 
 export interface FilterOptions {

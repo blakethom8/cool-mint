@@ -50,6 +50,12 @@ class ClaimsProviderListItem(BaseModel):
     provider_group: Optional[str] = Field(None, description="Provider group")
     geomarket: Optional[str] = Field(None, description="Geographic market")
     total_visits: int = Field(0, description="Total visits")
+    # Additional fields for expandable card view
+    top_site_name: Optional[str] = Field(None, description="Primary site of service name")
+    top_site_id: Optional[UUID] = Field(None, description="Primary site of service ID")
+    top_payer: Optional[str] = Field(None, description="Primary payer")
+    top_payer_percent: Optional[float] = Field(None, description="Percentage from top payer")
+    top_referring_org: Optional[str] = Field(None, description="Top referring organization")
 
 
 class SiteOfServiceBase(BaseModel):
@@ -134,6 +140,7 @@ class ProviderGroup(BaseModel):
     specialties: List[str] = Field([], description="Specialties represented in group")
     geomarkets: List[str] = Field([], description="Geographic markets served")
     top_sites: List[str] = Field([], description="Top sites by volume")
+    site_count: Optional[int] = Field(0, description="Number of sites where group has providers")
 
 
 # Filter schemas
@@ -150,12 +157,18 @@ class ClaimsFilters(BaseModel):
     
     # Provider filters
     specialty: Optional[List[str]] = Field(None, description="Provider specialties")
+    service_line: Optional[List[str]] = Field(None, description="Service lines")
     provider_group: Optional[List[str]] = Field(None, description="Provider groups")
-    min_visits: Optional[int] = Field(None, description="Minimum visit count")
-    max_visits: Optional[int] = Field(None, description="Maximum visit count")
+    min_provider_visits: Optional[int] = Field(None, description="Minimum provider visit count")
+    
+    # Provider group filters
+    min_group_visits: Optional[int] = Field(None, description="Minimum group visit count")
+    min_group_sites: Optional[int] = Field(None, description="Minimum sites per group")
     
     # Site filters
     site_type: Optional[List[str]] = Field(None, description="Site types")
+    min_site_visits: Optional[int] = Field(None, description="Minimum site visit count")
+    min_providers: Optional[int] = Field(None, description="Minimum number of providers at site")
     has_coordinates: Optional[bool] = Field(None, description="Only sites with lat/lng")
     
     # Service filters

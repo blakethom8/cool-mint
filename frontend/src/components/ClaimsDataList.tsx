@@ -6,6 +6,7 @@ import {
   ProviderGroup,
   ClaimsStatistics 
 } from '../types/claims';
+import ExpandableProviderCard from './ExpandableProviderCard';
 import './ClaimsDataList.css';
 
 interface ClaimsDataListProps {
@@ -38,6 +39,7 @@ const ClaimsDataList: React.FC<ClaimsDataListProps> = ({
 }) => {
   const [sortBy, setSortBy] = useState<SortOption>('visits');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [expandedProviderId, setExpandedProviderId] = useState<string | null>(null);
 
   // Get the current data based on view mode
   const currentData = useMemo(() => {
@@ -93,7 +95,12 @@ const ClaimsDataList: React.FC<ClaimsDataListProps> = ({
 
 
   const handleItemClick = (id: string) => {
-    onItemSelect(id);
+    // If clicking the same item that's already selected, deselect it
+    if (selectedId === id) {
+      onItemSelect('');  // Pass empty string to clear selection
+    } else {
+      onItemSelect(id);
+    }
   };
 
   const handleItemDoubleClick = (id: string) => {
@@ -133,39 +140,39 @@ const ClaimsDataList: React.FC<ClaimsDataListProps> = ({
     </div>
   );
 
+  const handleProviderExpand = (providerId: string) => {
+    setExpandedProviderId(expandedProviderId === providerId ? null : providerId);
+  };
+
+  const handleLeadClassification = (providerId: string, classification: string) => {
+    console.log('Lead classification:', providerId, classification);
+    // TODO: Implement API call to save classification
+  };
+
+  const handleAddToLeads = (providerId: string) => {
+    console.log('Add to leads:', providerId);
+    // TODO: Implement API call to add to leads
+  };
+
+  const handleViewDetails = (providerId: string) => {
+    console.log('View details:', providerId);
+    if (onItemDoubleClick) {
+      onItemDoubleClick(providerId);
+    }
+  };
+
   const renderProviderItem = (provider: ClaimsProviderListItem) => (
-    <div
+    <ExpandableProviderCard
       key={provider.id}
-      className={`data-list-item ${selectedId === provider.id ? 'selected' : ''}`}
-      onClick={() => handleItemClick(provider.id)}
-      onDoubleClick={() => handleItemDoubleClick?.(provider.id)}
-    >
-      <div className="item-header">
-        <h4 className="item-name">{provider.name}</h4>
-        <div className="item-stats">
-          <span className="stat-visits">{provider.total_visits?.toLocaleString() || 0}</span>
-          <span className="stat-label">visits</span>
-        </div>
-      </div>
-      
-      <div className="item-details">
-        {provider.specialty && (
-          <span className="specialty-badge">{provider.specialty}</span>
-        )}
-        {provider.npi && (
-          <span className="npi">NPI: {provider.npi}</span>
-        )}
-      </div>
-      
-      <div className="item-footer">
-        {provider.provider_group && (
-          <span className="provider-group">{provider.provider_group}</span>
-        )}
-        {provider.city && (
-          <span className="location">• {provider.city}</span>
-        )}
-      </div>
-    </div>
+      provider={provider}
+      isSelected={selectedId === provider.id}
+      isExpanded={expandedProviderId === provider.id}
+      onSelect={handleItemClick}
+      onExpand={handleProviderExpand}
+      onLeadClassification={handleLeadClassification}
+      onAddToLeads={handleAddToLeads}
+      onViewDetails={handleViewDetails}
+    />
   );
 
   const renderProviderGroupItem = (group: ProviderGroup) => (
@@ -322,7 +329,15 @@ const ClaimsDataList: React.FC<ClaimsDataListProps> = ({
             <div className="empty-message">{getEmptyMessage()}</div>
           </div>
         ) : (
-          <div className="data-items">
+          <div 
+            className="data-items"
+            onClick={(e) => {
+              // Clear selection if clicking on empty space
+              if (e.target === e.currentTarget) {
+                onItemSelect('');
+              }
+            }}
+          >
             {sortedData.map(renderItem)}
           </div>
         )}

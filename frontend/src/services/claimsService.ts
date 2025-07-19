@@ -182,6 +182,7 @@ class ClaimsService {
     if (filters.city?.length) params.city = filters.city;
     if (filters.county?.length) params.county = filters.county;
     if (filters.specialty?.length) params.specialty = filters.specialty;
+    if (filters.service_line?.length) params.service_line = filters.service_line;
     if (filters.provider_group?.length) params.provider_group = filters.provider_group;
     if (filters.site_type?.length) params.site_type = filters.site_type;
 
@@ -190,6 +191,12 @@ class ClaimsService {
     if (filters.south !== undefined) params.south = filters.south;
     if (filters.east !== undefined) params.east = filters.east;
     if (filters.west !== undefined) params.west = filters.west;
+    if (filters.min_provider_visits !== undefined) params.min_provider_visits = filters.min_provider_visits;
+    if (filters.min_group_visits !== undefined) params.min_group_visits = filters.min_group_visits;
+    if (filters.min_group_sites !== undefined) params.min_group_sites = filters.min_group_sites;
+    if (filters.min_site_visits !== undefined) params.min_site_visits = filters.min_site_visits;
+    
+    // Legacy filters for backwards compatibility
     if (filters.min_visits !== undefined) params.min_visits = filters.min_visits;
     if (filters.max_visits !== undefined) params.max_visits = filters.max_visits;
 
@@ -235,6 +242,16 @@ class ClaimsService {
       key.startsWith(`${endpoint}?`)
     );
     keysToDelete.forEach(key => this.cache.delete(key));
+  }
+
+  // Get sites where a provider operates
+  async getProviderSites(providerId: string): Promise<{ id: string; name: string }[]> {
+    return this.fetchWithCache<{ id: string; name: string }[]>(`/providers/${providerId}/sites`);
+  }
+
+  // Get sites where a provider group operates
+  async getProviderGroupSites(groupName: string): Promise<{ id: string; name: string }[]> {
+    return this.fetchWithCache<{ id: string; name: string }[]>(`/provider-groups/${encodeURIComponent(groupName)}/sites`);
   }
 
   // Helper method to format numbers

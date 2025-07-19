@@ -209,7 +209,7 @@ cd frontend && npm run dev
 
 ### Build July 18
 
- ⎿  ☒ Create comprehensive product specification for Market Explorer using claims data
+  ⎿  ☒ Create comprehensive product specification for Market Explorer using claims data
      ☒ Design and implement PostgreSQL database schema for claims data
      ☒ Create data import pipeline for CSV files to PostgreSQL
      ☒ Generate unique IDs for Sites of Service
@@ -220,11 +220,38 @@ cd frontend && npm run dev
      ☒ Rename sites_of_service table to claims_sites_of_service for consistency
      ☒ Adapt frontend ContactExplorer for claims data
      ☒ Implement view toggle (Sites/Providers/Groups) in right panel
+     ☒ Enhance popup with Quick View and Full Details buttons
+     ☒ Implement Quick View mode in right panel
+     ☒ Add site details API endpoints
+     ☒ Remove map stats overlay
+     ☒ Fix filters to show all options regardless of view mode
+     ☒ Refactor Quick View to be a filter layer instead of view mode override
+     ☒ Fix Quick View API endpoint UUID issue and PaginationMeta fields
+     ☒ Add ClaimsStatistics schema and fix API response models
+     ☒ Implement Quick View API endpoint for provider groups
+     ☒ Implement Quick View display for Sites mode with dedicated API
+     ☒ Add service_line to filter options and provider group aggregations
+     ☒ Create dropdown multi-select component for filters
+     ☒ Implement searchable provider group filter
+     ☒ Reorganize filter sections: Sites → Providers → Groups
+     ☒ Add provider group sites count filter
+     ☒ Enable cross-filtering: map-markers with provider filters
+     ☒ Enable cross-filtering: sites endpoint with provider filters
+     ☒ Enable cross-filtering: providers endpoint with site filters
+     ☒ Enable cross-filtering: provider-groups with service_line and site filters
+     ☒ Add min_providers filter to sites and map endpoints
+     ☒ Add Minimum Providers filter to frontend UI
+     ☒ Update ClaimsMapSimple for visual highlighting
+     ☒ Create site mapping endpoints for providers and groups
+     ☒ Update MarketExplorer state for highlight management
+     ☒ Add provider detail fields to backend schema
+     ☒ Create compact ExpandableProviderCard component
+     ☒ Update ClaimsDataList for expandable cards
+     ☒ Debug and fix map highlighting with Quick View precedence
      ☒ Create visit volume visualization on markers
-     ☐ Enhance popup with Quick View and Full Details buttons
-     ☐ Implement Quick View mode in right panel
+     ☐ Implement lead classification API endpoints
+     ☐ Update filter logic to apply filters to providers when showing site's providers
      ☐ Create SiteDetailsModal component with tabs
-     ☐ Add site details API endpoints
      ☐ Create detail window pop-out functionality
      ☐ Implement notes system with JSON storage
      ☐ Add provider and provider group list components

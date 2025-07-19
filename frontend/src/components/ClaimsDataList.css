@@ -1,0 +1,382 @@
+.claims-data-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+}
+
+.list-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fa;
+  flex-shrink: 0;
+}
+
+.header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.header-title h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.result-count {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.list-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.sort-select {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: white;
+  font-size: 0.875rem;
+  color: #495057;
+  min-width: 200px;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.list-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+.data-items {
+  padding: 0;
+}
+
+.data-list-item {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.data-list-item:hover {
+  background: #f8f9fa;
+}
+
+.data-list-item.selected {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+}
+
+.data-list-item:last-child {
+  border-bottom: none;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.item-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.3;
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.item-stats {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.stat-visits {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2196f3;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.item-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.site-type-badge,
+.specialty-badge,
+.provider-count-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.site-type-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.specialty-badge {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.provider-count-badge {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.location,
+.geomarket,
+.npi,
+.specialties,
+.geomarkets {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.npi {
+  font-family: 'Courier New', monospace;
+  background: #f8f9fa;
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+}
+
+.item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.provider-count,
+.provider-group {
+  font-weight: 500;
+}
+
+.provider-group {
+  color: #495057;
+}
+
+/* Loading state */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-message {
+  font-size: 1rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* List footer */
+.list-footer {
+  border-top: 1px solid #e9ecef;
+  background: #f8f9fa;
+  padding: 1rem;
+  flex-shrink: 0;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.summary-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .list-header {
+    padding: 0.75rem;
+  }
+  
+  .header-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .list-controls {
+    width: 100%;
+  }
+  
+  .sort-select {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .data-list-item {
+    padding: 0.75rem;
+  }
+  
+  .item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .item-stats {
+    align-self: flex-end;
+  }
+  
+  .item-details {
+    gap: 0.375rem;
+  }
+  
+  .item-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .summary-stats {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .summary-item {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* Scrollbar styling */
+.list-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.list-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.list-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Focus states for accessibility */
+.data-list-item:focus {
+  outline: 2px solid #007bff;
+  outline-offset: -2px;
+}
+
+.sort-select:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .list-header {
+    border-bottom: 2px solid #000;
+  }
+  
+  .data-list-item {
+    border-bottom: 1px solid #000;
+  }
+  
+  .data-list-item.selected {
+    border-left: 4px solid #000;
+    background: #f0f0f0;
+  }
+  
+  .sort-select {
+    border: 2px solid #000;
+  }
+  
+  .site-type-badge,
+  .specialty-badge,
+  .provider-count-badge {
+    border: 1px solid #000;
+  }
+}

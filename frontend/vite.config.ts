@@ -18,6 +18,10 @@ export default defineConfig({
       '/api/llm': {
         target: 'http://localhost:8080',
         changeOrigin: true,
+      },
+      '/api/claims': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       }
     }
   }

@@ -1,6 +1,6 @@
 # Cool Mint Activity Selector - Development Log
 
-## Completed Features 
+## Completed Features  # July 9 - Midday
 
 ### Backend API Development
 - [x] **Create API router for activities endpoints** - Set up FastAPI router structure in `/app/api/activities.py`
@@ -205,3 +205,33 @@ cd frontend && npm run dev
 - System is production-ready for LLM integration
 
 **Next Steps**: Ready for LLM integration to process selected activities and generate sales insights.
+
+
+### Build July 18
+
+ ⎿  ☒ Create comprehensive product specification for Market Explorer using claims data
+     ☒ Design and implement PostgreSQL database schema for claims data
+     ☒ Create data import pipeline for CSV files to PostgreSQL
+     ☒ Generate unique IDs for Sites of Service
+     ☒ Implement backend API endpoints for sites, providers, and visits
+     ☒ Create Pydantic schemas for claims data models
+     ☒ Implement map marker aggregation for sites of service
+     ☒ Fix claims_visits data import with comma-separated numbers
+     ☒ Rename sites_of_service table to claims_sites_of_service for consistency
+     ☒ Adapt frontend ContactExplorer for claims data
+     ☒ Implement view toggle (Sites/Providers/Groups) in right panel
+     ☒ Create visit volume visualization on markers
+     ☐ Enhance popup with Quick View and Full Details buttons
+     ☐ Implement Quick View mode in right panel
+     ☐ Create SiteDetailsModal component with tabs
+     ☐ Add site details API endpoints
+     ☐ Create detail window pop-out functionality
+     ☐ Implement notes system with JSON storage
+     ☐ Add provider and provider group list components
+     ☐ Implement advanced filtering for claims data
+     ☐ Add search functionality across all entities
+     ☐ Implement lead classification system
+     ☐ Add Google search and LLM summarization integration
+     ☐ Create export functionality for filtered data
+     ☐ Implement saved searches feature
+     ☐ Add performance optimizations for large datasets

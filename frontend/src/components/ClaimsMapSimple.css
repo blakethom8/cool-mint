@@ -63,19 +63,24 @@
 }
 
 /* Marker state classes */
+.marker-highlighted {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  z-index: 1000 !important;
+}
+
 .marker-highlighted path {
-  stroke: #fff !important;
-  stroke-width: 3 !important;
+  stroke: #333 !important;
+  stroke-width: 4 !important;
   stroke-opacity: 1 !important;
-  fill-opacity: 0.9 !important;
+  fill-opacity: 0.95 !important;
 }
 
 .marker-inactive path {
-  stroke: #999 !important;
-  stroke-width: 2 !important;
-  stroke-opacity: 0.3 !important;
-  fill: #cccccc !important;
-  fill-opacity: 0.2 !important;
+  stroke: #ccc !important;
+  stroke-width: 1 !important;
+  stroke-opacity: 0.15 !important;
+  fill: #e0e0e0 !important;
+  fill-opacity: 0.1 !important;
 }
 
 /* Disable zoom animations on the map */

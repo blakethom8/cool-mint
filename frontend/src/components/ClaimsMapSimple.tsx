@@ -50,9 +50,11 @@ const createPathOptions = (
   isHighlighted: boolean,
   isInactive: boolean
 ) => {
+  const baseRadius = getRadius(marker.total_visits);
+  
   const baseOptions = {
-    radius: getRadius(marker.total_visits),
-    fillColor: isInactive ? '#cccccc' : getSiteTypeColor(marker.site_type),
+    radius: baseRadius,
+    fillColor: isInactive ? '#e0e0e0' : getSiteTypeColor(marker.site_type),
     color: '#fff',
     weight: 2,
     opacity: 1,
@@ -62,20 +64,22 @@ const createPathOptions = (
   if (isHighlighted) {
     return {
       ...baseOptions,
-      color: '#fff',
-      weight: 3,
+      radius: baseRadius + 2, // Make highlighted markers slightly larger
+      fillColor: getSiteTypeColor(marker.site_type), // Keep original color
+      color: '#333', // Dark border for contrast
+      weight: 4, // Thicker border
       opacity: 1,
-      fillOpacity: 0.9,
+      fillOpacity: 0.95,
     };
   }
 
   if (isInactive) {
     return {
       ...baseOptions,
-      color: '#999',
-      weight: 2,
-      opacity: 0.3,
-      fillOpacity: 0.2,
+      color: '#ccc',
+      weight: 1, // Thinner border
+      opacity: 0.15, // Very low opacity
+      fillOpacity: 0.1, // Almost transparent
     };
   }
 
@@ -119,12 +123,19 @@ const MemoizedCircleMarker = React.memo<{
     }
   }, [marker, onFullDetails]);
 
+  const className = isHighlighted 
+    ? 'marker-highlighted' 
+    : isInactive 
+    ? 'marker-inactive' 
+    : 'marker-normal';
+
   return (
     <CircleMarker
       key={marker.id}
       center={[marker.latitude, marker.longitude]}
       pathOptions={pathOptions}
       eventHandlers={{ click: handleClick }}
+      className={className}
     >
       <Popup>
         <div style={{ minWidth: '250px' }}>
@@ -209,15 +220,26 @@ const ClaimsMapSimple: React.FC<ClaimsMapSimpleProps> = ({
     [highlightedSiteIds]
   );
 
-  // Memoize the marker highlight states
+  // Memoize the marker highlight states and sort for z-index
   const markerStates = useMemo(() => {
     const hasHighlights = highlightMode !== 'none' && highlightedSiteIds.length > 0;
     
-    return markers.map(marker => ({
+    const states = markers.map(marker => ({
       marker,
       isHighlighted: hasHighlights && highlightedSet.has(marker.id),
       isInactive: hasHighlights && !highlightedSet.has(marker.id),
     }));
+    
+    // Sort so highlighted markers render last (on top)
+    if (hasHighlights) {
+      states.sort((a, b) => {
+        if (a.isHighlighted && !b.isHighlighted) return 1;
+        if (!a.isHighlighted && b.isHighlighted) return -1;
+        return 0;
+      });
+    }
+    
+    return states;
   }, [markers, highlightMode, highlightedSet]);
 
   return (

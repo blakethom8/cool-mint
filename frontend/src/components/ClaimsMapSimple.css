@@ -3,9 +3,17 @@
   font-family: inherit;
 }
 
-/* Smooth transitions for marker highlighting */
+/* IMPORTANT: No transitions on markers to prevent bouncing */
 .leaflet-interactive {
-  transition: all 0.3s ease-in-out;
+  transition: none !important;
+}
+
+/* Disable all marker animations */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-interactive path {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* Loading overlay */
@@ -52,4 +60,25 @@
 .leaflet-popup-content p strong {
   font-weight: 600;
   color: #2c3e50;
+}
+
+/* Marker state classes */
+.marker-highlighted path {
+  stroke: #fff !important;
+  stroke-width: 3 !important;
+  stroke-opacity: 1 !important;
+  fill-opacity: 0.9 !important;
+}
+
+.marker-inactive path {
+  stroke: #999 !important;
+  stroke-width: 2 !important;
+  stroke-opacity: 0.3 !important;
+  fill: #cccccc !important;
+  fill-opacity: 0.2 !important;
+}
+
+/* Disable zoom animations on the map */
+.leaflet-zoom-anim .leaflet-zoom-animated {
+  transition-duration: 0s !important;
 }

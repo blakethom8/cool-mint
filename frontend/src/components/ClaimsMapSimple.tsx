@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './ClaimsMapSimple.css';
@@ -24,6 +24,175 @@ interface ClaimsMapSimpleProps {
   loading?: boolean;
 }
 
+// Static helper functions to prevent recreation
+const getRadius = (visits: number): number => {
+  if (visits >= 10000) return 12;
+  if (visits >= 5000) return 10;
+  if (visits >= 1000) return 8;
+  if (visits >= 500) return 6;
+  return 4;
+};
+
+const getSiteTypeColor = (siteType?: string): string => {
+  if (!siteType) return '#2ecc71';
+  const type = siteType.toLowerCase();
+  if (type.includes('hospital')) return '#e74c3c';
+  if (type.includes('clinic')) return '#3498db';
+  if (type.includes('surgery') || type.includes('surgical')) return '#f39c12';
+  if (type.includes('imaging') || type.includes('radiology')) return '#9b59b6';
+  if (type.includes('lab') || type.includes('laboratory')) return '#1abc9c';
+  return '#2ecc71';
+};
+
+// Create stable path options configurations
+const createPathOptions = (
+  marker: MapMarker,
+  isHighlighted: boolean,
+  isInactive: boolean
+) => {
+  const baseOptions = {
+    radius: getRadius(marker.total_visits),
+    fillColor: isInactive ? '#cccccc' : getSiteTypeColor(marker.site_type),
+    color: '#fff',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.8,
+  };
+
+  if (isHighlighted) {
+    return {
+      ...baseOptions,
+      color: '#fff',
+      weight: 3,
+      opacity: 1,
+      fillOpacity: 0.9,
+    };
+  }
+
+  if (isInactive) {
+    return {
+      ...baseOptions,
+      color: '#999',
+      weight: 2,
+      opacity: 0.3,
+      fillOpacity: 0.2,
+    };
+  }
+
+  return baseOptions;
+};
+
+// Memoized marker component to prevent unnecessary re-renders
+const MemoizedCircleMarker = React.memo<{
+  marker: MapMarker;
+  isHighlighted: boolean;
+  isInactive: boolean;
+  onMarkerClick: (marker: MapMarker) => void;
+  onQuickView?: (marker: MapMarker) => void;
+  onFullDetails?: (marker: MapMarker) => void;
+}>(({ marker, isHighlighted, isInactive, onMarkerClick, onQuickView, onFullDetails }) => {
+  // Memoize path options to keep them stable
+  const pathOptions = useMemo(
+    () => createPathOptions(marker, isHighlighted, isInactive),
+    [marker.id, marker.total_visits, marker.site_type, isHighlighted, isInactive]
+  );
+
+  // Stable event handler
+  const handleClick = useCallback(() => {
+    console.log('Marker clicked:', marker);
+    onMarkerClick(marker);
+  }, [marker, onMarkerClick]);
+
+  const handleQuickView = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('Quick View clicked for:', marker.name);
+    if (onQuickView) {
+      onQuickView(marker);
+    }
+  }, [marker, onQuickView]);
+
+  const handleFullDetails = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('Full Details clicked for:', marker.name);
+    if (onFullDetails) {
+      onFullDetails(marker);
+    }
+  }, [marker, onFullDetails]);
+
+  return (
+    <CircleMarker
+      key={marker.id}
+      center={[marker.latitude, marker.longitude]}
+      pathOptions={pathOptions}
+      eventHandlers={{ click: handleClick }}
+    >
+      <Popup>
+        <div style={{ minWidth: '250px' }}>
+          <h4 style={{ margin: '0 0 10px 0', borderBottom: '1px solid #e0e0e0', paddingBottom: '8px' }}>
+            {marker.name}
+          </h4>
+          
+          <div style={{ marginBottom: '12px' }}>
+            <p style={{ margin: '4px 0' }}><strong>Type:</strong> {marker.site_type || 'Unknown'}</p>
+            <p style={{ margin: '4px 0' }}><strong>Visits:</strong> {marker.total_visits.toLocaleString()}</p>
+            <p style={{ margin: '4px 0' }}><strong>Providers:</strong> {marker.provider_count}</p>
+            {marker.city && <p style={{ margin: '4px 0' }}><strong>City:</strong> {marker.city}</p>}
+            {marker.geomarket && <p style={{ margin: '4px 0' }}><strong>Geomarket:</strong> {marker.geomarket}</p>}
+          </div>
+          
+          <div style={{ 
+            display: 'flex', 
+            gap: '8px', 
+            marginTop: '12px',
+            borderTop: '1px solid #e0e0e0',
+            paddingTop: '12px'
+          }}>
+            <button
+              onClick={handleQuickView}
+              style={{
+                flex: 1,
+                padding: '8px 12px',
+                backgroundColor: '#3498db',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2980b9'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3498db'}
+            >
+              Quick View
+            </button>
+            
+            <button
+              onClick={handleFullDetails}
+              style={{
+                flex: 1,
+                padding: '8px 12px',
+                backgroundColor: '#27ae60',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#229954'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#27ae60'}
+            >
+              Full Details
+            </button>
+          </div>
+        </div>
+      </Popup>
+    </CircleMarker>
+  );
+});
+
+MemoizedCircleMarker.displayName = 'MemoizedCircleMarker';
+
 const ClaimsMapSimple: React.FC<ClaimsMapSimpleProps> = ({
   markers,
   selectedSiteId,
@@ -34,16 +203,22 @@ const ClaimsMapSimple: React.FC<ClaimsMapSimpleProps> = ({
   onFullDetails,
   loading = false,
 }) => {
-  // Debug logging (commented out for production)
-  // console.log('ClaimsMapSimple rendering with', markers.length, 'markers');
-  // console.log('Highlighted sites:', highlightedSiteIds);
-  // console.log('Highlight mode:', highlightMode);
-  
-  // Count how many markers will be highlighted vs inactive
-  // if (highlightMode !== 'none' && highlightedSiteIds.length > 0) {
-  //   const highlightedCount = markers.filter(m => highlightedSiteIds.includes(m.id)).length;
-  //   console.log(`Highlighting ${highlightedCount} markers, graying out ${markers.length - highlightedCount} markers`);
-  // }
+  // Create a set for faster lookups
+  const highlightedSet = useMemo(
+    () => new Set(highlightedSiteIds),
+    [highlightedSiteIds]
+  );
+
+  // Memoize the marker highlight states
+  const markerStates = useMemo(() => {
+    const hasHighlights = highlightMode !== 'none' && highlightedSiteIds.length > 0;
+    
+    return markers.map(marker => ({
+      marker,
+      isHighlighted: hasHighlights && highlightedSet.has(marker.id),
+      isInactive: hasHighlights && !highlightedSet.has(marker.id),
+    }));
+  }, [markers, highlightMode, highlightedSet]);
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -63,137 +238,19 @@ const ClaimsMapSimple: React.FC<ClaimsMapSimpleProps> = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        {markers.map((marker) => {
+        {markerStates.map(({ marker, isHighlighted, isInactive }) => {
           if (!marker.latitude || !marker.longitude) return null;
           
-          // Calculate radius based on visit volume
-          const getRadius = (visits: number) => {
-            if (visits >= 10000) return 12;
-            if (visits >= 5000) return 10;
-            if (visits >= 1000) return 8;
-            if (visits >= 500) return 6;
-            return 4;
-          };
-          
-          // Check if marker should be highlighted
-          const isHighlighted = highlightMode !== 'none' && highlightedSiteIds.includes(marker.id);
-          const isInactive = highlightMode !== 'none' && highlightedSiteIds.length > 0 && !isHighlighted;
-          
-          // Get color based on site type
-          const getColor = (siteType?: string) => {
-            // If inactive (not highlighted when others are), return grey
-            if (isInactive) return '#cccccc';  // Lighter grey for better contrast
-            
-            if (!siteType) return '#2ecc71'; // Default green
-            const type = siteType.toLowerCase();
-            if (type.includes('hospital')) return '#e74c3c'; // Red
-            if (type.includes('clinic')) return '#3498db'; // Blue
-            if (type.includes('surgery') || type.includes('surgical')) return '#f39c12'; // Orange
-            if (type.includes('imaging') || type.includes('radiology')) return '#9b59b6'; // Purple
-            if (type.includes('lab') || type.includes('laboratory')) return '#1abc9c'; // Teal
-            return '#2ecc71'; // Default green
-          };
-          
-          // Debug logging (commented out)
-          // if (highlightedSiteIds.length > 0 && marker.id === highlightedSiteIds[0]) {
-          //   console.log('First highlighted marker:', marker.name, marker.id);
-          //   console.log('isHighlighted:', isHighlighted, 'isInactive:', isInactive);
-          //   console.log('Color will be:', getColor(marker.site_type));
-          // }
-          
           return (
-            <CircleMarker
+            <MemoizedCircleMarker
               key={marker.id}
-              center={[marker.latitude, marker.longitude]}
-              pathOptions={{
-                radius: getRadius(marker.total_visits),
-                fillColor: getColor(marker.site_type),
-                color: isHighlighted ? '#fff' : (isInactive ? '#999' : '#fff'),
-                weight: isHighlighted ? 3 : 2,
-                opacity: isHighlighted ? 1 : (isInactive ? 0.3 : 1),
-                fillOpacity: isHighlighted ? 0.9 : (isInactive ? 0.2 : 0.8)
-              }}
-              eventHandlers={{
-                click: () => {
-                  console.log('Marker clicked:', marker);
-                  onMarkerClick(marker);
-                },
-              }}
-            >
-              <Popup>
-                <div style={{ minWidth: '250px' }}>
-                  <h4 style={{ margin: '0 0 10px 0', borderBottom: '1px solid #e0e0e0', paddingBottom: '8px' }}>
-                    {marker.name}
-                  </h4>
-                  
-                  <div style={{ marginBottom: '12px' }}>
-                    <p style={{ margin: '4px 0' }}><strong>Type:</strong> {marker.site_type || 'Unknown'}</p>
-                    <p style={{ margin: '4px 0' }}><strong>Visits:</strong> {marker.total_visits.toLocaleString()}</p>
-                    <p style={{ margin: '4px 0' }}><strong>Providers:</strong> {marker.provider_count}</p>
-                    {marker.city && <p style={{ margin: '4px 0' }}><strong>City:</strong> {marker.city}</p>}
-                    {marker.geomarket && <p style={{ margin: '4px 0' }}><strong>Geomarket:</strong> {marker.geomarket}</p>}
-                  </div>
-                  
-                  <div style={{ 
-                    display: 'flex', 
-                    gap: '8px', 
-                    marginTop: '12px',
-                    borderTop: '1px solid #e0e0e0',
-                    paddingTop: '12px'
-                  }}>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        console.log('Quick View clicked for:', marker.name);
-                        if (onQuickView) {
-                          onQuickView(marker);
-                        }
-                      }}
-                      style={{
-                        flex: 1,
-                        padding: '8px 12px',
-                        backgroundColor: '#3498db',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: '500'
-                      }}
-                      onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2980b9'}
-                      onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3498db'}
-                    >
-                      Quick View
-                    </button>
-                    
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        console.log('Full Details clicked for:', marker.name);
-                        if (onFullDetails) {
-                          onFullDetails(marker);
-                        }
-                      }}
-                      style={{
-                        flex: 1,
-                        padding: '8px 12px',
-                        backgroundColor: '#27ae60',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: '500'
-                      }}
-                      onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#229954'}
-                      onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#27ae60'}
-                    >
-                      Full Details
-                    </button>
-                  </div>
-                </div>
-              </Popup>
-            </CircleMarker>
+              marker={marker}
+              isHighlighted={isHighlighted}
+              isInactive={isInactive}
+              onMarkerClick={onMarkerClick}
+              onQuickView={onQuickView}
+              onFullDetails={onFullDetails}
+            />
           );
         })}
       </MapContainer>

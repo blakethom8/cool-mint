@@ -4,7 +4,7 @@ from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 
-from app.database.database_utils import DatabaseUtils
+from database.database_utils import DatabaseUtils
 
 """
 Session Module

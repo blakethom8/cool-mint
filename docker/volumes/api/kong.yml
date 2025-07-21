@@ -206,6 +206,27 @@ services:
         paths:
           - /analytics/v1/
 
+  ## Custom API routes - MUST be before catch-all dashboard route
+  - name: custom-activities-api
+    _comment: 'Custom Activities API: /activities/* -> http://api:8080/api/activities/*'
+    url: http://api:8080/api/activities/
+    routes:
+      - name: custom-activities-api-all
+        strip_path: true
+        paths:
+          - /activities/
+    plugins:
+      - name: cors
+      - name: key-auth
+        config:
+          hide_credentials: false
+      - name: acl
+        config:
+          hide_groups_header: true
+          allow:
+            - admin
+            - anon
+
   ## Secure Database routes
   - name: meta
     _comment: 'pg-meta: /pg/* -> http://pg-meta:8080/*'

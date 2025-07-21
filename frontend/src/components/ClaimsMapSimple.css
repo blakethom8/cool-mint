@@ -1,0 +1,89 @@
+/* Map container styles */
+.leaflet-container {
+  font-family: inherit;
+}
+
+/* IMPORTANT: No transitions on markers to prevent bouncing */
+.leaflet-interactive {
+  transition: none !important;
+}
+
+/* Disable all marker animations */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-interactive path {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Loading overlay */
+.map-loading {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Popup styling */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  min-width: 250px;
+}
+
+.leaflet-popup-content h4 {
+  margin: 0 0 10px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.leaflet-popup-content p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #495057;
+}
+
+.leaflet-popup-content p strong {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Marker state classes */
+.marker-highlighted {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  z-index: 1000 !important;
+}
+
+.marker-highlighted path {
+  stroke: #333 !important;
+  stroke-width: 4 !important;
+  stroke-opacity: 1 !important;
+  fill-opacity: 0.95 !important;
+}
+
+.marker-inactive path {
+  stroke: #ccc !important;
+  stroke-width: 1 !important;
+  stroke-opacity: 0.15 !important;
+  fill: #e0e0e0 !important;
+  fill-opacity: 0.1 !important;
+}
+
+/* Disable zoom animations on the map */
+.leaflet-zoom-anim .leaflet-zoom-animated {
+  transition-duration: 0s !important;
+}

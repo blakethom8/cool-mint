@@ -1,110 +1,271 @@
-# GenAI Launchpad
+# Cool Mint - AI-Enabled CRM for Physician Liaisons
 
-With AI innovation moving beyond the speed of light, your time to develop is now more precious than ever. That’s why
-we’ve built the GenAI Launchpad – your secret weapon to shipping production-ready AI apps, faster.
+## Overview
 
-## 🚀 Introduction
+Cool Mint is a comprehensive CRM system designed specifically for physician liaisons, built on the GenAI Launchpad framework. It provides powerful tools for managing sales activities, organizing physician contacts, and exploring market territories through an intuitive interface. The system leverages AI capabilities to enhance productivity and provide intelligent insights for healthcare sales teams.
 
-Welcome to the GenAI Launchpad – your all-in-one repository for building powerful, scalable Generative AI applications.
-Whether you’re prototyping or deploying at scale, this Docker-based setup has you covered with everything from
-event-driven architecture to seamless AI workflow integration.
+## System Architecture
 
-No need to start from scratch or waste time on repetitive configurations. The GenAI Launchpad is engineered to get you
-up and running fast, with a flexible design that fits your workflow – all while keeping things production-ready from day
-one.
+### Core Components
 
-> **Note**: This repository has two main branches:
-> - [`main`](https://github.com/datalumina/genai-launchpad/tree/main): A stripped-down version with just the core
-    components, perfect for starting new projects.
-> - [`quickstart`](https://github.com/datalumina/genai-launchpad/tree/boilerplate): Contains a complete example
-    implementation to demonstrate the Launchpad's capabilities
->
-> We recommend following the Accelerator Course first to understand the example implementation in the `quickstart` branch.
+1. **Backend API (FastAPI)**
+   - RESTful API endpoints for activity management
+   - Pydantic schemas for data validation
+   - PostgreSQL database integration with SQLAlchemy ORM
+   - CORS middleware for frontend integration
 
-## 🎯 Overview
+2. **Frontend Application (React/TypeScript)**
+   - Modern React application with TypeScript
+   - Responsive activity table with filtering capabilities
+   - Multi-select functionality for activity selection
+   - Real-time pagination and scrolling
 
-The GenAI Launchpad isn’t just another framework – it’s your shortcut to a production-ready AI infrastructure. Built for
-speed and control, its modular architecture brings together the best tools and design patterns to help you deploy faster
-without compromising flexibility.
+3. **Database Layer**
+   - PostgreSQL database with Supabase integration
+   - Structured activity data from Salesforce
+   - Efficient querying with indexed fields
 
-Here’s what you’re working with:
+4. **Infrastructure**
+   - Docker containerization for all services
+   - Kong API Gateway for routing (bypassed in current setup)
+   - Redis for caching and background tasks
+   - Celery for asynchronous processing
 
-- FastAPI for lightning-fast API development
-- Celery for background task processing
-- PostgreSQL to handle all your data, includding embeddings
-- Redis for fast task queue management
-- Caddy for reverse proxy and automatic HTTPS
+### Data Flow
 
-All services are containerized using Docker, ensuring consistency across development and deployment environments.
-
-## ⭐ Key Features
-
-- **Event-Driven Architecture**: Built-in support for designing and implementing event-driven systems.
-- **AI Workflow Support**: Pre-configured setup for integrating AI models and workflows.
-- **Scalability**: Designed with scalability in mind, allowing easy expansion as your application grows.
-- **Flexibility**: Modular architecture that allows for easy customization and extension.
-- **Production-Ready**: Includes essential components for a production environment, including logging, monitoring, and
-  security features.
-- **Rapid Development**: Boilerplate code and project structure to accelerate development.
-- **Docker-Based Deployment**: Complete Docker-based strategy for straightforward deployment.
-- **Supabase**: Full self-hosted Supabase included.
-
-## 📚 Documentation
-
-The docs can be found at:
-https://launchpad-docs.datalumina.com/
-
-## 🏗️ Project Structure
-
-The Launchpad follows a logical, scalable, and reasonably standardized project structure for building event-driven GenAI
-apps.
-
-```text
-├── app
-│   ├── alembic            # Database migration scripts
-│   ├── api                # API endpoints and routers
-│   ├── worker             # Background task definitions
-│   ├── core               # Components for workflow and task processing
-│   ├── database           # Database models and utilities
-│   ├── prompts            # Prompt templates for AI models
-│   ├── schemas            # Event schemas
-│   ├── services           # Business logic and services
-│   ├── workflows          # AI workflow definitions
-├── docker                 # Docker configuration files
-├── playground             # Run experiments for workflow design
-└── requests               # Event definitions and handlers
+```
+Frontend (React) → FastAPI Backend → PostgreSQL Database
+     ↓                    ↓              ↓
+Activity Selection → API Processing → SfActivityStructured Table
 ```
 
-## 💬 Support
+## Key Features
 
-For support, questions, and collaboration related to the GenAI Launchpad:
+### Activity Selector
+- **Advanced Filtering**: Filter activities by date range, owner, contact types, specialties, and more
+- **Multi-Select Interface**: Select individual activities or bulk operations
+- **Real-time Search**: Search across activity subjects and descriptions
+- **Responsive Design**: Scrollable tables with sticky headers
+- **Pagination**: Efficient handling of large datasets
+- **Type Safety**: Full TypeScript implementation for reliability
 
-1. **Discord Community**: Join our [Discord server](https://discord.gg/H67KUD6vXe) for quick questions, real-time
-   support, and feature discussions. This is the fastest way to get help and connect with other users.
+### Bundle Manager
+- **Activity Bundling**: Group related activities into manageable bundles
+- **AI-Powered Descriptions**: Generate bundle descriptions using Claude AI
+- **Bundle Statistics**: View activity counts and date ranges
+- **Quick Actions**: Edit, delete, and manage bundles efficiently
 
-2. **GitHub Issues**: For bug reports and technical problems, please open an issue on
-   our [GitHub repository](https://github.com/datalumina/genai-launchpad/issues). This helps us track issues
-   systematically and builds a searchable knowledge base for the community.
+### Market Explorer (New)
+- **Interactive Map Interface**: Explore physician contacts on a geographic map
+- **Smart Markers**: Marker size indicates contact density at each location
+- **Comprehensive Filtering**: Filter by specialty, organization, location, and more
+- **Split-View Design**: Map view synchronized with scrollable contact list
+- **Performance Optimized**: Viewport-based loading for 3000+ contacts
+- **Clean Aesthetics**: CARTO Light map theme for professional appearance
 
-3. **Email**: For private inquiries or matters that don't fit Discord or GitHub, you can reach us at
-   launchpad@datalumina.com. However, we encourage using Discord or GitHub for most support needs to benefit the entire
-   community.
+## Database Schema
 
-## ⚖️ License
+### Activity Data
+The system uses the `SfActivityStructured` table which contains:
+- Activity metadata (ID, date, subject, description)
+- Contact information (names, counts, specialties)
+- Owner details (user names, IDs)
+- Activity types and statuses
+- Structured data for efficient querying
+
+### Contact Data
+The `SfContacts` table provides:
+- Contact identification (Salesforce ID, name, NPI)
+- Geographic data (mailing address, latitude/longitude)
+- Professional info (specialty, organization, physician status)
+- Activity tracking (last activity date, days since visit)
+- Custom fields (geography, panel status, network info)
+
+## API Endpoints
+
+### Activities API (`/api/activities/`)
+- `GET /` - List activities with filtering and pagination
+- `GET /filter-options` - Get available filter options
+- `POST /selection` - Process selected activities
+
+### Bundles API (`/api/bundles/`)
+- `GET /` - List all bundles
+- `POST /` - Create new bundle
+- `PUT /{id}` - Update bundle
+- `DELETE /{id}` - Delete bundle
+- `POST /generate-description` - AI-powered description generation
+
+### Contacts API (`/api/contacts/`)
+- `GET /map-data` - Optimized contact data for map markers
+- `GET /` - List contacts with filtering and pagination
+- `GET /{id}` - Get detailed contact information
+- `GET /filter-options` - Get available filter values
+
+### Authentication
+Currently bypassing Kong authentication for development. The system connects directly to FastAPI backend running on port 8080.
+
+## Getting Started
+
+### Prerequisites
+- Docker and Docker Compose
+- Node.js and npm (for frontend development)
+- PostgreSQL with Salesforce data
+
+### Environment Setup
+
+1. **Configure Environment Variables**
+   Create a `.env` file in the root directory:
+   ```
+   PROJECT_NAME=cool-mint
+   POSTGRES_HOST=db
+   POSTGRES_DB=postgres
+   POSTGRES_PASSWORD=your-super-secret-and-long-postgres-password
+   POSTGRES_PORT=5432
+   # Add other required environment variables
+   ```
+
+2. **Database Setup**
+   Ensure your PostgreSQL database contains the `SfActivityStructured` table with proper Salesforce data.
+
+### Starting the System
+
+#### Backend Services
+```bash
+# Start Docker containers
+cd docker
+docker-compose up -d
+
+# Verify services are running
+docker-compose ps
+```
+
+The backend API will be available at `http://localhost:8080`
+
+#### Frontend Application
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+The frontend will be available at `http://localhost:3000`
+
+### Alternative Quick Start
+Use the provided startup script:
+```bash
+./start-activity-selector.sh
+```
+
+## Development Notes
+
+### Direct FastAPI Connection
+**Important**: The current setup bypasses Kong API Gateway and connects directly to FastAPI for development purposes. This approach:
+- Simplifies authentication during development
+- Avoids Kong routing conflicts with Supabase Studio
+- Provides direct access to FastAPI at `localhost:8080`
+- Uses Vite proxy configuration for CORS handling
+
+### Frontend-Backend Communication
+- Frontend proxy configuration routes `/activities/*` to backend
+- CORS middleware configured in FastAPI to allow `localhost:3000`
+- Authentication handled through Kong's basic auth (username/password popup)
+
+### Key Configuration Files
+- `app/main.py` - FastAPI application with CORS configuration
+- `frontend/vite.config.ts` - Vite proxy configuration
+- `docker/volumes/api/kong.yml` - Kong routing configuration
+- `app/api/activities.py` - Activity API endpoints
+
+## Testing
+
+### Backend Testing
+```bash
+# Test API endpoints
+./test-activity-api.sh
+
+# Test complete setup
+./test-complete-setup.sh
+```
+
+### Frontend Testing
+```bash
+cd frontend
+npm run build  # Test build process
+npm run preview  # Preview production build
+```
+
+## Deployment Considerations
+
+### Production Deployment
+1. **Authentication**: Implement proper authentication system
+2. **HTTPS**: Configure SSL certificates for production
+3. **Database**: Use production-grade PostgreSQL setup
+4. **Monitoring**: Add logging and monitoring solutions
+5. **Scaling**: Consider load balancing for high traffic
+
+### Kong Gateway Integration
+For production deployment, re-enable Kong API Gateway:
+1. Update Kong configuration in `docker/volumes/api/kong.yml`
+2. Implement proper authentication plugins
+3. Configure rate limiting and security policies
+
+## Service Documentation
+
+Detailed documentation for individual services can be found in:
+- `frontend/readme/` - Frontend service documentation
+- `app/api/README.md` - Backend API documentation
+- `app/services/README.md` - Business logic documentation
+- `MARKET_EXPLORER_TODO.md` - Market Explorer planning document
+- `MARKET_EXPLORER_IMPLEMENTATION.md` - Detailed implementation guide
+
+## Technology Stack
+
+### Backend
+- **FastAPI**: Modern Python web framework
+- **SQLAlchemy**: Database ORM
+- **Pydantic**: Data validation
+- **PostgreSQL**: Database
+- **Redis**: Caching and task queue
+- **Celery**: Background task processing
+
+### Frontend
+- **React 18**: User interface framework
+- **TypeScript**: Type safety
+- **Vite**: Build tool and development server
+- **Axios**: HTTP client
+- **React Leaflet**: Interactive mapping
+- **Leaflet**: Map rendering engine
+- **CSS3**: Styling
+
+### Infrastructure
+- **Docker**: Containerization
+- **Kong**: API Gateway (bypassed in development)
+- **Supabase**: Database and auth services
+
+## Contributing
+
+1. Follow the existing code style and patterns
+2. Add TypeScript types for new features
+3. Update documentation for API changes
+4. Test both frontend and backend components
+5. Ensure Docker containers build successfully
+
+## License
 
 This project is licensed under the DATALUMINA License. See the [LICENSE](/LICENSE) file for details.
 
-### Key Points
+## Support
 
-- You are free to use this code for personal or commercial projects, including client work.
-- You can modify and build upon the code.
-- You cannot resell or distribute this code as a template or part of a package where the primary value is in the code
-  itself.
-- The software is provided "AS IS", without warranty of any kind.
-
-For the full license text, please refer to the [LICENSE](/LICENSE) file in the repository.
+For support and questions:
+- Create issues in the GitHub repository
+- Check the service-specific documentation in `frontend/readme/`
+- Review the GenAI Launchpad documentation
 
 ---
 
-For further assistance or to contribute to the GenAI Launchpad, please consult the project maintainers or refer to the
-contribution guidelines.
+*Built with ❤️ using the GenAI Launchpad framework*

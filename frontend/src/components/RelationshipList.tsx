@@ -91,40 +91,6 @@ const RelationshipList: React.FC<RelationshipListProps> = ({
     });
   };
 
-  // Format target information based on entity type
-  const formatTargetInfo = (relationship: RelationshipListItem) => {
-    const details = relationship.entity_details;
-    const entityType = relationship.entity_type.code;
-    
-    if (entityType === 'SfContact') {
-      const parts = [];
-      if (details.specialty) parts.push(details.specialty);
-      if (details.employment_status) parts.push(details.employment_status);
-      if (details.provider_group) {
-        // Truncate provider group name to 15 characters
-        const truncated = details.provider_group.length > 15 
-          ? details.provider_group.substring(0, 15) + '...'
-          : details.provider_group;
-        parts.push(truncated);
-      }
-      return parts.join(' • ');
-    } else if (entityType === 'SiteOfService') {
-      const parts = [];
-      if (details.city) parts.push(details.city);
-      if (details.site_type) parts.push(details.site_type);
-      if (details.site_specialty) parts.push(details.site_specialty);
-      return parts.join(' • ');
-    } else if (entityType === 'ClaimsProvider') {
-      const parts = [];
-      if (details.specialty) parts.push(details.specialty);
-      if (details.city && details.state) {
-        parts.push(`${details.city}, ${details.state}`);
-      }
-      return parts.join(' • ');
-    }
-    
-    return '';
-  };
 
   // Render sort indicator
   const renderSortIndicator = (column: string) => {
@@ -265,7 +231,6 @@ const RelationshipList: React.FC<RelationshipListProps> = ({
               >
                 Activities {renderSortIndicator('activity_count')}
               </th>
-              <th>Target Info</th>
               <th>Campaigns</th>
             </tr>
           </thead>
@@ -336,11 +301,6 @@ const RelationshipList: React.FC<RelationshipListProps> = ({
                 </td>
                 <td className="relationship-list__activity-count">
                   {relationship.activity_count || 0}
-                </td>
-                <td className="relationship-list__target-info">
-                  <span className="relationship-list__target-info-text" title={formatTargetInfo(relationship)}>
-                    {formatTargetInfo(relationship)}
-                  </span>
                 </td>
                 <td>
                   {relationship.campaign_count > 0 && (

@@ -287,6 +287,9 @@ class SfUser(Base):
     managed_relationships = relationship("Relationships", back_populates="user")  
     uploaded_content = relationship("ContentLibrary", back_populates="uploaded_by")
     reminders = relationship("Reminders", back_populates="user")
+    notes = relationship("Notes", back_populates="user")
+    created_tags = relationship("Tags", back_populates="created_by")
+    tagged_entities = relationship("EntityTags", back_populates="tagged_by")
 
 
 class SfTaskWhoRelation(Base):

@@ -7,7 +7,7 @@ and related data retrieval.
 
 from datetime import datetime, date, timedelta, timezone
 from typing import List, Optional, Dict, Any, Tuple
-from uuid import UUID
+from uuid import UUID, uuid4
 from sqlalchemy import select, func, and_, or_, text
 from sqlalchemy.orm import Session, selectinload, joinedload
 
@@ -20,6 +20,7 @@ from database.data_models.crm_lookups import (
 )
 from database.data_models.salesforce_data import SfUser, SfContact, SfActivityStructured
 from database.data_models.claims_data import ClaimsProvider, SiteOfService
+from database.data_models.crm_general import Notes
 from schemas.relationship_schema import (
     RelationshipListItem, RelationshipDetail, RelationshipFilters,
     RelationshipUpdate, ActivityLogCreate, RelationshipMetrics as MetricsSchema,
@@ -401,8 +402,10 @@ class RelationshipService:
                     "name": provider.name,
                     "npi": provider.npi,
                     "specialty": provider.specialty,
-                    "city": provider.city,
-                    "state": provider.state
+                    "geomarket": provider.geomarket,
+                    "provider_group": provider.provider_group,
+                    "top_sos_name": provider.top_sos_name,
+                    "top_sos_address": provider.top_sos_address
                 }
         elif entity_type_code == "SiteOfService":
             site = self.db.query(SiteOfService).filter(
@@ -412,8 +415,10 @@ class RelationshipService:
                 return {
                     "name": site.name,
                     "city": site.city,
-                    "state": site.county,  # Using county since state is not available
-                    "site_type": site.site_type
+                    "county": site.county,
+                    "site_type": site.site_type,
+                    "address": site.address,
+                    "geomarket": site.geomarket
                 }
         
         return {"name": "Unknown"}
@@ -596,3 +601,83 @@ class RelationshipService:
             LoyaltyStatusTypes.id == loyalty_id
         ).first()
         return loyalty.code if loyalty else None
+    
+    def create_from_provider(
+        self,
+        provider_id: str,
+        user_id: int,
+        relationship_status_id: int,
+        loyalty_status_id: Optional[int] = None,
+        lead_score: Optional[int] = None,
+        next_steps: Optional[str] = None,
+        note_content: Optional[str] = None
+    ) -> RelationshipDetail:
+        """Create a relationship from a claims provider.
+        
+        This method is used by the Market Explorer integration to create
+        relationships from providers. It also creates an associated note
+        if content is provided.
+        """
+        # Look up the provider
+        provider = self.db.query(ClaimsProvider).filter(
+            ClaimsProvider.id == provider_id
+        ).first()
+        
+        if not provider:
+            raise ValueError(f"Provider with ID {provider_id} not found")
+        
+        # Look up the entity type for ClaimsProvider
+        entity_type = self.db.query(EntityTypes).filter(
+            EntityTypes.code == "ClaimsProvider"
+        ).first()
+        
+        if not entity_type:
+            raise ValueError("Entity type 'ClaimsProvider' not found")
+        
+        # Check if relationship already exists
+        existing = self.db.query(Relationships).filter(
+            Relationships.user_id == user_id,
+            Relationships.entity_type_id == entity_type.id,
+            Relationships.linked_entity_id == provider_id
+        ).first()
+        
+        if existing:
+            raise ValueError("Relationship already exists for this user and provider")
+        
+        try:
+            # Create the relationship
+            relationship = Relationships(
+                user_id=user_id,
+                entity_type_id=entity_type.id,
+                linked_entity_id=provider_id,
+                relationship_status_id=relationship_status_id,
+                loyalty_status_id=loyalty_status_id,
+                lead_score=lead_score,
+                next_steps=next_steps,
+                engagement_frequency="Monthly",  # Default
+                last_activity_date=datetime.now()  # Set to now since we're creating it
+            )
+            
+            self.db.add(relationship)
+            self.db.flush()  # Get the ID without committing
+            
+            # Create note if provided
+            if note_content:
+                note = Notes(
+                    user_id=user_id,
+                    linked_entity_type="Relationship",
+                    linked_entity_id=relationship.relationship_id,
+                    note_content=note_content,
+                    llm_processing_status="Pending"
+                )
+                self.db.add(note)
+            
+            # Commit the transaction
+            self.db.commit()
+            
+            # Return the detailed relationship
+            return self.get_relationship_detail(relationship.relationship_id)
+            
+        except Exception as e:
+            self.db.rollback()
+            raise Exception(f"Failed to create relationship: {str(e)}")

@@ -219,6 +219,32 @@ export interface ExportRequest {
   include_metrics?: boolean;
 }
 
+// Create Relationship types
+export interface CreateRelationshipRequest {
+  user_id: number;
+  entity_type_id: number;
+  linked_entity_id: string;
+  relationship_status_id: number;
+  loyalty_status_id?: number;
+  lead_score?: number;
+  next_steps?: string;
+  engagement_frequency?: string;
+  notes?: {
+    content: string;
+    title?: string;
+  };
+}
+
+export interface CreateRelationshipFromProvider {
+  provider_id: string;
+  user_id: number;
+  relationship_status_id: number;
+  loyalty_status_id?: number;
+  lead_score?: number;
+  next_steps?: string;
+  note_content?: string;
+}
+
 // UI State types
 export interface RelationshipTableState {
   selectedIds: Set<string>;

@@ -252,3 +252,28 @@ class ExportRequest(BaseModel):
     format: str = Field(default="csv", pattern="^(csv|excel)$")
     include_activities: bool = False
     include_metrics: bool = True
+
+
+# Schema for creating relationship from Market Explorer
+class CreateRelationshipFromProvider(BaseModel):
+    """Schema for creating a relationship from a provider in Market Explorer."""
+    provider_id: str = Field(..., description="Claims provider ID")
+    user_id: int = Field(..., description="User ID who owns the relationship")
+    relationship_status_id: int = Field(..., description="Relationship status type ID")
+    loyalty_status_id: Optional[int] = Field(None, description="Loyalty status type ID")
+    lead_score: Optional[int] = Field(None, ge=1, le=5, description="Lead score (1-5)")
+    next_steps: Optional[str] = Field(None, description="Next steps for the relationship")
+    note_content: Optional[str] = Field(None, description="Note content to attach to the relationship")
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "provider_id": "123e4567-e89b-12d3-a456-426614174000",
+                "user_id": 1,
+                "relationship_status_id": 1,
+                "loyalty_status_id": 1,
+                "lead_score": 3,
+                "next_steps": "Schedule introductory meeting",
+                "note_content": "Met at conference, interested in our oncology program"
+            }
+        }

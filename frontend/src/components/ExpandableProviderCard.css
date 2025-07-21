@@ -200,12 +200,12 @@
   transition: all 0.2s ease;
 }
 
-.action-button.add-to-leads {
+.action-button.add-to-relationships {
   background: #28a745;
   color: white;
 }
 
-.action-button.add-to-leads:hover {
+.action-button.add-to-relationships:hover {
   background: #218838;
 }
 

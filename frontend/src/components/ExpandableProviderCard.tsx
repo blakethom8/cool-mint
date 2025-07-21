@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ClaimsProviderListItem } from '../types/claims';
 import './ExpandableProviderCard.css';
 
@@ -8,8 +8,7 @@ interface ExpandableProviderCardProps {
   isExpanded: boolean;
   onSelect: (id: string) => void;
   onExpand: (id: string) => void;
-  onLeadClassification?: (id: string, classification: string) => void;
-  onAddToLeads?: (id: string) => void;
+  onAddToRelationships?: (id: string) => void;
   onViewDetails?: (id: string) => void;
 }
 
@@ -19,11 +18,9 @@ const ExpandableProviderCard: React.FC<ExpandableProviderCardProps> = ({
   isExpanded,
   onSelect,
   onExpand,
-  onLeadClassification,
-  onAddToLeads,
+  onAddToRelationships,
   onViewDetails,
 }) => {
-  const [selectedClassification, setSelectedClassification] = useState<string>('');
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -35,18 +32,10 @@ const ExpandableProviderCard: React.FC<ExpandableProviderCardProps> = ({
     onExpand(provider.id);
   };
 
-  const handleClassificationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const classification = e.target.value;
-    setSelectedClassification(classification);
-    if (classification && onLeadClassification) {
-      onLeadClassification(provider.id, classification);
-    }
-  };
-
-  const handleAddToLeads = (e: React.MouseEvent) => {
+  const handleAddToRelationships = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (onAddToLeads) {
-      onAddToLeads(provider.id);
+    if (onAddToRelationships) {
+      onAddToRelationships(provider.id);
     }
   };
 
@@ -130,27 +119,12 @@ const ExpandableProviderCard: React.FC<ExpandableProviderCardProps> = ({
           </div>
 
           <div className="action-section">
-            <div className="action-row">
-              <select
-                className="lead-classification-select"
-                value={selectedClassification}
-                onChange={handleClassificationChange}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <option value="">Lead Classification</option>
-                <option value="hot">Hot Lead</option>
-                <option value="warm">Warm Lead</option>
-                <option value="cold">Cold Lead</option>
-                <option value="not-qualified">Not Qualified</option>
-              </select>
-
-              <button
-                className="action-button add-to-leads"
-                onClick={handleAddToLeads}
-              >
-                Add to Leads
-              </button>
-            </div>
+            <button
+              className="action-button add-to-relationships"
+              onClick={handleAddToRelationships}
+            >
+              Add to Relationships
+            </button>
 
             <button
               className="action-button view-details"

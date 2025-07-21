@@ -15,6 +15,7 @@ import ClaimsFiltersComponent from '../components/ClaimsFilters';
 import ClaimsDataList from '../components/ClaimsDataList';
 import ViewModeSelector from '../components/ViewModeSelector';
 import QuickViewHeader from '../components/QuickViewHeader';
+import AddToRelationshipModal from '../components/AddToRelationshipModal';
 import './MarketExplorer.css';
 
 const MarketExplorer: React.FC = () => {
@@ -39,6 +40,10 @@ const MarketExplorer: React.FC = () => {
   const [loadingMap, setLoadingMap] = useState(true);
   const [loadingList, setLoadingList] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Modal state for adding to relationships
+  const [selectedProviderForModal, setSelectedProviderForModal] = useState<ClaimsProviderListItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Load data when filters, view mode, or quick view changes
   useEffect(() => {
@@ -242,6 +247,22 @@ const MarketExplorer: React.FC = () => {
     loadData();
   }, [filters, viewMode, quickViewSiteId]);
 
+  const handleAddProviderToRelationships = useCallback((provider: ClaimsProviderListItem) => {
+    setSelectedProviderForModal(provider);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleModalClose = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProviderForModal(null);
+  }, []);
+
+  const handleModalSuccess = useCallback(() => {
+    // Show success message or navigate to relationship manager
+    console.log('Relationship created successfully');
+    // You could add a toast notification here
+  }, []);
+
   return (
     <div className="market-explorer">
       <div className="explorer-header">
@@ -324,11 +345,22 @@ const MarketExplorer: React.FC = () => {
             selectedId={selectedId}
             onItemSelect={handleItemSelect}
             onItemDoubleClick={handleItemDoubleClick}
+            onAddProviderToRelationships={handleAddProviderToRelationships}
             loading={loadingList}
             isQuickView={!!quickViewSiteId}
           />
         </div>
       </div>
+      
+      {/* Add to Relationship Modal */}
+      {selectedProviderForModal && (
+        <AddToRelationshipModal
+          provider={selectedProviderForModal}
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          onSuccess={handleModalSuccess}
+        />
+      )}
     </div>
   );
 };

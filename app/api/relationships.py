@@ -23,7 +23,8 @@ from schemas.relationship_schema import (
     ActivityLogCreate,
     ActivityLogResponse,
     FilterOptionsResponse,
-    ExportRequest
+    ExportRequest,
+    CreateRelationshipFromProvider
 )
 
 router = APIRouter()
@@ -282,6 +283,43 @@ async def get_relationship_metrics(
         raise HTTPException(status_code=404, detail="Relationship not found")
         
     return relationship.metrics
+
+
+@router.post("/from-provider", response_model=RelationshipDetail)
+async def create_relationship_from_provider(
+    data: CreateRelationshipFromProvider = Body(...),
+    session: Session = Depends(db_session)
+):
+    """
+    Create a new relationship from a claims provider.
+    
+    This endpoint is used by the Market Explorer to add providers
+    to the relationship management system. It also creates an
+    associated note if provided.
+    """
+    service = RelationshipService(session)
+    
+    try:
+        # Create the relationship and optional note
+        relationship = service.create_from_provider(
+            provider_id=data.provider_id,
+            user_id=data.user_id,
+            relationship_status_id=data.relationship_status_id,
+            loyalty_status_id=data.loyalty_status_id,
+            lead_score=data.lead_score,
+            next_steps=data.next_steps,
+            note_content=data.note_content
+        )
+        
+        return relationship
+        
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to create relationship: {str(e)}"
+        )
 
 
 @router.post("/export")

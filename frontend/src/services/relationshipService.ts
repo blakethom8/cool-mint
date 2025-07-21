@@ -16,7 +16,8 @@ import {
   ActivityLogResponse,
   FilterOptionsResponse,
   ExportRequest,
-  ActivityLogItem
+  ActivityLogItem,
+  CreateRelationshipFromProvider
 } from '../types/relationship';
 
 // Base API configuration
@@ -211,6 +212,19 @@ class RelationshipService {
     return this.updateRelationship(relationshipId, {
       next_steps: nextSteps
     });
+  }
+
+  /**
+   * Create a relationship from a provider (Market Explorer integration)
+   */
+  async createRelationshipFromProvider(
+    data: CreateRelationshipFromProvider
+  ): Promise<RelationshipDetail> {
+    const response = await axios.post<RelationshipDetail>(
+      `${API_BASE_URL}/from-provider`,
+      data
+    );
+    return response.data;
   }
 
   /**

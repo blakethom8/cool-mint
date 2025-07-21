@@ -197,6 +197,17 @@ One-time service for initial data population from historical activities.
   - "Community" = External/out-of-network providers
   - Impacts lead scoring and prioritization
 
+### 3. Market Explorer Integration
+
+The service now supports creating relationships directly from the Market Explorer:
+
+**`create_from_provider(provider_id, user_id, ...)`**
+- Creates relationships from ClaimsProvider entities
+- Validates provider existence and prevents duplicates
+- Supports initial note creation linked to the relationship
+- Sets initial activity date to establish baseline
+- Returns complete relationship detail for immediate use
+
 ## RESTful API Endpoints
 
 ### Base URL: `/api/relationships`
@@ -458,6 +469,24 @@ Returns detailed metrics and analytics for a relationship.
 #### 9. **POST /export** - Export Relationships
 Exports filtered relationships to CSV or Excel (currently not implemented).
 
+#### 10. **POST /from-provider** - Create from Market Explorer
+Creates a new relationship from a claims provider.
+
+**Request Body:**
+```json
+{
+  "provider_id": "uuid",
+  "user_id": 123,
+  "relationship_status_id": 1,
+  "loyalty_status_id": 2,
+  "lead_score": 3,
+  "next_steps": "Schedule introductory meeting",
+  "note_content": "Met at conference, interested in our program"
+}
+```
+
+**Response:** Returns created relationship detail (same as GET detail)
+
 ## Frontend Architecture
 
 ### Single-Page Application Structure
@@ -630,6 +659,13 @@ The frontend uses a dedicated service layer (`relationshipService.ts`) that:
 - Polymorphic relationships to multiple entity types
 - Currently supports: SfContacts, ClaimsProviders, SiteOfService
 - Extensible to new entity types via lookup table
+- Seamless integration with Market Explorer for provider discovery
+
+### 6. Cross-Application Integration
+- Market Explorer to Relationship Manager bridge
+- Modal-based relationship creation from provider cards
+- Note attachment to relationships for context preservation
+- Unified user experience across applications
 
 ## Security & Performance
 
@@ -652,6 +688,20 @@ The frontend uses a dedicated service layer (`relationshipService.ts`) that:
 3. **Async Operations**: FastAPI async endpoints
 4. **Batch Operations**: Bulk updates reduce API calls
 
+## Known Issues & Solutions
+
+### 1. Modal Scrolling
+**Issue**: Submit button not visible in AddToRelationshipModal
+**Solution**: Implemented flex layout with `min-height: 0` and `flex-shrink: 0`
+
+### 2. Field Access Errors
+**Issue**: ClaimsProvider doesn't have city/state fields
+**Solution**: Updated entity details mapping to use available fields (geomarket, top_sos_address)
+
+### 3. SQLAlchemy Relationships
+**Issue**: Missing back_populates references between models
+**Solution**: Added missing relationship definitions in SfUser model
+
 ## Future Enhancements
 
 ### Planned Features
@@ -660,6 +710,8 @@ The frontend uses a dedicated service layer (`relationshipService.ts`) that:
 3. **LLM Integration**: AI-powered insights and recommendations
 4. **Export Functionality**: CSV/Excel export with filters
 5. **Mobile App**: Native mobile experience
+6. **Bulk Provider Import**: Add multiple providers from Market Explorer simultaneously
+7. **Smart Defaults**: AI-suggested relationship configurations based on provider type
 
 ### API Extensions
 1. **Activity Logging**: POST endpoint implementation
@@ -667,3 +719,4 @@ The frontend uses a dedicated service layer (`relationshipService.ts`) that:
 3. **Team Collaboration**: Shared relationships and notes
 4. **Workflow Automation**: Trigger-based status updates
 5. **Third-party Integrations**: CRM and calendar sync
+6. **Provider Enrichment**: Auto-fetch additional data during relationship creation

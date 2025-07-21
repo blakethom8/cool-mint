@@ -18,6 +18,7 @@ interface ClaimsDataListProps {
   selectedId?: string;
   onItemSelect: (id: string) => void;
   onItemDoubleClick?: (id: string) => void;
+  onAddProviderToRelationships?: (provider: ClaimsProviderListItem) => void;
   loading?: boolean;
   isQuickView?: boolean;
 }
@@ -34,6 +35,7 @@ const ClaimsDataList: React.FC<ClaimsDataListProps> = ({
   selectedId,
   onItemSelect,
   onItemDoubleClick,
+  onAddProviderToRelationships,
   loading = false,
   isQuickView = false,
 }) => {
@@ -144,14 +146,11 @@ const ClaimsDataList: React.FC<ClaimsDataListProps> = ({
     setExpandedProviderId(expandedProviderId === providerId ? null : providerId);
   };
 
-  const handleLeadClassification = (providerId: string, classification: string) => {
-    console.log('Lead classification:', providerId, classification);
-    // TODO: Implement API call to save classification
-  };
-
-  const handleAddToLeads = (providerId: string) => {
-    console.log('Add to leads:', providerId);
-    // TODO: Implement API call to add to leads
+  const handleAddToRelationships = (providerId: string) => {
+    const provider = providers.find(p => p.id === providerId);
+    if (provider && onAddProviderToRelationships) {
+      onAddProviderToRelationships(provider);
+    }
   };
 
   const handleViewDetails = (providerId: string) => {
@@ -169,8 +168,7 @@ const ClaimsDataList: React.FC<ClaimsDataListProps> = ({
       isExpanded={expandedProviderId === provider.id}
       onSelect={handleItemClick}
       onExpand={handleProviderExpand}
-      onLeadClassification={handleLeadClassification}
-      onAddToLeads={handleAddToLeads}
+      onAddToRelationships={handleAddToRelationships}
       onViewDetails={handleViewDetails}
     />
   );

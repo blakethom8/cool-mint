@@ -29,8 +29,8 @@ from typing import Type, Optional, Union, Any, Dict, List
 from langfuse import Langfuse
 from langfuse.decorators import observe
 
-from app.core.nodes.base import Node
-from app.core.task import TaskContext
+from core.nodes.base import Node
+from core.task import TaskContext
 
 load_dotenv()
 

@@ -12,8 +12,8 @@ from typing import Dict, List, Any, Optional
 from collections import defaultdict
 from pathlib import Path
 
-from app.core.nodes.base import Node
-from app.core.task import TaskContext
+from core.nodes.base import Node
+from core.task import TaskContext
 
 
 class DataStructureNode(Node):

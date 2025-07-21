@@ -8,9 +8,9 @@ to gather additional information.
 from typing import Dict, Any, Literal, Optional
 from pydantic import BaseModel, Field
 
-from app.core.nodes.agent import AgentNode, AgentConfig, ModelProvider
-from app.core.task import TaskContext
-from app.services.prompt_loader import PromptManager
+from core.nodes.agent import AgentNode, AgentConfig, ModelProvider
+from core.task import TaskContext
+from services.prompt_loader import PromptManager
 
 
 class SearchClassifierNode(AgentNode):

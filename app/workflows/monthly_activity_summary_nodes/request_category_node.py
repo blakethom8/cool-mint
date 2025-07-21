@@ -8,8 +8,8 @@ This node categorizes the type of request being made. Currently hardcoded to
 import logging
 from typing import Dict, Any
 
-from app.core.nodes.base import Node
-from app.core.task import TaskContext
+from core.nodes.base import Node
+from core.task import TaskContext
 
 
 class RequestCategoryNode(Node):

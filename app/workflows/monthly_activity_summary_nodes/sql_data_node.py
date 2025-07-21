@@ -11,10 +11,10 @@ from typing import Dict, List, Any, Optional
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from app.core.nodes.base import Node
-from app.core.task import TaskContext
-from app.database.session import SessionLocal
-from app.workflows.monthly_activity_summary_nodes.sql_templates import (
+from core.nodes.base import Node
+from core.task import TaskContext
+from database.session import SessionLocal
+from workflows.monthly_activity_summary_nodes.sql_templates import (
     MonthlyActivitySQLTemplates,
 )
 

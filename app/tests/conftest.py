@@ -17,16 +17,16 @@ from fastapi.testclient import TestClient
 # Add app directory to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from app.main import app
-from app.database.session import Base, db_session
-from app.database.data_models.salesforce_data import SfUser, SfContact
-from app.database.data_models.relationship_management import (
+from main import app
+from database.session import Base, db_session
+from database.data_models.salesforce_data import SfUser, SfContact
+from database.data_models.relationship_management import (
     Relationships, Campaigns
 )
-from app.database.data_models.crm_lookups import (
+from database.data_models.crm_lookups import (
     RelationshipStatusTypes, LoyaltyStatusTypes, EntityTypes
 )
-from app.database.data_models.claims_data import ClaimsProvider, SiteOfService
+from database.data_models.claims_data import ClaimsProvider, SiteOfService
 
 
 # Test database URL - uses SQLite for speed in testing

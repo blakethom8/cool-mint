@@ -1,9 +1,9 @@
 from enum import Enum
 from typing import Dict, Type
 
-from app.workflows.langfuse_tracing_workflow import LangfuseTracingWorkflow
-from app.workflows.market_data_explorer_workflow import MarketDataExplorerWorkflow
-from app.workflows.monthly_activity_summary_workflow import (
+from workflows.langfuse_tracing_workflow import LangfuseTracingWorkflow
+from workflows.market_data_explorer_workflow import MarketDataExplorerWorkflow
+from workflows.monthly_activity_summary_workflow import (
     MonthlyActivitySummaryWorkflow,
 )
 

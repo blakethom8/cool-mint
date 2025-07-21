@@ -9,15 +9,15 @@ from sqlalchemy import inspect
 from sqlalchemy.orm import configure_mappers
 from sqlalchemy.exc import InvalidRequestError
 
-from app.database.session import Base
-from app.database.data_models.salesforce_data import SfUser, SfContact, SfActivity
-from app.database.data_models.relationship_management import (
+from database.session import Base
+from database.data_models.salesforce_data import SfUser, SfContact, SfActivity
+from database.data_models.relationship_management import (
     Relationships, Campaigns, CampaignRelationships,
     RelationshipHistory, RelationshipMetrics, Reminders,
     ContentLibrary, NextBestActions, LLMProcessingQueue,
     SalesforceSync, CampaignTargetSpecialties, CampaignContent
 )
-from app.database.data_models.crm_lookups import (
+from database.data_models.crm_lookups import (
     RelationshipStatusTypes, LoyaltyStatusTypes, EntityTypes
 )
 
@@ -154,7 +154,7 @@ class TestModelRelationships:
         """
         # If we got this far in the test file, imports worked
         # But let's be explicit
-        from app.database.data_models import (
+        from database.data_models import (
             salesforce_data, relationship_management, 
             crm_lookups, provider_crm, sites
         )

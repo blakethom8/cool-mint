@@ -14,13 +14,13 @@ from collections import Counter
 from sqlalchemy.orm import Session
 from sqlalchemy import text, and_
 
-from app.database.session import SessionLocal
-from app.database.data_models.salesforce_data import (
+from database.session import SessionLocal
+from database.data_models.salesforce_data import (
     SfActivity,
     SfActivityStructured,
     SfUser,
 )
-from app.workflows.salesforce_data_analyzer.analyzers import (
+from workflows.salesforce_data_analyzer.analyzers import (
     MonthlyActivitySummaryAnalyzer,
 )
 

@@ -3,9 +3,9 @@ from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, Any, List
 
-from app.core.nodes.base import Node
-from app.core.schema import NodeConfig
-from app.core.task import TaskContext
+from core.nodes.base import Node
+from core.schema import NodeConfig
+from core.task import TaskContext
 
 
 class ParallelNode(Node, ABC):

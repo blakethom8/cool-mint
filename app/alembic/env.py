@@ -13,18 +13,18 @@ project_root = os.path.dirname(os.path.dirname(current_dir))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-from app.database.database_utils import DatabaseUtils
-from app.database.session import Base
+from database.database_utils import DatabaseUtils
+from database.session import Base
 
 # This import is required for autogenerate support
-from app.database.event import *
-from app.database.data_models.salesforce_data import *  # Import Salesforce models
-from app.database.data_models.proc_dx_tables import *  # Import procedure/diagnosis models
-from app.database.data_models.claims_data import *  # Import claims data models
-from app.database.data_models.activity_bundles import *  # Import activity bundle models
-from app.database.data_models.crm_lookups import *  # Import CRM lookup tables first
-from app.database.data_models.relationship_management import *  # Import CRM relationship models
-from app.database.data_models.crm_general import *  # Import CRM general models
+from database.event import *
+from database.data_models.salesforce_data import *  # Import Salesforce models
+from database.data_models.proc_dx_tables import *  # Import procedure/diagnosis models
+from database.data_models.claims_data import *  # Import claims data models
+from database.data_models.activity_bundles import *  # Import activity bundle models
+from database.data_models.crm_lookups import *  # Import CRM lookup tables first
+from database.data_models.relationship_management import *  # Import CRM relationship models
+from database.data_models.crm_general import *  # Import CRM general models
 
 """
 Alembic Environment Module

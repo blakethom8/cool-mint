@@ -18,9 +18,9 @@ import logging
 from datetime import datetime, date, timedelta
 from typing import Optional
 
-from app.services.activity_structuring_service import ActivityStructuringService
-from app.database.session import SessionLocal
-from app.database.data_models.salesforce_data import SfActivityStructured
+from services.activity_structuring_service import ActivityStructuringService
+from database.session import SessionLocal
+from database.data_models.salesforce_data import SfActivityStructured
 
 
 def setup_logging(log_level: str = "INFO"):

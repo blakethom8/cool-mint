@@ -8,9 +8,9 @@ def test_imports():
     """Test that all critical imports work."""
     try:
         # Test database models can be imported
-        from app.database.data_models.salesforce_data import SfUser
-        from app.database.data_models.relationship_management import Relationships, Campaigns
-        from app.database.data_models.crm_lookups import EntityTypes, RelationshipStatusTypes
+        from database.data_models.salesforce_data import SfUser
+        from database.data_models.relationship_management import Relationships, Campaigns
+        from database.data_models.crm_lookups import EntityTypes, RelationshipStatusTypes
         print("✓ Database models imported successfully")
         
         # Test SQLAlchemy mapper configuration
@@ -19,7 +19,7 @@ def test_imports():
         print("✓ SQLAlchemy mappers configured successfully")
         
         # Test API can be imported
-        from app.main import app
+        from main import app
         print("✓ FastAPI app imported successfully")
         
         print("\n🎉 All imports successful! The relationship configuration issues are fixed.")

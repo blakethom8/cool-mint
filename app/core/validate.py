@@ -1,8 +1,8 @@
 from collections import deque
 from typing import Dict, Any, List, Set, Type
 
-from app.core.nodes.base import Node
-from app.core.schema import WorkflowSchema
+from core.nodes.base import Node
+from core.schema import WorkflowSchema
 
 """
 Workflow Validator Module

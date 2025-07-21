@@ -7,19 +7,19 @@ outreach specialists by analyzing their Salesforce activity data.
 
 from typing import Dict, Any
 
-from app.core.schema import WorkflowSchema, NodeConfig
-from app.core.workflow import Workflow
-from app.core.task import TaskContext
+from core.schema import WorkflowSchema, NodeConfig
+from core.workflow import Workflow
+from core.task import TaskContext
 
-from app.workflows.monthly_activity_summary_nodes.request_category_node import (
+from workflows.monthly_activity_summary_nodes.request_category_node import (
     RequestCategoryNode,
 )
-from app.workflows.monthly_activity_summary_nodes.sql_data_node import SQLDataNode
-from app.workflows.monthly_activity_summary_nodes.data_structure_node import (
+from workflows.monthly_activity_summary_nodes.sql_data_node import SQLDataNode
+from workflows.monthly_activity_summary_nodes.data_structure_node import (
     DataStructureNode,
 )
-from app.workflows.monthly_activity_summary_nodes.llm_summary_node import LLMSummaryNode
-from app.schemas.monthly_activity_summary_schema import MonthlyActivitySummaryEvent
+from workflows.monthly_activity_summary_nodes.llm_summary_node import LLMSummaryNode
+from schemas.monthly_activity_summary_schema import MonthlyActivitySummaryEvent
 
 
 class MonthlyActivitySummaryWorkflow(Workflow):

@@ -7,17 +7,17 @@ determining if additional search is needed and identifying potential targets.
 
 from typing import Dict, Any
 
-from app.core.schema import WorkflowSchema, NodeConfig
-from app.core.workflow import Workflow
-from app.core.task import TaskContext
+from core.schema import WorkflowSchema, NodeConfig
+from core.workflow import Workflow
+from core.task import TaskContext
 
-from app.workflows.market_data_explorer_nodes.search_classifier import (
+from workflows.market_data_explorer_nodes.search_classifier import (
     SearchClassifierNode,
 )
-from app.workflows.market_data_explorer_nodes.target_identify_node import (
+from workflows.market_data_explorer_nodes.target_identify_node import (
     TargetIdentifyNode,
 )
-from app.schemas.market_data_explorer_schema import MarketDataExplorerEvent
+from schemas.market_data_explorer_schema import MarketDataExplorerEvent
 
 
 class MarketDataExplorerWorkflow(Workflow):

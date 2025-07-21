@@ -27,8 +27,8 @@ from typing import List
 
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from app.database.session import db_session
-from app.database.data_models.provider_crm import (
+from database.session import db_session
+from database.data_models.provider_crm import (
     Provider,
     ProviderVisits,
     OutreachEfforts,

@@ -54,11 +54,11 @@ else:
 # Now try imports with better error handling
 try:
     # Try absolute imports (for notebook use)
-    from app.services.web_crawler.url_discovery_service import (
+    from services.web_crawler.url_discovery_service import (
         URLDiscoveryService,
         ProviderURLs,
     )
-    from app.services.web_crawler.web_crawler_service import (
+    from services.web_crawler.web_crawler_service import (
         WebCrawlerService,
         CrawlResult,
     )

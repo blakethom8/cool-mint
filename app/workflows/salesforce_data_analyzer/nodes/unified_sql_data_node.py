@@ -9,10 +9,10 @@ import logging
 from typing import Dict, Any, Optional
 from datetime import datetime, date, timedelta
 
-from app.core.nodes.base import Node
-from app.core.task import TaskContext
-from app.database.session import SessionLocal
-from app.workflows.salesforce_data_analyzer.analyzers.base_analyzer import BaseAnalyzer
+from core.nodes.base import Node
+from core.task import TaskContext
+from database.session import SessionLocal
+from workflows.salesforce_data_analyzer.analyzers.base_analyzer import BaseAnalyzer
 
 
 class UnifiedSQLDataNode(Node):

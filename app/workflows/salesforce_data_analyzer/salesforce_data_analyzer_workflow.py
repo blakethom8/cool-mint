@@ -9,8 +9,8 @@ between Activities and Contacts through the TaskWhoRelation table.
 import logging
 from typing import Dict, Any
 
-from app.core.workflow import Workflow
-from app.core.task import TaskContext
+from core.workflow import Workflow
+from core.task import TaskContext
 from .nodes import RequestCategoryNode, UnifiedSQLDataNode
 
 

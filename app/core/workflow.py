@@ -6,12 +6,12 @@ from typing import Dict, Optional, ClassVar, Type, Any
 from dotenv import load_dotenv
 from opentelemetry.sdk.trace import Span
 
-from app.core.langfuse_config import LangfuseConfig
-from app.core.nodes.base import Node
-from app.core.nodes.router import BaseRouter
-from app.core.schema import WorkflowSchema, NodeConfig
-from app.core.task import TaskContext
-from app.core.validate import WorkflowValidator
+from core.langfuse_config import LangfuseConfig
+from core.nodes.base import Node
+from core.nodes.router import BaseRouter
+from core.schema import WorkflowSchema, NodeConfig
+from core.task import TaskContext
+from core.validate import WorkflowValidator
 
 load_dotenv()
 

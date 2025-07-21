@@ -5,6 +5,7 @@ import { HomePage } from './pages/HomePage';
 import { ActivitySelector } from './pages/ActivitySelector';
 import { BundleManagement } from './pages/BundleManagement';
 import MarketExplorer from './pages/MarketExplorer';
+import RelationshipManager from './pages/RelationshipManager';
 import './App.css';
 
 interface LayoutProps {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/bundles" element={<BundleManagement />} />
           <Route path="/bundles/:bundleId" element={<BundleManagement />} />
           <Route path="/contacts" element={<MarketExplorer />} />
+          <Route path="/relationships" element={<RelationshipManager />} />
         </Routes>
       </Layout>
     </Router>

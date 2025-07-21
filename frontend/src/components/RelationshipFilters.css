@@ -1,0 +1,241 @@
+.relationship-filters {
+  padding: 16px;
+  background: #f8f9fa;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.relationship-filters__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  color: #6c757d;
+}
+
+/* Header */
+.relationship-filters__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.relationship-filters__count {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.relationship-filters__clear {
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.relationship-filters__clear:hover {
+  background: #dc3545;
+  color: white;
+}
+
+/* Sections */
+.relationship-filters__section {
+  margin-bottom: 16px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.relationship-filters__section-header {
+  width: 100%;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.relationship-filters__section-header:hover {
+  background: #e9ecef;
+}
+
+.relationship-filters__section-header .chevron {
+  font-size: 12px;
+  color: #6c757d;
+  transition: transform 0.2s;
+}
+
+.relationship-filters__section-content {
+  padding: 12px 16px;
+}
+
+/* Subsections */
+.relationship-filters__subsection {
+  margin-bottom: 16px;
+}
+
+.relationship-filters__subsection:last-child {
+  margin-bottom: 0;
+}
+
+.relationship-filters__subsection h4 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Checkboxes */
+.relationship-filters__checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.relationship-filters__checkbox:last-child {
+  margin-bottom: 0;
+}
+
+.relationship-filters__checkbox input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.relationship-filters__checkbox span {
+  flex: 1;
+}
+
+.relationship-filters__checkbox .relationship-filters__count {
+  margin-left: 4px;
+  font-size: 12px;
+}
+
+.relationship-filters__loyalty-label {
+  display: inline-block;
+}
+
+/* Date and Number Ranges */
+.relationship-filters__date-range,
+.relationship-filters__number-range {
+  margin-bottom: 16px;
+}
+
+.relationship-filters__date-range label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.relationship-filters__date-range label span {
+  display: block;
+  font-size: 12px;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.relationship-filters__date-range input[type="date"] {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.relationship-filters__range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.relationship-filters__range-inputs input[type="number"] {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.relationship-filters__range-inputs span {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+/* Scroll Lists */
+.relationship-filters__scroll-list {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.relationship-filters__scroll-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.relationship-filters__scroll-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.relationship-filters__scroll-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.relationship-filters__scroll-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Search */
+.relationship-filters__search {
+  padding: 0;
+}
+
+.relationship-filters__search input[type="text"] {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.relationship-filters__search input[type="text"]:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Divider */
+.relationship-filters__divider {
+  height: 1px;
+  background: #dee2e6;
+  margin: 12px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .relationship-filters {
+    padding: 12px;
+  }
+  
+  .relationship-filters__section-header {
+    padding: 10px 12px;
+  }
+  
+  .relationship-filters__section-content {
+    padding: 10px 12px;
+  }
+}

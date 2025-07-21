@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from api import endpoint, activities, bundles, llm, contacts, claims
+from api import endpoint, activities, bundles, llm, contacts, claims, relationships
 
 """
 API Router Module
@@ -17,3 +17,4 @@ router.include_router(bundles.router, prefix="/bundles", tags=["bundles"])
 router.include_router(llm.router, prefix="/llm", tags=["llm"])
 router.include_router(contacts.router, prefix="/contacts", tags=["contacts"])
 router.include_router(claims.router, tags=["claims"])
+router.include_router(relationships.router, prefix="/relationships", tags=["relationships"])

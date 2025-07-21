@@ -22,6 +22,10 @@ export default defineConfig({
       '/api/claims': {
         target: 'http://localhost:8080',
         changeOrigin: true,
+      },
+      '/api/relationships': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       }
     }
   }

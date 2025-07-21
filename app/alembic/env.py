@@ -18,9 +18,13 @@ from app.database.session import Base
 
 # This import is required for autogenerate support
 from app.database.event import *
-from app.database.data_models.provider_crm import *  # Import provider CRM models
 from app.database.data_models.salesforce_data import *  # Import Salesforce models
 from app.database.data_models.proc_dx_tables import *  # Import procedure/diagnosis models
+from app.database.data_models.claims_data import *  # Import claims data models
+from app.database.data_models.activity_bundles import *  # Import activity bundle models
+from app.database.data_models.crm_lookups import *  # Import CRM lookup tables first
+from app.database.data_models.relationship_management import *  # Import CRM relationship models
+from app.database.data_models.crm_general import *  # Import CRM general models
 
 """
 Alembic Environment Module

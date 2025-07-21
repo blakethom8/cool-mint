@@ -18,7 +18,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import relationship
 
-from app.database.session import Base
+from database.session import Base
 
 
 class SfContact(Base):
@@ -281,6 +281,12 @@ class SfUser(Base):
     # Local metadata
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationships for CRM functionality
+    owned_campaigns = relationship("Campaigns", back_populates="owner")
+    managed_relationships = relationship("Relationships", back_populates="user")  
+    uploaded_content = relationship("ContentLibrary", back_populates="uploaded_by")
+    reminders = relationship("Reminders", back_populates="user")
 
 
 class SfTaskWhoRelation(Base):

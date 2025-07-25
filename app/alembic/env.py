@@ -25,6 +25,7 @@ from database.data_models.activity_bundles import *  # Import activity bundle mo
 from database.data_models.crm_lookups import *  # Import CRM lookup tables first
 from database.data_models.relationship_management import *  # Import CRM relationship models
 from database.data_models.crm_general import *  # Import CRM general models
+from database.data_models.email_data import *  # Import email data models
 
 """
 Alembic Environment Module

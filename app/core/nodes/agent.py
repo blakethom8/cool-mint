@@ -27,7 +27,6 @@ from pydantic_ai.providers.google_gla import GoogleGLAProvider
 from pydantic_ai.providers.openai import OpenAIProvider
 from typing import Type, Optional, Union, Any, Dict, List
 from langfuse import Langfuse
-from langfuse.decorators import observe
 
 from core.nodes.base import Node
 from core.task import TaskContext
@@ -139,9 +138,13 @@ class AgentNode(Node, ABC):
         )
 
     def __get_anthropic_model(self, model_name: AnthropicModelName) -> Model:
+        api_key = os.getenv("ANTHROPIC_API_KEY")
         return AnthropicModel(
             model_name=model_name,
-            provider=AnthropicProvider(http_client=self.__async_client),
+            provider=AnthropicProvider(
+                api_key=api_key,
+                http_client=self.__async_client
+            ),
         )
 
     def __get_gemini_model(self, model_name: str) -> Model:

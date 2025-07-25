@@ -8,6 +8,9 @@ from sqlalchemy.orm import relationship
 
 from database.session import Base
 
+# Import Email model to ensure it's available for the relationship
+from database.data_models.email_data import Email
+
 
 class EmailParsed(Base):
     """Stores parsed and extracted data from emails"""

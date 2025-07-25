@@ -244,6 +244,13 @@ class Relationships(Base):
     )
     metrics = relationship("RelationshipMetrics", back_populates="related_relationship")
     # Note: Reminders relationship is defined in the Reminders model with a complex primaryjoin
+    reminders = relationship(
+        "Reminders",
+        primaryjoin="and_(Reminders.linked_entity_type=='Relationship', "
+        "Reminders.linked_entity_id==Relationships.relationship_id)",
+        foreign_keys="[Reminders.linked_entity_id]",
+        viewonly=True
+    )
     next_best_actions = relationship(
         "NextBestActions", back_populates="related_relationship"
     )

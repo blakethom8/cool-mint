@@ -57,6 +57,17 @@ class Email(Base):
     # Raw data storage
     raw_webhook_data = Column(JSON, nullable=True)  # Store complete webhook payload
     
+    # Enhanced email content fields
+    clean_body = Column(Text, nullable=True)  # Cleaned version of email content
+    user_instruction = Column(Text, nullable=True)  # Sales rep's request (top of forwarded email)
+    extracted_thread = Column(Text, nullable=True)  # The forwarded conversation content
+    
+    # Email metadata for better processing
+    headers = Column(JSON, nullable=True)  # Email headers for metadata
+    message_id = Column(String(255), nullable=True, index=True)  # Unique message identifier
+    in_reply_to = Column(String(255), nullable=True)  # Reference to parent message
+    is_forwarded = Column(Boolean, default=False)  # Auto-detect forwarded emails
+    
     # Timestamps
     created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -72,6 +83,45 @@ class Email(Base):
         Index('idx_emails_from_subject', 'from_email', 'subject'),
         Index('idx_emails_processing', 'processed', 'processing_status'),
     )
+    
+    @property
+    def is_forwarded_email(self):
+        """Detect if email is forwarded based on subject and content markers"""
+        if self.subject:
+            forwarding_markers = ['fwd:', 'fw:', 'forwarded:', 'fwd :', 'fw :']
+            if any(marker in self.subject.lower() for marker in forwarding_markers):
+                return True
+        
+        # Check body for forwarding markers
+        if self.body_plain or self.body:
+            content = self.body_plain or self.body
+            forwarding_patterns = [
+                '---------- forwarded message',
+                '-------- original message',
+                'begin forwarded message',
+                '>>> begin forwarded'
+            ]
+            if any(pattern in content.lower() for pattern in forwarding_patterns):
+                return True
+        
+        return False
+    
+    @property
+    def conversation_for_llm(self):
+        """Return the best available conversation context for LLM processing"""
+        if self.user_instruction and self.extracted_thread:
+            return f"User Request:\n{self.user_instruction}\n\nEmail Thread:\n{self.extracted_thread}"
+        elif self.clean_body:
+            return self.clean_body
+        elif self.body_plain:
+            return self.body_plain
+        else:
+            return self.body
+    
+    @property
+    def has_user_instruction(self):
+        """Check if email has a user instruction (typical for forwarded emails)"""
+        return bool(self.user_instruction)
 
 
 class EmailAttachment(Base):

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(curl:*)",
       "Bash(alembic revision:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

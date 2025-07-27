@@ -27,6 +27,7 @@ from database.data_models.relationship_management import *  # Import CRM relatio
 from database.data_models.crm_general import *  # Import CRM general models
 from database.data_models.email_data import *  # Import email data models
 from database.data_models.email_parsed_data import *  # Import email parsed data models
+from database.data_models.email_actions import *  # Import email actions models
 
 """
 Alembic Environment Module

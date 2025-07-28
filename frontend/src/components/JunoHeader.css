@@ -1,0 +1,202 @@
+.juno-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Branding Section */
+.juno-branding {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.juno-avatar {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  backdrop-filter: blur(10px);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  animation: float 3s ease-in-out infinite;
+}
+
+.juno-icon {
+  font-size: 48px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.juno-info {
+  flex: 1;
+}
+
+.juno-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.juno-tagline {
+  font-size: 16px;
+  margin: 4px 0 0 0;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* Stats Section */
+.juno-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Stat card color accents */
+.stat-card.pending .stat-value {
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.stat-card.approved .stat-value {
+  color: #90ee90;
+  text-shadow: 0 0 20px rgba(144, 238, 144, 0.5);
+}
+
+.stat-card.completed .stat-value {
+  color: #87ceeb;
+  text-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+}
+
+.stat-card.confidence .stat-value {
+  color: #ffa500;
+  text-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+}
+
+.stat-card.recent .stat-value {
+  color: #da70d6;
+  text-shadow: 0 0 20px rgba(218, 112, 214, 0.5);
+}
+
+/* Welcome Section */
+.juno-welcome {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.juno-welcome p {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.juno-welcome p:last-child {
+  margin-bottom: 0;
+}
+
+.juno-instructions {
+  margin-top: 12px !important;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.juno-instructions strong {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .juno-header {
+    padding: 20px;
+  }
+  
+  .juno-branding {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .juno-avatar {
+    margin: 0 0 16px 0;
+  }
+  
+  .juno-title {
+    font-size: 24px;
+  }
+  
+  .juno-stats {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+  }
+  
+  .stat-card {
+    padding: 16px;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+  }
+  
+  .stat-label {
+    font-size: 12px;
+  }
+}

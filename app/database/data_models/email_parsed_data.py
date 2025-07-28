@@ -65,7 +65,8 @@ class EmailParsed(Base):
     entity_mappings = Column(JSONB)  # {"Dr. McDonald": "devon_mcdonald_123"}
     
     # Relationships
-    email = relationship("Email", back_populates="parsed_data")
+    # Relationship - removed back_populates until Email model is updated
+    email = relationship("Email")
     
     # Indexes (defined at table level in migration)
     __table_args__ = (

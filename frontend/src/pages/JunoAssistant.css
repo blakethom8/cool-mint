@@ -1,0 +1,178 @@
+.juno-assistant {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f8f9fa;
+  position: relative;
+}
+
+.juno-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Filters Panel */
+.juno-filters-panel {
+  width: 300px;
+  background-color: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  position: relative;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.juno-filters-panel.collapsed {
+  width: 40px;
+}
+
+.filters-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.filters-toggle:hover {
+  background: #0056b3;
+}
+
+/* Main Content Area */
+.juno-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Tabs */
+.juno-tabs {
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 0 20px;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-button:hover {
+  color: #333;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.tab-button.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+  background-color: white;
+}
+
+.tab-badge {
+  background: #dc3545;
+  color: white;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 12px;
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+/* Loading and Error States */
+.juno-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  color: #666;
+  font-size: 18px;
+}
+
+.juno-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  color: #dc3545;
+  text-align: center;
+  padding: 20px;
+}
+
+.juno-error h3 {
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .juno-filters-panel {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .juno-content {
+    flex-direction: column;
+  }
+  
+  .juno-filters-panel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .juno-filters-panel.collapsed {
+    max-height: 40px;
+  }
+  
+  .juno-main {
+    margin: 10px;
+  }
+  
+  .tab-button {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.juno-main {
+  animation: slideIn 0.3s ease-out;
+}

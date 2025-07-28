@@ -26,6 +26,14 @@ export default defineConfig({
       '/api/relationships': {
         target: 'http://localhost:8080',
         changeOrigin: true,
+      },
+      '/api/email-actions': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+      '/api/emails': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       }
     }
   }

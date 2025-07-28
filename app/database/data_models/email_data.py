@@ -75,7 +75,8 @@ class Email(Base):
     # Relationships
     attachments = relationship("EmailAttachment", back_populates="email", cascade="all, delete-orphan")
     activities = relationship("EmailActivity", back_populates="email", cascade="all, delete-orphan")
-    parsed_data = relationship("EmailParsed", back_populates="email", uselist=False, cascade="all, delete-orphan")
+    # Commented out until EmailParsed model is created
+    # parsed_data = relationship("EmailParsed", back_populates="email", uselist=False, cascade="all, delete-orphan")
     
     # Indexes for common queries
     __table_args__ = (

@@ -61,6 +61,14 @@ export const Navigation: React.FC = () => {
               <span className="nav-icon">🤝</span>
               Relationship Manager
             </Link>
+            
+            <Link 
+              to="/juno" 
+              className={`nav-link ${isActive('/juno') ? 'active' : ''}`}
+            >
+              <span className="nav-icon">🤖</span>
+              Juno Assistant
+            </Link>
           </div>
           
           <div className="nav-section nav-section-future">

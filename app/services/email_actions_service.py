@@ -5,9 +5,7 @@ from sqlalchemy import select, func, and_, or_, desc, asc
 from sqlalchemy.orm import Session, joinedload, selectinload
 
 from database.data_models.email_actions import EmailAction, CallLogStaging, NoteStaging, ReminderStaging
-from database.data_models.email import Email
-from database.data_models.sf_models import SfUser
-from database.session import get_db
+from database.data_models.email_data import Email
 
 
 class EmailActionsService:
@@ -35,11 +33,11 @@ class EmailActionsService:
         Returns:
             Tuple of (actions list, total count)
         """
-        # Base query with joins
-        query = self.db.query(EmailAction).join(
+        # Base query with LEFT joins to handle missing emails
+        query = self.db.query(EmailAction).outerjoin(
             Email, EmailAction.email_id == Email.id
         ).options(
-            joinedload(EmailAction.email),
+            joinedload(EmailAction.email, innerjoin=False),
             selectinload(EmailAction.call_log_staging),
             selectinload(EmailAction.note_staging),
             selectinload(EmailAction.reminder_staging)
@@ -66,13 +64,14 @@ class EmailActionsService:
             query = query.filter(
                 or_(
                     Email.subject.ilike(search_pattern),
-                    Email.parsed_content.ilike(search_pattern),
+                    Email.body.ilike(search_pattern),
                     EmailAction.reasoning.ilike(search_pattern)
                 )
             )
         
         # Get total count
         total_count = query.count()
+        print(f"[DEBUG] Total email actions found: {total_count}")
         
         # Apply sorting
         sort_column = getattr(EmailAction, sort_by, EmailAction.created_at)
@@ -87,13 +86,23 @@ class EmailActionsService:
         
         # Execute query and format results
         actions = query.all()
+        print(f"[DEBUG] Actions retrieved: {len(actions)}")
         results = []
         
+        if not actions:
+            print("[DEBUG] No actions found, returning empty list")
+            return [], total_count
+        
         for action in actions:
-            # Get staging data based on action type
-            staging_data = self._get_staging_data(action)
-            
-            results.append({
+            try:
+                # Get staging data based on action type
+                staging_data = self._get_staging_data(action)
+                
+                print(f"[DEBUG] Processing action {action.id}, type: {action.action_type}, email_id: {action.email_id}")
+                print(f"[DEBUG] Email object: {action.email}")
+                
+                # Build the result item
+                result_item = {
                 'id': str(action.id),
                 'email_id': str(action.email_id),
                 'action_type': action.action_type,
@@ -105,18 +114,40 @@ class EmailActionsService:
                 'reviewed_by': action.reviewed_by,
                 'review_notes': action.review_notes,
                 'created_at': action.created_at.isoformat(),
-                'updated_at': action.updated_at.isoformat(),
-                'email': {
-                    'subject': action.email.subject,
-                    'from_email': action.email.from_email,
-                    'to_email': action.email.to_email,
-                    'date': action.email.date.isoformat() if action.email.date else None,
-                    'parsed_content': action.email.parsed_content[:200] + '...' if len(action.email.parsed_content or '') > 200 else action.email.parsed_content,
-                    'user_instruction': action.email.user_instruction
-                },
-                'staging_data': staging_data
-            })
+                'updated_at': action.updated_at.isoformat()
+                }
+                
+                # Handle date formatting - it might be an integer timestamp or datetime
+                email_date = None
+                if action.email and action.email.date:
+                    if isinstance(action.email.date, int):
+                        # Convert timestamp to datetime
+                        from datetime import datetime
+                        email_date = datetime.fromtimestamp(action.email.date).isoformat()
+                    elif hasattr(action.email.date, 'isoformat'):
+                        email_date = action.email.date.isoformat()
+                    else:
+                        email_date = str(action.email.date)
+                
+                result_item['email'] = {
+                    'subject': action.email.subject if action.email else 'No subject',
+                    'from_email': action.email.from_email if action.email else 'Unknown',
+                    'to_email': action.email.to_emails if action.email else None,
+                    'date': email_date,
+                    'parsed_content': (action.email.body[:200] + '...' if action.email and action.email.body and len(action.email.body) > 200 else action.email.body if action.email else None),
+                    'user_instruction': action.email.user_instruction if action.email else None
+                }
+                result_item['staging_data'] = staging_data
+                
+                print(f"[DEBUG] Successfully built result item for action {action.id}")
+                results.append(result_item)
+            except Exception as e:
+                print(f"[DEBUG] Error processing action {action.id}: {str(e)}")
+                import traceback
+                traceback.print_exc()
+                continue
         
+        print(f"[DEBUG] Returning {len(results)} results")
         return results, total_count
     
     def get_email_action_detail(self, action_id: UUID) -> Optional[Dict[str, Any]]:
@@ -132,6 +163,18 @@ class EmailActionsService:
             return None
         
         staging_data = self._get_staging_data(action)
+        
+        # Handle date formatting for detail endpoint
+        email_date = None
+        if action.email and action.email.date:
+            if isinstance(action.email.date, int):
+                # Convert timestamp to datetime
+                from datetime import datetime as dt
+                email_date = dt.fromtimestamp(action.email.date).isoformat()
+            elif hasattr(action.email.date, 'isoformat'):
+                email_date = action.email.date.isoformat()
+            else:
+                email_date = str(action.email.date)
         
         return {
             'id': str(action.id),
@@ -149,15 +192,15 @@ class EmailActionsService:
             'created_at': action.created_at.isoformat(),
             'updated_at': action.updated_at.isoformat(),
             'email': {
-                'id': str(action.email.id),
-                'subject': action.email.subject,
-                'from_email': action.email.from_email,
-                'to_email': action.email.to_email,
-                'date': action.email.date.isoformat() if action.email.date else None,
-                'content': action.email.content,
-                'parsed_content': action.email.parsed_content,
-                'user_instruction': action.email.user_instruction,
-                'is_forwarded': action.email.is_forwarded
+                'id': str(action.email.id) if action.email else None,
+                'subject': action.email.subject if action.email else 'No subject',
+                'from_email': action.email.from_email if action.email else 'Unknown',
+                'to_email': action.email.to_emails if action.email else None,
+                'date': email_date,
+                'content': action.email.body if action.email else None,
+                'parsed_content': action.email.body if action.email else None,  # Use body field
+                'user_instruction': action.email.user_instruction if action.email else None,
+                'is_forwarded': action.email.is_forwarded if action.email else False
             },
             'staging_data': staging_data
         }
@@ -181,12 +224,10 @@ class EmailActionsService:
             action.review_notes = updates['review_notes']
         
         # Track reviewer if status changed
-        if user_id and 'status' in updates:
+        if 'status' in updates:
             action.reviewed_at = datetime.utcnow()
-            # Get user email from SfUser
-            user = self.db.query(SfUser).filter(SfUser.id == user_id).first()
-            if user:
-                action.reviewed_by = user.email
+            # For now, just mark as reviewed by system
+            action.reviewed_by = 'system' if not user_id else f'user_{user_id}'
         
         # Update staging data if provided
         if 'staging_updates' in updates:
@@ -236,54 +277,58 @@ class EmailActionsService:
     
     def _get_staging_data(self, action: EmailAction) -> Optional[Dict[str, Any]]:
         """Get staging data based on action type"""
-        if action.action_type == 'log_call' and action.call_log_staging:
-            staging = action.call_log_staging[0] if action.call_log_staging else None
-            if staging:
-                return {
-                    'type': 'call_log',
-                    'id': str(staging.id),
-                    'subject': staging.subject,
-                    'description': staging.description,
-                    'activity_date': staging.activity_date.isoformat() if staging.activity_date else None,
-                    'duration_minutes': staging.duration_minutes,
-                    'mno_type': staging.mno_type,
-                    'mno_subtype': staging.mno_subtype,
-                    'mno_setting': staging.mno_setting,
-                    'contact_ids': staging.contact_ids,
-                    'primary_contact_id': staging.primary_contact_id,
-                    'approval_status': staging.approval_status
-                }
-        
-        elif action.action_type == 'add_note' and action.note_staging:
-            staging = action.note_staging[0] if action.note_staging else None
-            if staging:
-                return {
-                    'type': 'note',
-                    'id': str(staging.id),
-                    'note_content': staging.note_content,
-                    'note_type': staging.note_type,
-                    'related_entity_type': staging.related_entity_type,
-                    'related_entity_id': staging.related_entity_id,
-                    'related_entity_name': staging.related_entity_name,
-                    'approval_status': staging.approval_status
-                }
-        
-        elif action.action_type == 'set_reminder' and action.reminder_staging:
-            staging = action.reminder_staging[0] if action.reminder_staging else None
-            if staging:
-                return {
-                    'type': 'reminder',
-                    'id': str(staging.id),
-                    'reminder_text': staging.reminder_text,
-                    'due_date': staging.due_date.isoformat() if staging.due_date else None,
-                    'priority': staging.priority,
-                    'assignee': staging.assignee,
-                    'assignee_id': staging.assignee_id,
-                    'related_entity_type': staging.related_entity_type,
-                    'related_entity_id': staging.related_entity_id,
-                    'related_entity_name': staging.related_entity_name,
-                    'approval_status': staging.approval_status
-                }
+        try:
+            if action.action_type == 'log_call' and hasattr(action, 'call_log_staging') and action.call_log_staging:
+                staging = action.call_log_staging[0] if action.call_log_staging else None
+                if staging:
+                    return {
+                        'type': 'call_log',
+                        'id': str(staging.id),
+                        'subject': staging.subject,
+                        'description': staging.description,
+                        'activity_date': staging.activity_date.isoformat() if staging.activity_date else None,
+                        'duration_minutes': staging.duration_minutes,
+                        'mno_type': staging.mno_type,
+                        'mno_subtype': staging.mno_subtype,
+                        'mno_setting': staging.mno_setting,
+                        'contact_ids': staging.contact_ids,
+                        'primary_contact_id': staging.primary_contact_id,
+                        'approval_status': staging.approval_status
+                    }
+            
+            elif action.action_type == 'add_note' and hasattr(action, 'note_staging') and action.note_staging:
+                staging = action.note_staging[0] if action.note_staging else None
+                if staging:
+                    return {
+                        'type': 'note',
+                        'id': str(staging.id),
+                        'note_content': staging.note_content,
+                        'note_type': staging.note_type,
+                        'related_entity_type': staging.related_entity_type,
+                        'related_entity_id': staging.related_entity_id,
+                        'related_entity_name': staging.related_entity_name,
+                        'approval_status': staging.approval_status
+                    }
+            
+            elif action.action_type == 'set_reminder' and hasattr(action, 'reminder_staging') and action.reminder_staging:
+                staging = action.reminder_staging[0] if action.reminder_staging else None
+                if staging:
+                    return {
+                        'type': 'reminder',
+                        'id': str(staging.id),
+                        'reminder_text': staging.reminder_text,
+                        'due_date': staging.due_date.isoformat() if staging.due_date else None,
+                        'priority': staging.priority,
+                        'assignee': staging.assignee,
+                        'assignee_id': staging.assignee_id,
+                        'related_entity_type': staging.related_entity_type,
+                        'related_entity_id': staging.related_entity_id,
+                        'related_entity_name': staging.related_entity_name,
+                        'approval_status': staging.approval_status
+                    }
+        except Exception as e:
+            print(f"[DEBUG] Error getting staging data: {e}")
+            return None
         
         return None
     

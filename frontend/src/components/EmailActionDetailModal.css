@@ -194,6 +194,55 @@
   gap: 16px;
 }
 
+/* Contact list styles */
+.contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  background: #007bff;
+  color: white;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+.contact-chip .remove-contact {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.contact-chip .remove-contact:hover {
+  opacity: 1;
+}
+
+.contact-list input {
+  flex: 1;
+  min-width: 150px;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;

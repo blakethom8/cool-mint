@@ -5,7 +5,8 @@ import {
   DashboardStats,
   ActionResultResponse,
   EmailActionFilters,
-  EmailActionUpdateRequest
+  EmailActionUpdateRequest,
+  TransferResponse
 } from '../types/emailActions';
 
 const API_BASE_URL = '/api/email-actions';
@@ -159,6 +160,75 @@ class EmailActionsService {
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
     return date.toLocaleDateString();
+  }
+
+  /**
+   * Transfer call log from staging to sf_activities_structured
+   */
+  async transferCallLog(
+    stagingId: string,
+    userId: string,
+    finalValues: Record<string, any>
+  ): Promise<TransferResponse> {
+    const url = `${API_BASE_URL}/call-logs/${stagingId}/transfer`;
+    const payload = {
+      user_id: userId,
+      final_values: finalValues
+    };
+    
+    console.log('[DEBUG] Calling transfer API:', {
+      url,
+      payload
+    });
+    
+    try {
+      const response = await axios.post(url, payload);
+      console.log('[DEBUG] Transfer API raw response:', response);
+      return response.data;
+    } catch (error) {
+      console.error('[ERROR] Transfer API call failed:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('[ERROR] Response data:', error.response?.data);
+        console.error('[ERROR] Response status:', error.response?.status);
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * Transfer note from staging to notes table
+   */
+  async transferNote(
+    stagingId: string,
+    userId: string,
+    finalValues: Record<string, any>
+  ): Promise<TransferResponse> {
+    const response = await axios.post(
+      `${API_BASE_URL}/notes/${stagingId}/transfer`,
+      {
+        user_id: userId,
+        final_values: finalValues
+      }
+    );
+    return response.data;
+  }
+
+  /**
+   * Transfer reminder from staging to reminders table
+   */
+  async transferReminder(
+    stagingId: string,
+    userId: string,
+    finalValues: Record<string, any>
+  ): Promise<TransferResponse> {
+    const response = await axios.post(
+      `${API_BASE_URL}/reminders/${stagingId}/transfer`,
+      {
+        user_id: userId,
+        final_values: finalValues
+      }
+    );
+    return response.data;
   }
 }
 

@@ -6,6 +6,9 @@ from sqlalchemy.orm import Session, joinedload, selectinload
 
 from database.data_models.email_actions import EmailAction, CallLogStaging, NoteStaging, ReminderStaging
 from database.data_models.email_data import Email
+from database.data_models.salesforce_data import SfActivityStructured
+from database.data_models.crm_general import Notes
+from database.data_models.relationship_management import Reminders
 
 
 class EmailActionsService:
@@ -354,3 +357,257 @@ class EmailActionsService:
                 if hasattr(staging, field):
                     setattr(staging, field, value)
             staging.user_modifications = staging_updates
+    
+    def transfer_call_log_to_activity(
+        self,
+        staging_id: UUID,
+        user_id: str,
+        final_values: Dict[str, Any],
+        additional_data: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        Transfer a call log from staging to sf_activities_structured table.
+        
+        Creates a new structured activity record and updates the staging record
+        with the transfer status and relationship.
+        """
+        # Get the staging record
+        staging = self.db.query(CallLogStaging).filter(CallLogStaging.id == staging_id).first()
+        if not staging:
+            raise ValueError(f"Call log staging record {staging_id} not found")
+        
+        # Check if already transferred
+        if staging.transferred_to_activity_id:
+            raise ValueError(f"Call log staging record {staging_id} has already been transferred")
+        
+        # Parse activity date if it's a string
+        activity_date = final_values.get('activity_date') or staging.activity_date
+        if isinstance(activity_date, str):
+            try:
+                # Handle ISO format from frontend
+                activity_date = datetime.fromisoformat(activity_date.replace('Z', '+00:00'))
+            except:
+                activity_date = datetime.utcnow()
+        elif not activity_date:
+            activity_date = datetime.utcnow()
+            
+        print(f"[DEBUG] Creating activity with date: {activity_date}")
+        
+        # Create structured activity record using final values from user
+        structured_activity = SfActivityStructured(
+            activity_date=activity_date,
+            subject=final_values.get('subject', staging.subject),
+            description=final_values.get('description', staging.description),
+            status='Completed',
+            priority=final_values.get('priority', 'Normal'),
+            mno_type=final_values.get('mno_type', staging.mno_type),
+            mno_subtype=final_values.get('mno_subtype', staging.mno_subtype),
+            mno_setting=final_values.get('mno_setting', staging.mno_setting),
+            type='Task',
+            owner_id=user_id,
+            user_name=additional_data.get('user_name', '') if additional_data else '',
+            
+            # Contact information from final values
+            contact_count=len(final_values.get('contact_ids', staging.contact_ids or [])),
+            contact_names=final_values.get('contact_ids', staging.contact_ids if isinstance(staging.contact_ids, list) else []),
+            
+            # Required fields
+            salesforce_activity_id=f'STG_{str(staging_id)[:14]}',  # Temporary ID (max 18 chars)
+            source_activity_id=None,  # No SF activity record for email actions
+            
+            # LLM context with delta tracking
+            llm_context_json={
+                'staging_id': str(staging_id),
+                'email_action_id': str(staging.email_action_id),
+                'original_llm_values': {
+                    'subject': staging.subject,
+                    'description': staging.description,
+                    'activity_date': staging.activity_date.isoformat() if staging.activity_date else None,
+                    'mno_type': staging.mno_type,
+                    'mno_subtype': staging.mno_subtype,
+                    'mno_setting': staging.mno_setting,
+                    'contacts': staging.contact_ids,
+                    'suggested_values': staging.suggested_values
+                },
+                'user_final_values': final_values,
+                'delta_summary': {
+                    'subject_changed': final_values.get('subject') != staging.subject,
+                    'description_changed': final_values.get('description') != staging.description,
+                    'date_changed': final_values.get('activity_date') != staging.activity_date,
+                    'type_changed': final_values.get('mno_type') != staging.mno_type
+                }
+            }
+        )
+        
+        self.db.add(structured_activity)
+        self.db.flush()  # Get the ID without committing
+        
+        # Update staging record
+        staging.transferred_to_activity_id = structured_activity.id
+        staging.transfer_status = 'completed'
+        staging.transferred_at = datetime.utcnow()
+        staging.approval_status = 'transferred'
+        
+        # Update email action status
+        email_action = self.db.query(EmailAction).filter(EmailAction.id == staging.email_action_id).first()
+        if email_action:
+            email_action.status = 'completed'
+            email_action.executed_at = datetime.utcnow()
+            email_action.execution_result = {
+                'activity_id': str(structured_activity.id),
+                'transfer_type': 'call_log',
+                'transferred_at': datetime.utcnow().isoformat()
+            }
+        
+        try:
+            self.db.commit()
+            print(f"[DEBUG] Successfully committed activity {structured_activity.id} to database")
+            
+            # Verify the record was created
+            verify = self.db.query(SfActivityStructured).filter(
+                SfActivityStructured.id == structured_activity.id
+            ).first()
+            if verify:
+                print(f"[DEBUG] Verified activity exists: ID={verify.id}, Subject={verify.subject}")
+            else:
+                print(f"[ERROR] Activity {structured_activity.id} not found after commit!")
+                
+        except Exception as e:
+            print(f"[ERROR] Failed to commit activity: {e}")
+            self.db.rollback()
+            raise
+        
+        return {
+            'activity_id': str(structured_activity.id),
+            'staging_id': str(staging_id),
+            'status': 'completed',
+            'message': 'Call log transferred successfully'
+        }
+    
+    def transfer_note_to_persistent(
+        self,
+        staging_id: UUID,
+        user_id: str,
+        final_values: Dict[str, Any],
+        additional_data: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        Transfer a note from staging to notes table.
+        
+        Creates a new note record and updates the staging record
+        with the transfer status and relationship.
+        """
+        # Get the staging record
+        staging = self.db.query(NoteStaging).filter(NoteStaging.id == staging_id).first()
+        if not staging:
+            raise ValueError(f"Note staging record {staging_id} not found")
+        
+        # Check if already transferred
+        if staging.transferred_to_note_id:
+            raise ValueError(f"Note staging record {staging_id} has already been transferred")
+        
+        # Create note record using final values from user
+        note = Notes(
+            user_id=int(user_id) if user_id.isdigit() else 1,  # Convert to int or default
+            linked_entity_type=final_values.get('related_entity_type', staging.related_entity_type or 'Contact'),
+            linked_entity_id=staging.email_action_id,  # Use email action ID for now
+            note_content=final_values.get('note_content', staging.note_content),
+            llm_processing_status='Pending',
+            # Store original LLM values and user edits for QC
+            llm_topics=[{
+                'original_llm_content': staging.note_content,
+                'user_final_content': final_values.get('note_content', staging.note_content),
+                'content_changed': final_values.get('note_content') != staging.note_content,
+                'original_entity_type': staging.related_entity_type,
+                'final_entity_type': final_values.get('related_entity_type', staging.related_entity_type)
+            }]
+        )
+        
+        self.db.add(note)
+        self.db.flush()  # Get the ID without committing
+        
+        # Update staging record
+        staging.transferred_to_note_id = note.note_id
+        staging.transfer_status = 'completed'
+        staging.transferred_at = datetime.utcnow()
+        staging.approval_status = 'transferred'
+        
+        # Update email action status
+        email_action = self.db.query(EmailAction).filter(EmailAction.id == staging.email_action_id).first()
+        if email_action:
+            email_action.status = 'completed'
+            email_action.executed_at = datetime.utcnow()
+            email_action.execution_result = {
+                'note_id': str(note.note_id),
+                'transfer_type': 'note',
+                'transferred_at': datetime.utcnow().isoformat()
+            }
+        
+        self.db.commit()
+        
+        return {
+            'note_id': note.note_id,
+            'staging_id': staging_id,
+            'status': 'completed'
+        }
+    
+    def transfer_reminder_to_persistent(
+        self,
+        staging_id: UUID,
+        user_id: str,
+        final_values: Dict[str, Any],
+        additional_data: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        Transfer a reminder from staging to reminders table.
+        
+        Creates a new reminder record and updates the staging record
+        with the transfer status and relationship.
+        """
+        # Get the staging record
+        staging = self.db.query(ReminderStaging).filter(ReminderStaging.id == staging_id).first()
+        if not staging:
+            raise ValueError(f"Reminder staging record {staging_id} not found")
+        
+        # Check if already transferred
+        if staging.transferred_to_reminder_id:
+            raise ValueError(f"Reminder staging record {staging_id} has already been transferred")
+        
+        # Create reminder record using final values from user  
+        reminder = Reminders(
+            user_id=int(user_id) if user_id.isdigit() else 1,  # Convert to int or default
+            linked_entity_type=final_values.get('related_entity_type', staging.related_entity_type or 'Contact'),
+            linked_entity_id=staging.email_action_id,  # Use email action ID for now
+            reminder_type=final_values.get('reminder_type', 'task'),
+            description=final_values.get('reminder_text', staging.reminder_text),
+            due_date=final_values.get('due_date', staging.due_date),
+            is_completed=False
+        )
+        
+        self.db.add(reminder)
+        self.db.flush()  # Get the ID without committing
+        
+        # Update staging record
+        staging.transferred_to_reminder_id = reminder.reminder_id
+        staging.transfer_status = 'completed'
+        staging.transferred_at = datetime.utcnow()
+        staging.approval_status = 'transferred'
+        
+        # Update email action status
+        email_action = self.db.query(EmailAction).filter(EmailAction.id == staging.email_action_id).first()
+        if email_action:
+            email_action.status = 'completed'
+            email_action.executed_at = datetime.utcnow()
+            email_action.execution_result = {
+                'reminder_id': str(reminder.reminder_id),
+                'transfer_type': 'reminder',
+                'transferred_at': datetime.utcnow().isoformat()
+            }
+        
+        self.db.commit()
+        
+        return {
+            'reminder_id': reminder.reminder_id,
+            'staging_id': staging_id,
+            'status': 'completed'
+        }

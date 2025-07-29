@@ -343,7 +343,7 @@ class SfActivityStructured(Base):
     # Primary Keys & References
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     source_activity_id = Column(
-        UUID(as_uuid=True), ForeignKey("sf_activities.id"), nullable=False, index=True
+        UUID(as_uuid=True), ForeignKey("sf_activities.id"), nullable=True, index=True
     )
     salesforce_activity_id = Column(
         String(18), nullable=False, index=True

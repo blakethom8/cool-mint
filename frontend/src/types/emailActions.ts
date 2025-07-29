@@ -119,6 +119,26 @@ export interface EmailActionUpdateRequest {
   staging_updates?: Record<string, any>;
 }
 
+// Transfer API Types
+export interface TransferRequest {
+  user_id: string;
+  final_values: Record<string, any>;
+  additional_data?: Record<string, any>;
+}
+
+export interface TransferResponse {
+  success: boolean;
+  message: string;
+  activity_id?: string;
+  note_id?: string;
+  reminder_id?: string;
+  staging_id: string;
+  transfer_details?: {
+    delta_fields?: Record<string, any>;
+    original_values?: Record<string, any>;
+  };
+}
+
 // Component State Types
 export interface JunoAssistantState {
   actions: EmailAction[];

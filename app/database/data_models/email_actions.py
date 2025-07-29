@@ -8,6 +8,11 @@ from sqlalchemy.orm import relationship
 
 from database.session import Base
 
+# Import related models for relationships
+from database.data_models.crm_general import Notes
+from database.data_models.relationship_management import Reminders
+from database.data_models.salesforce_data import SfActivityStructured
+
 
 class EmailAction(Base):
     """Stores classified actions extracted from emails"""
@@ -91,12 +96,19 @@ class CallLogStaging(Base):
     approved_by = Column(String(255))
     approved_at = Column(DateTime(timezone=True))
     
+    # Transfer tracking
+    transferred_to_activity_id = Column(PostgresUUID(as_uuid=True), ForeignKey("sf_activities_structured.id"))
+    transfer_status = Column(String(20))  # 'pending', 'completed', 'failed'
+    transferred_at = Column(DateTime(timezone=True))
+    transfer_error = Column(Text)  # Error details if transfer failed
+    
     # Timestamps
     created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
     email_action = relationship("EmailAction", backref="call_log_staging")
+    transferred_activity = relationship("SfActivityStructured", foreign_keys=[transferred_to_activity_id])
 
 
 class NoteStaging(Base):
@@ -128,12 +140,19 @@ class NoteStaging(Base):
     approved_by = Column(String(255))
     approved_at = Column(DateTime(timezone=True))
     
+    # Transfer tracking
+    transferred_to_note_id = Column(PostgresUUID(as_uuid=True), ForeignKey("notes.note_id"))
+    transfer_status = Column(String(20))  # 'pending', 'completed', 'failed'
+    transferred_at = Column(DateTime(timezone=True))
+    transfer_error = Column(Text)  # Error details if transfer failed
+    
     # Timestamps
     created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
     email_action = relationship("EmailAction", backref="note_staging")
+    transferred_note = relationship("Notes", foreign_keys=[transferred_to_note_id])
 
 
 class ReminderStaging(Base):
@@ -170,12 +189,19 @@ class ReminderStaging(Base):
     approved_by = Column(String(255))
     approved_at = Column(DateTime(timezone=True))
     
+    # Transfer tracking
+    transferred_to_reminder_id = Column(PostgresUUID(as_uuid=True), ForeignKey("reminders.reminder_id"))
+    transfer_status = Column(String(20))  # 'pending', 'completed', 'failed'
+    transferred_at = Column(DateTime(timezone=True))
+    transfer_error = Column(Text)  # Error details if transfer failed
+    
     # Timestamps
     created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
     email_action = relationship("EmailAction", backref="reminder_staging")
+    transferred_reminder = relationship("Reminders", foreign_keys=[transferred_to_reminder_id])
     
     # Indexes
     __table_args__ = (

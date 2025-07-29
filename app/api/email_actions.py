@@ -183,40 +183,9 @@ async def get_email_action_detail(
     return EmailActionResponse(**action)
 
 
-@router.patch("/{action_id}", response_model=EmailActionResponse)
-async def update_email_action(
-    action_id: UUID,
-    request: EmailActionUpdateRequest,
-    db: Session = Depends(db_session)
-):
-    """
-    Update an email action and its staging data.
-    
-    Allows updating status, review notes, and staging data fields.
-    """
-    service = EmailActionsService(db)
-    
-    updates = {}
-    if request.status is not None:
-        updates['status'] = request.status
-    if request.review_notes is not None:
-        updates['review_notes'] = request.review_notes
-    if request.staging_updates is not None:
-        updates['staging_updates'] = request.staging_updates
-    
-    action = service.update_email_action(
-        action_id=action_id,
-        updates=updates,
-        user_id=None
-    )
-    
-    if not action:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Email action not found"
-        )
-    
-    return EmailActionResponse(**action)
+# Note: PATCH endpoint removed to preserve staging data integrity
+# Original staging data should remain unchanged for QC and testing purposes
+# Use transfer endpoints with final_values instead
 
 
 @router.post("/{action_id}/approve", response_model=ActionResultResponse)
@@ -293,3 +262,163 @@ async def reject_email_action(
         message="Action rejected successfully. Juno will learn from this feedback.",
         action_id=str(action_id)
     )
+
+
+# Transfer endpoints for staging to persistent data
+class TransferRequest(BaseModel):
+    user_id: str = Field(..., description="ID of the user performing the transfer")
+    final_values: Dict[str, Any] = Field(..., description="Final values from user form submission")
+    additional_data: Optional[Dict[str, Any]] = Field(None, description="Additional data for the transfer")
+
+
+class TransferResponse(BaseModel):
+    success: bool
+    message: str
+    staging_id: str
+    transferred_id: Optional[str] = None
+    transfer_status: str
+    error_details: Optional[str] = None
+
+
+@router.post("/call-logs/{staging_id}/transfer", response_model=TransferResponse)
+async def transfer_call_log(
+    staging_id: UUID,
+    request: TransferRequest,
+    db: Session = Depends(db_session)
+):
+    """
+    Transfer a call log from staging to sf_activities_structured table.
+    
+    This creates a new structured activity record and updates the staging record
+    with the transfer status and relationship.
+    """
+    service = EmailActionsService(db)
+    
+    try:
+        result = service.transfer_call_log_to_activity(
+            staging_id=staging_id,
+            user_id=request.user_id,
+            final_values=request.final_values,
+            additional_data=request.additional_data
+        )
+        
+        return TransferResponse(
+            success=True,
+            message="Call log transferred successfully",
+            staging_id=str(staging_id),
+            transferred_id=str(result['activity_id']),
+            transfer_status="completed"
+        )
+    except ValueError as e:
+        return TransferResponse(
+            success=False,
+            message=str(e),
+            staging_id=str(staging_id),
+            transfer_status="failed",
+            error_details=str(e)
+        )
+    except Exception as e:
+        db.rollback()
+        return TransferResponse(
+            success=False,
+            message="Transfer failed due to an error",
+            staging_id=str(staging_id),
+            transfer_status="failed",
+            error_details=str(e)
+        )
+
+
+@router.post("/notes/{staging_id}/transfer", response_model=TransferResponse)
+async def transfer_note(
+    staging_id: UUID,
+    request: TransferRequest,
+    db: Session = Depends(db_session)
+):
+    """
+    Transfer a note from staging to notes table.
+    
+    This creates a new note record and updates the staging record
+    with the transfer status and relationship.
+    """
+    service = EmailActionsService(db)
+    
+    try:
+        result = service.transfer_note_to_persistent(
+            staging_id=staging_id,
+            user_id=request.user_id,
+            final_values=request.final_values,
+            additional_data=request.additional_data
+        )
+        
+        return TransferResponse(
+            success=True,
+            message="Note transferred successfully",
+            staging_id=str(staging_id),
+            transferred_id=str(result['note_id']),
+            transfer_status="completed"
+        )
+    except ValueError as e:
+        return TransferResponse(
+            success=False,
+            message=str(e),
+            staging_id=str(staging_id),
+            transfer_status="failed",
+            error_details=str(e)
+        )
+    except Exception as e:
+        db.rollback()
+        return TransferResponse(
+            success=False,
+            message="Transfer failed due to an error",
+            staging_id=str(staging_id),
+            transfer_status="failed",
+            error_details=str(e)
+        )
+
+
+@router.post("/reminders/{staging_id}/transfer", response_model=TransferResponse)
+async def transfer_reminder(
+    staging_id: UUID,
+    request: TransferRequest,
+    db: Session = Depends(db_session)
+):
+    """
+    Transfer a reminder from staging to reminders table.
+    
+    This creates a new reminder record and updates the staging record
+    with the transfer status and relationship.
+    """
+    service = EmailActionsService(db)
+    
+    try:
+        result = service.transfer_reminder_to_persistent(
+            staging_id=staging_id,
+            user_id=request.user_id,
+            final_values=request.final_values,
+            additional_data=request.additional_data
+        )
+        
+        return TransferResponse(
+            success=True,
+            message="Reminder transferred successfully",
+            staging_id=str(staging_id),
+            transferred_id=str(result['reminder_id']),
+            transfer_status="completed"
+        )
+    except ValueError as e:
+        return TransferResponse(
+            success=False,
+            message=str(e),
+            staging_id=str(staging_id),
+            transfer_status="failed",
+            error_details=str(e)
+        )
+    except Exception as e:
+        db.rollback()
+        return TransferResponse(
+            success=False,
+            message="Transfer failed due to an error",
+            staging_id=str(staging_id),
+            transfer_status="failed",
+            error_details=str(e)
+        )

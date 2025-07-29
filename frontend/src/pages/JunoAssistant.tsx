@@ -93,8 +93,9 @@ const JunoAssistant: React.FC = () => {
       // Filter based on tab if needed
       let filteredActions = response.items || [];
       if (state.activeTab === 'completed') {
+        // Only show Juno-assisted entries (those with staging data) that are completed
         filteredActions = filteredActions.filter(
-          action => action.status !== 'pending'
+          action => action.status !== 'pending' && action.staging_data !== null && action.staging_data !== undefined
         );
       }
 
@@ -399,7 +400,12 @@ const JunoAssistant: React.FC = () => {
       {showDetailModal && state.selectedAction && (
         <EmailActionDetailModal
           action={state.selectedAction}
-          onClose={() => setShowDetailModal(false)}
+          onClose={() => {
+            setShowDetailModal(false);
+            // Reload data after modal closes
+            loadActions();
+            loadDashboardStats();
+          }}
           onUpdate={handleActionUpdate}
           onApprove={handleActionApprove}
           onReject={handleActionReject}

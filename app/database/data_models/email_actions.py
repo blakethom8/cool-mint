@@ -11,7 +11,7 @@ from database.session import Base
 # Import related models for relationships
 from database.data_models.crm_general import Notes
 from database.data_models.relationship_management import Reminders
-from database.data_models.salesforce_data import SfActivityStructured
+from database.data_models.salesforce_data import SfActivityStructured, SfUser
 
 
 class EmailAction(Base):
@@ -91,6 +91,14 @@ class CallLogStaging(Base):
     suggested_values = Column(JSONB)  # Original AI suggestions
     user_modifications = Column(JSONB)  # Track what user changed
     
+    # Entity matching fields
+    matched_participant_ids = Column(JSONB)  # List of matched participant details
+    unmatched_participants = Column(JSONB)  # List of unmatched participant names
+    entity_match_status = Column(String(20))  # 'all_matched', 'partial_matched', 'none_matched'
+    
+    # User tracking
+    created_by = Column(Integer, ForeignKey('sf_users.id'))
+    
     # Approval tracking
     approval_status = Column(String(20), default='pending')  # 'pending', 'approved', 'rejected'
     approved_by = Column(String(255))
@@ -109,6 +117,7 @@ class CallLogStaging(Base):
     # Relationships
     email_action = relationship("EmailAction", backref="call_log_staging")
     transferred_activity = relationship("SfActivityStructured", foreign_keys=[transferred_to_activity_id])
+    created_by_user = relationship("SfUser", foreign_keys=[created_by])
 
 
 class NoteStaging(Base):
@@ -126,14 +135,26 @@ class NoteStaging(Base):
     note_content = Column(Text, nullable=False)
     note_type = Column(String(50))  # 'general', 'meeting', 'follow_up'
     
+    # LLM-extracted fields
+    llm_topics = Column(JSONB)  # LLM-extracted key topics
+    llm_sentiment = Column(String(50))  # LLM-detected sentiment
+    
     # Related entity (what the note is attached to)
     related_entity_type = Column(String(50))  # 'contact', 'account', 'opportunity'
     related_entity_id = Column(String(255))  # ID of the entity
     related_entity_name = Column(String(255))  # Name for display
     
+    # Entity matching results
+    matched_entity_ids = Column(JSONB)  # Array of matched entities with confidence scores
+    unmatched_entities = Column(JSONB)  # Array of entities we couldn't resolve
+    entity_match_status = Column(String(20))  # 'all_matched', 'partial_matched', 'none_matched'
+    
     # AI suggestions vs user modifications
     suggested_values = Column(JSONB)
     user_modifications = Column(JSONB)
+    
+    # User tracking
+    created_by = Column(Integer, ForeignKey("sf_users.id"))  # User who initiated the note
     
     # Approval tracking
     approval_status = Column(String(20), default='pending')
@@ -153,6 +174,7 @@ class NoteStaging(Base):
     # Relationships
     email_action = relationship("EmailAction", backref="note_staging")
     transferred_note = relationship("Notes", foreign_keys=[transferred_to_note_id])
+    created_by_user = relationship("SfUser", foreign_keys=[created_by])
 
 
 class ReminderStaging(Base):
@@ -184,6 +206,17 @@ class ReminderStaging(Base):
     suggested_values = Column(JSONB)
     user_modifications = Column(JSONB)
     
+    # Entity matching fields
+    matched_entity_ids = Column(JSONB)  # List of matched entity IDs
+    unmatched_entities = Column(JSONB)  # List of unmatched entity names
+    entity_match_status = Column(String(20))  # 'all_matched', 'partial_matched', 'none_matched'
+    
+    # LLM fields
+    llm_reminder_category = Column(String(50))  # 'follow_up', 'check_in', 'task', 'deadline'
+    
+    # User tracking
+    created_by = Column(Integer, ForeignKey('sf_users.id'))
+    
     # Approval tracking
     approval_status = Column(String(20), default='pending')
     approved_by = Column(String(255))
@@ -202,6 +235,7 @@ class ReminderStaging(Base):
     # Relationships
     email_action = relationship("EmailAction", backref="reminder_staging")
     transferred_reminder = relationship("Reminders", foreign_keys=[transferred_to_reminder_id])
+    created_by_user = relationship("SfUser", foreign_keys=[created_by])
     
     # Indexes
     __table_args__ = (

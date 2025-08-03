@@ -9,6 +9,7 @@ from workflows.email_actions.email_actions_nodes import (
     AddNoteExtractionNode,
     SetReminderExtractionNode,
     UnknownActionNode,
+    EntityMatchingNode,
     CreateStagingRecordNode
 )
 
@@ -39,18 +40,23 @@ class EmailActionsWorkflow(Workflow):
             ),
             NodeConfig(
                 node=LogCallExtractionNode,
-                connections=[CreateStagingRecordNode],
+                connections=[EntityMatchingNode],
                 description="Extract call/meeting log parameters"
             ),
             NodeConfig(
                 node=AddNoteExtractionNode,
-                connections=[CreateStagingRecordNode],
+                connections=[EntityMatchingNode],
                 description="Extract note parameters"
             ),
             NodeConfig(
                 node=SetReminderExtractionNode,
-                connections=[CreateStagingRecordNode],
+                connections=[EntityMatchingNode],  # Now route through entity matching
                 description="Extract reminder parameters"
+            ),
+            NodeConfig(
+                node=EntityMatchingNode,
+                connections=[CreateStagingRecordNode],
+                description="Match extracted entities to database records"
             ),
             NodeConfig(
                 node=UnknownActionNode,

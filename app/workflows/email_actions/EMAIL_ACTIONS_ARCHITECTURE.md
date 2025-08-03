@@ -55,7 +55,7 @@ Email → NylasEmailService → Email Table (with enhanced fields)
 ### 2. Workflow Processing
 ```python
 # EmailActionsWorkflow processes the email
-Email → IntentClassificationNode → ActionRouterNode → ExtractionNode → CreateStagingRecordNode
+Email → IntentClassificationNode → ActionRouterNode → ExtractionNode → EntityMatchingNode → CreateStagingRecordNode
 ```
 
 ### 3. Data Storage
@@ -282,16 +282,32 @@ CREATE TABLE reminders_staging (
 - Calculates dates from relative references
 - Identifies related entities
 
-### 4. CreateStagingRecordNode
+### 4. EntityMatchingNode
+**Purpose:** Matches extracted entities (people, organizations) to database records
+
+**Key Features:**
+- Uses EntityMatchingService to find contacts/accounts in database
+- Handles name variations (Dr. Smith vs Robert Smith)
+- Returns confidence scores for matches
+- Processes all entities extracted by previous nodes
+
+**Entity Matching Process:**
+1. Collects entities from extraction nodes
+2. Searches database using fuzzy matching
+3. Returns matched IDs and unmatched entities
+4. Sets overall match status (all_matched, partial_matched, none_matched)
+
+### 5. CreateStagingRecordNode
 **Purpose:** Creates database records for extracted data
 
 **Process:**
 1. Creates EmailAction master record
-2. Creates action-specific staging record
-3. Stores original AI suggestions
-4. Sets status to 'pending'
+2. Creates ONE staging record per email (single-record pattern)
+3. Stores all matched/unmatched entities in JSONB fields
+4. Sets primary entity for backward compatibility
+5. Sets status to 'pending'
 
-### 5. UnknownActionNode
+### 6. UnknownActionNode
 **Purpose:** Handles unclassified or ambiguous requests
 
 **Actions:**

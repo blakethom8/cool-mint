@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from datetime import datetime, timedelta
 from pydantic import BaseModel, Field
 
@@ -25,6 +25,9 @@ Extract the following:
 3. **Priority**: High, Normal, or Low based on context
 4. **Assignee**: Who should handle this (default to email sender)
 5. **Related Entity**: Who/what this reminder is about
+6. **All Mentioned Entities**: Extract ALL people and organizations mentioned
+   - Include the assignee as an entity
+   - Include any contacts, accounts, or opportunities referenced
 
 Date parsing examples:
 - "in 60 days" → calculate date 60 days from today
@@ -48,6 +51,12 @@ Be specific about what action needs to be taken.""",
         assignee_name: Optional[str] = Field(None, description="Who should handle this")
         related_entity_name: Optional[str] = Field(None, description="Related person/account")
         
+        # Entity extraction for matching
+        mentioned_entities: List[Dict[str, str]] = Field(
+            default_factory=list,
+            description="All entities mentioned: [{'name': 'Dr. Smith', 'type': 'contact'}, {'name': 'ABC Corp', 'type': 'account'}]"
+        )
+        
         # Additional context
         reminder_type: str = Field("follow_up", description="Type: follow_up, check_in, task, deadline")
         original_context: str = Field(..., description="Context from the email")
@@ -69,7 +78,7 @@ Be specific about what action needs to be taken.""",
         result = self.agent.run_sync(
             user_prompt=f"""Extract reminder information from this email:
 
-From: {event.from_email} ({event.from_name or 'Unknown'})
+From: {event.from_email}
 Subject: {event.subject}
 Today's Date: {today.strftime('%Y-%m-%d')}
 
@@ -101,7 +110,26 @@ Extract reminder details and parse any relative dates based on today's date.""",
                     pass
         
         # Default assignee to sender if not specified
-        assignee = result.output.assignee_name or event.from_name or event.from_email
+        assignee = result.output.assignee_name or event.from_email
+        
+        # Build entity list from extracted data
+        entities = result.output.mentioned_entities.copy()
+        
+        # Add assignee as an entity if not already in list
+        if assignee and not any(e.get("name") == assignee for e in entities):
+            entities.append({
+                "name": assignee,
+                "type": "contact"
+            })
+        
+        # Add related entity if not already in list
+        if result.output.related_entity_name and not any(
+            e.get("name") == result.output.related_entity_name for e in entities
+        ):
+            entities.append({
+                "name": result.output.related_entity_name,
+                "type": "contact"  # Default to contact, could be account
+            })
         
         # Prepare reminder parameters
         reminder_data = {
@@ -112,6 +140,7 @@ Extract reminder details and parse any relative dates based on today's date.""",
             "related_entity_name": result.output.related_entity_name,
             "reminder_type": result.output.reminder_type,
             "original_context": result.output.original_context,
+            "mentioned_entities": entities,
         }
         
         task_context.update_node(

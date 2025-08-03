@@ -4,7 +4,9 @@
 from .intent_classification_node import IntentClassificationNode
 from .action_router_node import ActionRouterNode
 from .create_staging_record_node import CreateStagingRecordNode
+from .create_staging_record_testing_node import CreateStagingRecordTestingNode
 from .unknown_action_node import UnknownActionNode
+from .entity_matching_node import EntityMatchingNode
 
 # Import action-specific nodes
 from .log_call.log_call_extraction_node import LogCallExtractionNode
@@ -15,7 +17,9 @@ __all__ = [
     'IntentClassificationNode',
     'ActionRouterNode',
     'CreateStagingRecordNode',
+    'CreateStagingRecordTestingNode',
     'UnknownActionNode',
+    'EntityMatchingNode',
     'LogCallExtractionNode',
     'SetReminderExtractionNode',
     'AddNoteExtractionNode',

@@ -14,10 +14,10 @@ class ActionRouterNode(BaseRouter):
     def route(self, task_context: TaskContext):
         """Determine which node to route to based on action classification"""
         # Import nodes here to avoid circular imports
-        from workflows.email_actions.add_note_extraction_node import AddNoteExtractionNode
-        from workflows.email_actions.log_call_extraction_node import LogCallExtractionNode
-        from workflows.email_actions.set_reminder_extraction_node import SetReminderExtractionNode
-        from workflows.email_actions.unknown_action_node import UnknownActionNode
+        from workflows.email_actions.email_actions_nodes.add_note.add_note_extraction_node import AddNoteExtractionNode
+        from workflows.email_actions.email_actions_nodes.log_call.log_call_extraction_node import LogCallExtractionNode
+        from workflows.email_actions.email_actions_nodes.set_reminder.set_reminder_extraction_node import SetReminderExtractionNode
+        from workflows.email_actions.email_actions_nodes.unknown_action_node import UnknownActionNode
         
         # Get the classification results
         classification_data = task_context.nodes.get("IntentClassificationNode", {})

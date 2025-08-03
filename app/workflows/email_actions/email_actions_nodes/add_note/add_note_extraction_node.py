@@ -53,7 +53,7 @@ If the email contains a thread or meeting notes, structure them clearly.""",
         initial_params = classification.get("initial_parameters", {})
         
         # Get email content
-        content = event.content_for_analysis
+        content = event.content
         
         # Run extraction
         result = self.agent.run_sync(

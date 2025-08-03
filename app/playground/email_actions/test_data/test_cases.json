@@ -1,0 +1,24 @@
+[
+  {
+    "name": "log_call_md_to_md",
+    "user_instruction": "log an MD-to-MD lunch meeting with Dr. McDonald",
+    "expected_action": "log_call",
+    "expected_fields": {
+      "mno_type": "MD_to_MD_Visits",
+      "is_md_to_md": true
+    }
+  },
+  {
+    "name": "set_reminder_follow_up",
+    "user_instruction": "remind me to follow up with them in 60 days",
+    "expected_action": "set_reminder",
+    "expected_fields": {
+      "due_days": 60
+    }
+  },
+  {
+    "name": "add_note_capture",
+    "user_instruction": "capture the notes from this thread",
+    "expected_action": "add_note"
+  }
+]

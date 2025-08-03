@@ -399,3 +399,153 @@ cd frontend && npm run dev
     - [ ] Security testing
     - [ ] Data integrity tests
     - [ ] Performance benchmarks
+
+
+# July 27 - Email AI Assistant
+
+Review EMAIL_ARCHITECTURE.md to understand the email system design
+     ☒ Check Nylas configuration in app/config
+     ☒ Examine existing email CRM files for reference implementation
+     ☒ Test Nylas connection with existing credentials
+     ☒ Set up Pinggy tunnel and configure webhook
+     ☒ Create manual email sync script for development
+     ☒ Reorganize Nylas email files into services/nylas_email folder
+     ☒ Sync latest emails and analyze lunch scheduling thread
+     ☒ Design agentic actions for forwarded emails
+     ☒ Build AI assistant functionality for email processing
+     ☒ Create forward_email_parsing directory structure
+     ☒ Write EMAIL_PARSING_ARCHITECTURE.md documentation
+     ☒ Create emails_parsed table migration
+     ☒ Implement EmailParsingEventSchema
+     ☒ Create EmailParsingWorkflow base structure
+     ☒ Implement all workflow nodes
+     ☒ Fix langfuse import issue
+     ☒ Configure API keys and switch to Anthropic
+     ☒ Successfully test email parsing workflow
+     ☒ Create flexible model configuration system
+     ☒ Implement workflow-specific model configuration
+     ☒ Fix hardcoded model_used field to dynamically capture actual model
+     ☒ Add new fields to Email model for Nylas enhancements
+     ☒ Update NylasEmailService to parse forwarded emails
+     ☒ Create database migration for new email fields
+     ☒ Design email_actions table structure
+     ☒ Create staging tables for each action type
+     ☒ Build EmailActionsWorkflow with intent classification
+     ☒ Implement action-specific extraction nodes
+     ☒ Create database migration for email actions tables
+     ☒ Test EmailActionsWorkflow with sample emails
+     ☒ Set up webhook endpoint for Pingy integration
+     ☒ Create database models for storing emails
+     ☒ Implement email sync functionality
+     ☒ Create email processing workflow
+     ☒ Add toggle configuration for webhook vs manual sync
+     ☒ Update test script to accept email ID parameter
+     ☒ Add helper methods to Email model
+     ☒ Test enhanced email sync with parsed content
+     ☐ Test webhook integration end-to-end
+     ☐ Create user approval interface for staged actions
+
+
+    # Below si the todo to add the emails portion to our Juno frontend
+      ☒ Create backend Email Actions Service with listing and detail endpoints              
+     ☒ Create Email Actions API endpoints (list, detail, stats, placeholder approve/reject)
+     ☒ Create TypeScript types for Email Actions frontend
+     ☒ Create Email Actions API service client for frontend
+     ☒ Create JunoAssistant main page component with layout
+     ☒ Debug why email actions are not showing in the UI
+     ☒ Create email service for listing emails from database
+     ☒ Create GET /api/emails endpoint for listing emails
+     ☒ Create POST /api/emails/sync endpoint for manual sync
+     ☒ Create POST /api/emails/{email_id}/process endpoint for workflow
+     ☒ Add workflow triggering functionality to backend
+     ☒ Create synchronous test script for core functionality
+     ☒ Test basic Celery functionality with hello world task
+     ☒ Test full async email processing workflow
+     ☒ Comment out duplicate prevention and test API
+     ☒ Create JunoHeader component with branding and stats
+     ☒ Create EmailActionsList component for displaying action cards
+     ☒ Create EmailActionCard component for individual action preview
+     ☒ Create EmailActionDetailModal for reviewing/editing actions
+     ☒ Add Emails tab to JunoAssistant page
+     ☒ Create EmailsList component with table view
+     ☒ Add Refresh and Process buttons to email UI
+     ☒ Connect email processing to pending actions tab
+     ☒ Create database state inspector utility
+     ☒ Create EmailActionFilters component for filtering actions
+     ☒ Add Juno Assistant to navigation menu
+     ☒ Add routing for Juno Assistant page
+     ☒ Style components with CSS for Juno personality
+     ☒ Add success notifications and status indicators
+     ☐ Create Celery monitoring script
+     ☐ Create workflow test runner for direct testing
+
+
+     # Next up - Need to add staging areas, work on LLM flow, and create CRM CRUD APIs
+
+
+
+     # August 3rd - Refining email agentic workflows
+
+     ⎿  ☒ Create playground directory structure for email actions testing
+     ☒ Extract sample emails from database and create test data files
+     ☒ Create isolated test script for intent classification
+     ☒ Create isolated test script for information extraction
+     ☒ Build prompt variation testing utility
+     ☒ Create data validation components
+     ☒ Implement accuracy metrics tracking
+     ☒ Create workflow simulator for integration testing
+     ☒ Create contact name validation and matching system
+     ☒ Transform contact matcher into scalable entity matching service
+
+## August 3rd - Entity Matching Service Review
+
+### Summary
+Successfully created a comprehensive entity matching service that transforms the contact matching prototype into a scalable, extensible architecture supporting multiple entity types.
+
+### Key Achievements
+
+1. **Service Architecture**
+   - Created modular entity matching service structure in `services/entity_matching/`
+   - Built abstract base classes for easy extension to new entity types
+   - Implemented registry pattern for automatic matcher registration
+   - Added comprehensive type safety with Pydantic models and TypeScript interfaces
+
+2. **Contact Matching Implementation**
+   - Ported ContactMatcherV2 to service architecture
+   - Multiple matching strategies: email (1.0), NPI (1.0), exact name (0.95), last name (0.7)
+   - Context-aware matching with organization/specialty boosts
+   - Direct SQL queries to avoid SQLAlchemy ORM relationship issues
+
+3. **Utilities and Helpers**
+   - Created text similarity utilities with multiple algorithms
+   - Built advanced name parser handling medical titles and nicknames
+   - Implemented scoring system with configurable weights
+   - Added phone normalization and name normalization utilities
+
+4. **Service Interface**
+   - Unified `EntityMatchingService` with support for multiple entity types
+   - Convenience methods: `match_contact()`, `match_provider_group()`, `match_site()`
+   - Best match retrieval with confidence thresholds
+   - Multi-entity search capability
+
+5. **Testing Infrastructure**
+   - Created comprehensive test script demonstrating all features
+   - Context-aware matching tests
+   - Multiple entity type support verification
+   - All tests passing successfully
+
+### Technical Details
+
+- **Base Classes**: `BaseEntityMatcher`, `MatcherRegistry`, `MatchingConfig`
+- **Match Results**: `ContactMatch`, `ProviderGroupMatch`, `SiteOfServiceMatch`
+- **Utilities**: `MatchScorer`, `TextSimilarity`, `NameParser`, `NameNormalizer`
+- **Import Structure**: Proper `__init__.py` files for clean imports
+
+### Future Extensions
+
+The architecture is ready for:
+- Provider group matcher implementation
+- Site of service matcher implementation  
+- Additional entity types as needed
+- Caching layer for performance optimization
+- Machine learning-based matching improvements

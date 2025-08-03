@@ -60,7 +60,7 @@ Be specific about what action needs to be taken.""",
         initial_params = classification.get("initial_parameters", {})
         
         # Get email content
-        content = event.content_for_analysis
+        content = event.content
         
         # Get today's date for relative date parsing
         today = datetime.now()

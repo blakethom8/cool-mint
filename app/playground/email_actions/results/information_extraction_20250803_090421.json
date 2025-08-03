@@ -1,0 +1,813 @@
+{
+  "test_cases": 5,
+  "prompts_tested": [
+    "baseline",
+    "improved_medical",
+    "structured_extraction"
+  ],
+  "results": {
+    "baseline": [
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch Meeting with Devon McDonald - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Representative"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician (Referenced)"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic integration challenges",
+            "Patient referral relationship",
+            "Current collaboration with Dr. Uquillis"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Dr. McDonald re: Epic Integration",
+          "description": "Had lunch meeting with Dr. Devon McDonald to discuss patient sharing and Epic integration. Dr. McDonald currently shares patients with Dr. Uquillis but there are some challenges with the Epic integration that need to be addressed. The meeting was productive and established good rapport. Blake Thomson will follow up with Dr. McDonald in 60 days to reassess any changes.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Devon McDonald",
+            "Blake Thomson",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch Meeting with PT Devon McDonald - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Representative"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician (referenced)"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic integration challenges",
+            "Patient referral partnership",
+            "Current collaboration with Dr. Uquillis"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch Discussion with Devon McDonald",
+          "description": "Met with Devon McDonald, a physical therapist, to discuss patient care coordination and Epic integration. Devon currently shares patients with Dr. Uquillis. Key discussion points included challenges with Epic integration that need to be addressed. The relationship between practices was affirmed, with appreciation expressed for continued patient sharing.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Devon McDonald",
+            "Dr. Uquillis",
+            "Blake Thomson"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch Meeting with Devon McDonald - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Blake Thomson",
+              "role": "Representative"
+            },
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic integration challenges",
+            "Patient referral relationship",
+            "Collaboration with Dr. Uquillis"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald",
+          "description": "Had lunch meeting with Devon McDonald, a physical therapist. Key discussion points included:\n- Current status of patient sharing with Dr. Uquillis was reviewed - confirmed that Devon does share patients\n- Discussed challenges with Epic integration that need to be addressed\n- Blake will follow up in 60 days to reassess any changes",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch Meeting with PT Devon McDonald - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Representative"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic integration challenges",
+            "Patient sharing relationship",
+            "Partnership with Dr. Uquillis"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald and Dr. Uquillis",
+          "description": "Had a lunch meeting with Devon McDonald to discuss patient sharing and Epic integration. Key points discussed:\n- Current challenges with Epic integration system were identified\n- Confirmed that Devon McDonald is actively sharing patients with Dr. Uquillis\n- Discussed maintaining and strengthening the existing patient referral relationship\n- Blake will follow up in 60 days to check on any changes",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch Meeting with Devon McDonald - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Representative"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician (mentioned but not present)"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic integration challenges",
+            "Patient referral relationship",
+            "Current collaboration with Dr. Uquillis"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald - Epic Integration Discussion",
+          "description": "Had lunch meeting with Devon McDonald to discuss patient sharing and Epic integration challenges. Devon currently shares patients with Dr. Uquillis, but there are some technical challenges with Epic integration that need to be addressed. Discussed maintaining and strengthening the existing relationship for patient care.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      }
+    ],
+    "improved_medical": [
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD: Meeting with Devon McDonald PT and Dr. Uquillis - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist",
+              "type": "External"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "type": "Internal"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "type": "Internal"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": false,
+          "key_topics": [
+            "Epic EMR Integration",
+            "Patient Referral Process",
+            "Care Coordination"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Dr. McDonald re: Epic Integration",
+          "description": "Had lunch meeting with Dr. Devon McDonald to discuss patient sharing and Epic integration. Dr. McDonald currently shares patients with Dr. Uquillis but there are some challenges with the Epic integration that need to be addressed. The meeting was productive and established good rapport. Blake Thomson will follow up with Dr. McDonald in 60 days to reassess any changes.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Devon McDonald",
+            "Blake Thomson",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": false,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD: Dr. McDonald with Dr. Uquillis - Orthopedics Patient Care Discussion",
+          "participants": [
+            {
+              "name": "Dr. Devon McDonald",
+              "role": "Physical Therapist",
+              "type": "External Provider"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "type": "Internal Provider"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "type": "Internal Staff"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic integration challenges",
+            "Patient referral relationship",
+            "Care coordination between providers"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch Discussion with Devon McDonald",
+          "description": "Met with Devon McDonald, a physical therapist, to discuss patient care coordination and Epic integration. Devon currently shares patients with Dr. Uquillis. Key discussion points included challenges with Epic integration that need to be addressed. The relationship between practices was affirmed, with appreciation expressed for continued patient sharing.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Devon McDonald",
+            "Dr. Uquillis",
+            "Blake Thomson"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 2,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD: Dr. McDonald with Dr. Uquillis - Orthopedics Patient Care Discussion",
+          "participants": [
+            {
+              "name": "Dr. Devon McDonald",
+              "role": "Physical Therapist",
+              "type": "External Provider"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "type": "Internal Provider"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "type": "Internal Staff"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic integration challenges",
+            "Patient sharing/referral relationship",
+            "Care coordination between providers"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald",
+          "description": "Had lunch meeting with Devon McDonald, a physical therapist. Key discussion points included:\n- Current status of patient sharing with Dr. Uquillis was reviewed - confirmed that Devon does share patients\n- Discussed challenges with Epic integration that need to be addressed\n- Blake will follow up in 60 days to reassess any changes",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 2,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD: Lunch Meeting with Devon McDonald and Dr. Uquillis - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist",
+              "type": "External Provider"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "type": "Internal Provider"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "type": "Internal Staff"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic EMR Integration Issues",
+            "Patient Referral Relationship",
+            "Care Coordination"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald and Dr. Uquillis",
+          "description": "Had a lunch meeting with Devon McDonald to discuss patient sharing and Epic integration. Key points discussed:\n- Current challenges with Epic integration system were identified\n- Confirmed that Devon McDonald is actively sharing patients with Dr. Uquillis\n- Discussed maintaining and strengthening the existing patient referral relationship\n- Blake will follow up in 60 days to check on any changes",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD: Dr. McDonald and Dr. Uquillis - Ortho Patient Referral Discussion",
+          "participants": [
+            {
+              "name": "Dr. Devon McDonald",
+              "role": "Physical Therapist",
+              "type": "External Provider"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "type": "Internal Provider"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "type": "Internal Staff"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic EMR integration challenges",
+            "Patient referral relationship",
+            "Current patient sharing workflow"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald - Epic Integration Discussion",
+          "description": "Had lunch meeting with Devon McDonald to discuss patient sharing and Epic integration challenges. Devon currently shares patients with Dr. Uquillis, but there are some technical challenges with Epic integration that need to be addressed. Discussed maintaining and strengthening the existing relationship for patient care.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 2,
+          "participants_expected": 3
+        }
+      }
+    ],
+    "structured_extraction": [
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch: Dr. McDonald and Dr. Uquillis - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist",
+              "organization": "Red Iron NYC"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "organization": "Cedars"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "organization": "Cedars"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": false,
+          "key_topics": [
+            "Epic EMR Integration",
+            "Patient Sharing Protocol",
+            "Referral Partnership"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Dr. McDonald re: Epic Integration",
+          "description": "Had lunch meeting with Dr. Devon McDonald to discuss patient sharing and Epic integration. Dr. McDonald currently shares patients with Dr. Uquillis but there are some challenges with the Epic integration that need to be addressed. The meeting was productive and established good rapport. Blake Thomson will follow up with Dr. McDonald in 60 days to reassess any changes.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Devon McDonald",
+            "Blake Thomson",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": false,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch: Blake Thomson & Devon McDonald - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Blake Thomson",
+              "role": "Representative",
+              "organization": "Cedars"
+            },
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist",
+              "organization": "Red Iron NYC"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "organization": "Cedars",
+              "mentioned_only": true
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD Lunch",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": false,
+          "key_topics": [
+            "Epic EMR Integration",
+            "Patient Sharing Partnership",
+            "Referral Relationship"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch Discussion with Devon McDonald",
+          "description": "Met with Devon McDonald, a physical therapist, to discuss patient care coordination and Epic integration. Devon currently shares patients with Dr. Uquillis. Key discussion points included challenges with Epic integration that need to be addressed. The relationship between practices was affirmed, with appreciation expressed for continued patient sharing.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Devon McDonald",
+            "Dr. Uquillis",
+            "Blake Thomson"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": false,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch: Dr. McDonald & Dr. Uquillis - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist",
+              "organization": "Red Iron NYC"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "organization": "Cedars"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "organization": "Cedars"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": false,
+          "key_topics": [
+            "Epic EMR Integration",
+            "Patient Sharing Workflow",
+            "Referral Partnership"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald",
+          "description": "Had lunch meeting with Devon McDonald, a physical therapist. Key discussion points included:\n- Current status of patient sharing with Dr. Uquillis was reviewed - confirmed that Devon does share patients\n- Discussed challenges with Epic integration that need to be addressed\n- Blake will follow up in 60 days to reassess any changes",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": false,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch: Dr. McDonald & Dr. Uquillis - Epic Integration & Patient Sharing Discussion",
+          "participants": [
+            {
+              "name": "Dr. Devon McDonald",
+              "role": "Physical Therapist",
+              "organization": "Red Iron NYC"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "organization": "Cedars"
+            },
+            {
+              "name": "Blake Thomson",
+              "role": "Liaison",
+              "organization": "Cedars"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": 60,
+          "activity_type": "MD-to-MD",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": true,
+          "key_topics": [
+            "Epic EMR Integration",
+            "Patient Sharing Workflow",
+            "Inter-provider Collaboration"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald and Dr. Uquillis",
+          "description": "Had a lunch meeting with Devon McDonald to discuss patient sharing and Epic integration. Key points discussed:\n- Current challenges with Epic integration system were identified\n- Confirmed that Devon McDonald is actively sharing patients with Dr. Uquillis\n- Discussed maintaining and strengthening the existing patient referral relationship\n- Blake will follow up in 60 days to check on any changes",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": true,
+          "participants_found": 2,
+          "participants_expected": 3
+        }
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "extracted": {
+          "subject": "MD-to-MD Lunch: Blake Thomson & Devon McDonald - Epic Integration Discussion",
+          "participants": [
+            {
+              "name": "Blake Thomson",
+              "role": "Representative",
+              "organization": "Cedars"
+            },
+            {
+              "name": "Devon McDonald",
+              "role": "Physical Therapist",
+              "organization": "Red Iron NYC"
+            },
+            {
+              "name": "Dr. Uquillis",
+              "role": "Physician",
+              "organization": "Cedars",
+              "type": "Referenced"
+            }
+          ],
+          "activity_date": "2025-07-25",
+          "duration_minutes": null,
+          "activity_type": "MD-to-MD Lunch",
+          "meeting_setting": "In-Person",
+          "is_md_to_md": false,
+          "key_topics": [
+            "Epic EMR Integration",
+            "Patient Referral Patterns",
+            "Care Coordination"
+          ]
+        },
+        "expected": {
+          "subject": "MD-to-MD Lunch with Devon McDonald - Epic Integration Discussion",
+          "description": "Had lunch meeting with Devon McDonald to discuss patient sharing and Epic integration challenges. Devon currently shares patients with Dr. Uquillis, but there are some technical challenges with Epic integration that need to be addressed. Discussed maintaining and strengthening the existing relationship for patient care.",
+          "activity_date": "2025-07-25T00:00:00+00:00",
+          "duration_minutes": null,
+          "mno_type": "MD_to_MD_Visits",
+          "mno_subtype": "MD_to_MD_w_Cedars",
+          "mno_setting": "In-Person",
+          "participants": [
+            "Blake Thomson",
+            "Devon McDonald",
+            "Dr. Uquillis"
+          ]
+        },
+        "comparison": {
+          "subject_match": false,
+          "md_to_md_correct": false,
+          "participants_found": 3,
+          "participants_expected": 3
+        }
+      }
+    ]
+  }
+}

@@ -42,11 +42,13 @@ class CallLogParameters(BaseModel):
     
     subject: str = Field(..., description="Subject of the call/meeting")
     description: str = Field(..., description="Description of what was discussed")
-    participants: List[str] = Field(..., description="People involved")
-    activity_date: Optional[datetime] = Field(None, description="When the activity occurred")
-    duration_minutes: Optional[int] = Field(None, description="Duration in minutes")
-    activity_type: Optional[str] = Field(None, description="Type of activity (MD-to-MD, etc)")
-    meeting_setting: Optional[str] = Field(None, description="In-person, Virtual, etc")
+    participants: List[dict] = Field(..., description="List of participants with names and roles")
+    activity_date: Optional[str] = Field(None, description="When the activity occurred")
+    activity_type: str = Field(..., description="Type of activity (MD_to_MD_Visits, BD_Outreach, Events, Planning_Management, Other)")
+    meeting_setting: str = Field("In-Person", description="In-Person, Virtual, Phone")
+    is_md_to_md: bool = Field(False, description="Whether this is an MD-to-MD activity")
+    key_topics: List[str] = Field(default_factory=list, description="Key topics discussed")
+    follow_up_items: List[str] = Field(default_factory=list, description="Follow-up items mentioned")
 
 
 class NoteParameters(BaseModel):

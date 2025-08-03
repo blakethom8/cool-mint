@@ -59,7 +59,7 @@ def test_email_actions_workflow(email_id: str = None):
             content=email.conversation_for_llm or email.body_plain or email.body_html,
             subject=email.subject,
             from_email=email.from_email,
-            is_forwarded=email.is_forwarded,
+            is_forwarded=email.is_forwarded or False,
             user_instruction=email.user_instruction
         )
         

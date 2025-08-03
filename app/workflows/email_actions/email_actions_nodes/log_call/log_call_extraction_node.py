@@ -22,16 +22,23 @@ Extract the following information:
 2. **Description**: Detailed notes about what was discussed
 3. **Participants**: All people involved (extract names and roles)
 4. **Date**: When the activity occurred (if mentioned)
-5. **Duration**: How long it lasted (if mentioned)
-6. **Activity Type**: Type of activity (MD-to-MD, Sales Call, etc.)
-7. **Setting**: In-person, Virtual, Phone, etc.
+5. **Activity Type**: Categorize the activity type:
+   - MD_to_MD_Visits: Direct physician-to-physician interactions and meetings
+   - BD_Outreach: Physician liaison engagement with other stakeholders
+   - Events: Group gatherings and educational sessions
+   - Planning_Management: Internal planning and coordination
+   - Other: General activities not fitting above categories
+
+6. **Setting**: In-person, Virtual, Phone, etc.
+7. **Key Topics**: List of key topics discussed
+8. **Follow-up Items**: List of follow-up items mentioned
 
 For MD-to-MD activities:
 - Always include "MD-to-MD" in the subject
 - Note which physicians were involved
 - Capture key discussion points
 
-Be thorough in extracting discussion topics, action items, and follow-up plans.""",
+Only capture information that is provided by the user or in the email thread. To not try to make inferences or assumptions for information that is not shared. """,
             output_type=self.CallLogExtractionOutput,
             deps_type=EmailActionsEventSchema,
             model_provider=provider,
@@ -40,18 +47,28 @@ Be thorough in extracting discussion topics, action items, and follow-up plans."
         )
     
     class CallLogExtractionOutput(BaseModel):
+        """Output schema for call log extraction"""
+        
         subject: str = Field(..., description="Subject/title for the activity")
         description: str = Field(..., description="Detailed description of the activity")
-        participants: List[dict] = Field(..., description="List of participants with names and roles")
+        participants: List[dict] = Field(
+            ..., description="List of participants with names and roles"
+        )
         activity_date: Optional[str] = Field(None, description="When the activity occurred")
-        duration_minutes: Optional[int] = Field(None, description="Duration in minutes")
-        activity_type: str = Field(..., description="Type of activity (MD-to-MD, Sales Call, etc)")
+        activity_type: str = Field(
+            ...,
+            description="Type of activity (MD_to_MD_Visits, BD_Outreach, Events, Planning_Management, Other)",
+        )
         meeting_setting: str = Field("In-Person", description="In-Person, Virtual, Phone")
+        key_topics: List[str] = Field(
+            default_factory=list, description="Key topics discussed"
+        )
+        follow_up_items: List[str] = Field(
+            default_factory=list, description="Follow-up items mentioned"
+        )
         
-        # Specific fields for medical activities
+        # Optional fields
         is_md_to_md: bool = Field(False, description="Whether this is an MD-to-MD activity")
-        key_topics: List[str] = Field(default_factory=list, description="Key topics discussed")
-        follow_up_items: List[str] = Field(default_factory=list, description="Follow-up items mentioned")
     
     def process(self, task_context: TaskContext) -> TaskContext:
         event: EmailActionsEventSchema = task_context.event
@@ -63,21 +80,33 @@ Be thorough in extracting discussion topics, action items, and follow-up plans."
         # Get email content
         content = event.content
         
+        # Build user prompt with optional user instruction
+        user_instruction = getattr(event, 'user_instruction', '') or ''
+        
+        user_prompt_parts = [
+            f"Extract call/meeting information from this email:",
+            f"",
+            f"From: {event.from_email}",
+            f"Subject: {event.subject}",
+        ]
+        
+        if user_instruction:
+            user_prompt_parts.extend([
+                f"",
+                f"User Instruction: {user_instruction}",
+            ])
+        
+        user_prompt_parts.extend([
+            f"",
+            f"Email Content:",
+            f"{content}",
+            f"",
+            f"Extract all relevant information for logging this activity."
+        ])
+        
         # Run extraction
         result = self.agent.run_sync(
-            user_prompt=f"""Extract call/meeting information from this email:
-
-From: {event.from_email}
-Subject: {event.subject}
-
-Initial extraction hints:
-- Participants mentioned: {initial_params.get('participants', [])}
-- Date mentioned: {initial_params.get('date', 'Not specified')}
-
-Email content:
-{content}
-
-Extract all relevant information for logging this activity.""",
+            user_prompt="\n".join(user_prompt_parts),
             deps=event
         )
         
@@ -87,7 +116,6 @@ Extract all relevant information for logging this activity.""",
             "description": result.output.description,
             "participants": result.output.participants,
             "activity_date": result.output.activity_date,
-            "duration_minutes": result.output.duration_minutes,
             "activity_type": result.output.activity_type,
             "meeting_setting": result.output.meeting_setting,
             "is_md_to_md": result.output.is_md_to_md,

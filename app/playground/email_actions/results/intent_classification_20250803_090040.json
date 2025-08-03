@@ -1,0 +1,236 @@
+{
+  "test_cases": 5,
+  "prompts_tested": [
+    "baseline",
+    "improved_v1",
+    "improved_v2"
+  ],
+  "results": {
+    "baseline": [
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald from the lunch meeting. The email thread provides context about the meeting, including discussions about patient sharing and Epic integration. The primary action is to log this MD-to-MD interaction as a call/meeting activity.",
+        "keywords": [
+          "MD-to-MD",
+          "log an Md-to-MD activity",
+          "log activity"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.9,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald and capture notes from the email thread. The keywords \"MD-to-MD\" and the specific instruction to log the activity strongly indicate this is a call logging action. The email thread provides context about a lunch meeting discussing patient sharing and Epic integration, which supports the need to log this professional interaction.",
+        "keywords": [
+          "MD-to-MD",
+          "log an Md-to-MD activity",
+          "capture the notes"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The email explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald and capture notes from the lunch meeting. The key indicators are the direct phrases \"log an Md-to-MD activity\" and \"capture the notes from the thread\", which align perfectly with the log_call and add_note action types. Since logging the MD-to-MD activity is the primary request, log_call is selected as the main action.",
+        "keywords": [
+          "MD-to-MD",
+          "log an Md-to-MD activity",
+          "capture the notes"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.9,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald after their lunch meeting. The email contains details about a medical professional discussion, specifically mentioning sharing patients and discussing Epic integration. The primary action is clearly to log this MD-to-MD interaction as a call/meeting activity.",
+        "keywords": [
+          "MD-to-MD",
+          "log an Md-to-MD activity",
+          "log activity"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald and capture notes from the email thread. The key phrases \"MD-to-MD\" and \"log an Md-to-MD activity\" directly point to logging a call/meeting, while also mentioning capturing notes. The primary action is logging the MD-to-MD interaction, with note-taking as a secondary aspect.",
+        "keywords": [
+          "MD-to-MD",
+          "log an Md-to-MD activity",
+          "capture the notes"
+        ]
+      }
+    ],
+    "improved_v1": [
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requested to log an MD-to-MD activity with Dr. Devon McDonald from a lunch meeting. The email thread provides context about a lunch discussion regarding patient sharing and Epic integration. The key phrases \"log an Md-to-MD activity\" and \"MD-to-MD lunch\" directly indicate a call logging action is required.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "log an Md-to-MD activity"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requested to log an MD-to-MD activity with Dr. Devon McDonald. The email thread provides context about a lunch meeting discussing patient sharing and Epic integration. The key phrases \"log an Md-to-MD activity\" directly indicate a call logging action, with specific details about the meeting with the physical therapist.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "log an Md-to-MD activity"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald after their lunch meeting. The email thread provides context about a lunch discussion regarding patient sharing and Epic integration. The key phrase \"log an Md-to-MD activity\" directly indicates a call/interaction logging action.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "log an Md-to-MD activity"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald. The email thread confirms a lunch meeting discussing patient sharing and Epic integration. The key indicators of \"log\" and \"MD-to-MD\" directly point to a call/meeting log action.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "share patients"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald from a lunch meeting. The email thread confirms the meeting details, including discussion points about patient sharing and Epic integration. The key phrases \"log an Md-to-MD activity\" and the context of a physician interaction strongly indicate a call logging action.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "log an Md-to-MD activity"
+        ]
+      }
+    ],
+    "improved_v2": [
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald, which occurred during a lunch meeting. The email thread provides context about discussing patient sharing and Epic integration, making this a clear log_call scenario. The user wants to capture the details of this physician interaction as an activity in the system.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "patient sharing"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.9,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald. The email thread provides context about a lunch meeting discussing patient sharing and Epic integration. The key indicators are the direct instruction to \"log an Md-to-MD activity\" and the details of the physician interaction, making this a clear case for logging a call/meeting.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "patient sharing"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requests to log an MD-to-MD activity with Dr. Devon McDonald from the email thread. The email details a lunch meeting discussing patient sharing and Epic integration, which clearly indicates a call/meeting log is the appropriate action. The keywords and direct instruction strongly support logging this as a call activity.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "patient sharing"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requested to log an MD-to-MD activity with Dr. Devon McDonald. The email thread confirms a lunch meeting occurred where they discussed patient sharing and Epic integration. The key indicators are the direct instruction to log the MD-to-MD activity and the detailed meeting notes provided in the email thread.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "patient sharing"
+        ]
+      },
+      {
+        "email_id": "7c1b11f8-0ed6-4bb0-94b1-a438fea2b973",
+        "user_instruction": "Chat, below is an email thread where we had MD-to-MD lunch with Devon McDonald who is a physical the",
+        "predicted": "log_call",
+        "expected": "log_call",
+        "correct": true,
+        "confidence": 0.95,
+        "reasoning": "The user explicitly requested to log an MD-to-MD activity with Dr. Devon McDonald. The email thread provides context about a lunch meeting discussing patient sharing and Epic integration. The instruction clearly indicates logging a call/meeting activity, making this a straightforward log_call classification.",
+        "keywords": [
+          "MD-to-MD lunch",
+          "Devon McDonald",
+          "Epic integration",
+          "patient sharing"
+        ]
+      }
+    ]
+  }
+}
